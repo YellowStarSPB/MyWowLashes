@@ -1,0 +1,31 @@
+basePath: /api
+definitions:
+  domain.GetExampleResponse:
+    properties:
+      example:
+        example: oleg loh
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a Kate server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Kate Shop testing API
+  version: "0.1"
+paths:
+  /admin/example:
+    get:
+      consumes:
+      - application/json
+      description: get example message
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetExampleResponse'
+      summary: Example api test
+swagger: "2.0"
