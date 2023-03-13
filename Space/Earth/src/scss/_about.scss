@@ -1,0 +1,48 @@
+//section About
+
+.sectionAbout {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    padding-bottom: 20px;
+
+    &__img {
+        width: 50%;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &__text {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+
+        div {
+            width: 500px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            margin-bottom: 70px;
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                display: block;
+                width: 100px;
+                border-bottom: 1px solid #000;
+            }
+        }
+
+        p {
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+    }
+}

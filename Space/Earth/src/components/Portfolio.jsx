@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { transition1 } from "../transition1";
 
 function Portfolio() {
     const [categoryItems, setCategoryrItems] = React.useState(['all', 'fashion', 'portrait', 'urban', 'events', 'nature'])
@@ -9,8 +10,18 @@ function Portfolio() {
         setActiveCategory(index)
     }
     return (
-        <section className="sectionPortfolio">
-            <div className="portfolioContent">
+        <motion.section
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            transition={transition1}
+            className="sectionPortfolio">
+            <motion.div
+                initial={{ opacity: 0, y: '-50%' }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: '-50%' }}
+                transition={transition1}
+                className="portfolioContent">
                 <h2>Portfolio</h2>
                 <ul className="filters">
                     {categoryItems.map((item, index) => (
@@ -88,42 +99,8 @@ function Portfolio() {
                         <img src="https://images.unsplash.com/photo-1527928159272-7d012024eb74?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" alt="" />
                     </div>
                 </div>
-
-
-                {/* <div className="gallary">
-                        <div className="gallary__item">
-                            <img src={img7} alt="" />
-                        </div>
-                        <div className="gallary__item">
-                            <img src={img8} alt="" />
-                        </div>
-                        <div className="gallary__item">
-                            <img src={img9} alt="" />
-                        </div>
-                        <div className="gallary__item">
-                            <img src={img10} alt="" />
-                        </div>
-                        <div className="gallary__item">
-                            <img src={img11} alt="" />
-                        </div>
-                        <div className="gallary__item">
-                            <img src={img7} alt="" />
-                        </div>
-                        <div className="gallary__item">
-                            <img src={img8} alt="" />
-                        </div>
-                        <div className="gallary__item">
-                            <img src={img9} alt="" />
-                        </div>
-                        <div className="gallary__item">
-                            <img src={img10} alt="" />
-                        </div>
-                        <div className="gallary__item">
-                            <img src={img11} alt="" />
-                        </div>
-                </div> */}
-            </div>
-        </section>
+            </motion.div>
+        </motion.section>
     )
 }
 

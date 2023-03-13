@@ -13,9 +13,7 @@ function Header() {
                     <div>
                         <ul className="navBar__menu">
                             <Link className="navBar__link" to={'/'}>Главная</Link>
-                            <li className="navBar__link">
-                                <a href={'#about'}>Обо мне</a>
-                            </li>
+                            <Link className="navBar__link" to={'/about'}>Обо мне</Link>
                             <Link className="navBar__link" to={'/price'}>Прайс</Link>
                             <Link className="navBar__link" to={'/portfolio'}>Портфолио</Link>
                             <Link className="navBar__link" to={'/order'}>Записаться</Link>
