@@ -4,10 +4,12 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"venus/internal/gin"
-	"venus/internal/logger"
 
 	log "github.com/sirupsen/logrus"
+
+	docs "venus/docs"
+	"venus/internal/gin"
+	"venus/internal/logger"
 )
 
 type kateController struct {
@@ -50,6 +52,7 @@ func main() {
 
 	// Create kate controller
 	kc := CreateKateController()
+	docs.SwaggerInfo.BasePath = "/api"
 
 	// Start server
 	go kc.gin.Run(":8080")
