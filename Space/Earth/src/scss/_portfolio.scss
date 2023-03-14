@@ -6,6 +6,9 @@
         font-size: 56px;
         line-height: 141.8%;
         margin-bottom: 70px;
+        @media (max-width: 640px) {
+            margin-bottom: 20px;
+        }
 
         &::after {
             content: '';
@@ -20,6 +23,10 @@
         display: flex;
         align-items: center;
         margin-bottom: 80px;
+        @media (max-width: 640px) {
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
 
         li {
             margin-right: 34px;
@@ -31,6 +38,10 @@
             letter-spacing: 0.06em;
             text-transform: uppercase;
             cursor: pointer;
+            @media (max-width: 640px) {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
 
             &:last-child {
                 margin-right: 0px;

@@ -15,6 +15,10 @@ function Portfolio() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             transition={transition1}
+            /* initial={{ opacity: 0, y: '-50%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: '-50%' }}
+            transition={transition1} */
             className="sectionPortfolio">
             <motion.div
                 initial={{ opacity: 0, y: '-50%' }}

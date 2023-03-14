@@ -4,6 +4,8 @@
 @import './scss/about';
 @import './scss/portfolio';
 @import './scss/order';
+@import './scss/price';
+@import './scss/mobileMenu';
 
 
 
@@ -12,7 +14,9 @@
     max-width: 1480px;
     margin: 0 auto;
     padding: 0 10px;
+
 }
+
 // delite scrollbar
 ::-webkit-scrollbar {
     width: 0;
@@ -33,6 +37,11 @@
     letter-spacing: 0.03em;
     text-transform: uppercase;
     transition: transform 0.15s ease-in-out;
+    @media (max-width: 500px) {
+        padding: 10px 30px;
+        font-size: 14px;
+        width: 100%;
+    }
 
     &:hover {
         transform: translateY(-5px)
