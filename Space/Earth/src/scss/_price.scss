@@ -1,0 +1,28 @@
+.sectionPrice {
+    div {
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            margin-bottom: 70px;
+            position: relative;
+            @media (max-width: 500px) {
+                font-size: 36px;
+                margin-bottom: 30px;
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                display: block;
+                width: 100px;
+                border-bottom: 1px solid #000;
+            }
+        }
+    }
+
+    .cardWrapper {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+}

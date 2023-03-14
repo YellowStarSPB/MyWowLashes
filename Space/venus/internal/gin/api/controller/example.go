@@ -11,8 +11,8 @@ import (
 // @Description get example message
 // @Accept  json
 // @Produce  json
-// @Success 200 {string} string	"ok"
-// @Router /api/amdin/example [get]
+// @Success 200 {object} domain.GetExampleResponse
+// @Router /admin/example [get]
 func GetExample(c *gin.Context) {
 	service.ExampleApiWork()
 	logrus.Debug("Example API")
