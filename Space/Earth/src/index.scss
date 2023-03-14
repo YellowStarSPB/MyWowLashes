@@ -1,0 +1,54 @@
+@import './scss/normalize';
+@import './scss/header';
+@import './scss/home';
+@import './scss/about';
+@import './scss/portfolio';
+@import './scss/order';
+@import './scss/price';
+@import './scss/mobileMenu';
+
+
+
+
+.container {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 10px;
+
+}
+
+// delite scrollbar
+::-webkit-scrollbar {
+    width: 0;
+}
+
+//button styles
+
+.btn {
+    padding: 18px 50px;
+    background-color: #000;
+    box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 194.19%;
+    text-align: center;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: transform 0.15s ease-in-out;
+    @media (max-width: 500px) {
+        padding: 10px 30px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    &:hover {
+        transform: translateY(-5px)
+    }
+
+    &:active {
+        transform: translate(0)
+    }
+
+}
