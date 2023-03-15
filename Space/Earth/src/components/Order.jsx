@@ -24,7 +24,6 @@ function Order() {
     }
     function onChangeMessageInput(value) {
         setMessageInput(value)
-        console.log(value)
     }
 
 

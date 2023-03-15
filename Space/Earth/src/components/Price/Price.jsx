@@ -2,11 +2,11 @@ import React from "react";
 import CardPrice from "./CardPrice/CardPrice";
 import { motion } from "framer-motion";
 import { transition1 } from "../../transition1";
+import { Link } from "react-router-dom";
 
 
 
 function Price() {
-    const [arr, setArr] = React.useState(Array(1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5))
 
     return (
         <motion.section
@@ -28,7 +28,9 @@ function Price() {
                 exit={{ opacity: 0, y: '-50%' }}
                 transition={transition1}
                 className="cardWrapper">
-                {arr.map(item => <CardPrice />)}
+
+                {[...Array(10)].map(item => <Link to={'/order'} ><CardPrice /></Link>)}
+
             </motion.div>
         </motion.section>
     )
