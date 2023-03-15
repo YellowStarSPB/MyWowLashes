@@ -1,10 +1,10 @@
-** Use all commands from this path: `Space/docker`
-* For start local DB:
+# Use all commands from this path: `Space/docker`
+- For start local DB:
 `docker-compose up -d`
-* For stop local DB:
+- For stop local DB:
 `docker-compose down`
 
-* For connect to adminer(DB UI):
+# For connect to adminer(DB UI):
 - `http://localhost:8080/`
 - Engine: `PostgreSQL`
 - Server: `db`
@@ -12,5 +12,5 @@
 - Password: `kateshop`
 - DB: `kateshop`
 
-* Requirenments:
+# Requirenments:
 - docker (`https://www.docker.com/`)
