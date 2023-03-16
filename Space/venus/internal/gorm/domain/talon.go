@@ -6,11 +6,11 @@ import (
 	"gorm.io/gorm"
 )
 
-// Table struct
-// NOTE this struct and struct in migration can be different. In this case actual struct.
 type Talon struct {
 	gorm.Model
-	Time time.Time
+	Time    time.Time
+	UserID  uint
+	OrderID uint
 }
 
 // ConvertToAPI - function for converting DB struct into API struct
