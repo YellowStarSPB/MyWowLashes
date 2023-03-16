@@ -5,22 +5,28 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/mcuadros/go-defaults"
+	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 
 	docs "venus/docs"
+	"venus/internal/config"
 	"venus/internal/gin"
+	db_services "venus/internal/gorm/services"
 	"venus/internal/logger"
 )
 
 type kateController struct {
-	gin gin.GinController
+	gin  gin.GinController
+	gorm db_services.DbController
 }
 
-func CreateKateController() *kateController {
-	kc := new(kateController)
+func CreateKateController(config config.Config) (kc *kateController, err error) {
+	kc = new(kateController)
 	kc.gin = gin.CreateGinController()
+	kc.gorm, err = db_services.CreateDbController(config)
 
-	return kc
+	return kc, err
 }
 
 // @title Kate Shop testing API
@@ -45,18 +51,27 @@ func main() {
 		// Set shutdown = true
 		shutdown <- true
 	}()
+
+	// Create config file
+	config := new(config.Config)
+	defaults.SetDefaults(config)
+
 	// Init logger
 	logger.InitLogger()
 
-	log.SetLevel(logger.ParseLogLevel("TRACE"))
+	log.SetLevel(logger.ParseLogLevel(config.LoggerConf.LogLevel))
 
 	// Create kate controller
-	kc := CreateKateController()
+	kc, err := CreateKateController(*config)
+	if err != nil {
+		logrus.WithError(err).Fatal("Couldn't create KateController")
+	}
+
 	docs.SwaggerInfo.BasePath = "/api"
 
 	// Start server
-	go kc.gin.Run(":8080")
+	go kc.gin.Run(":1001")
 
-	log.Debug("Server is running!")
 	<-shutdown
+	log.Debug("Server is down!")
 }

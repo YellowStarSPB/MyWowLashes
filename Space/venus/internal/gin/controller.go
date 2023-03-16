@@ -28,4 +28,6 @@ func (gc *ginController) Run(port string) {
 	if err := gc.Engine.Run(port); err != nil {
 		logrus.WithError(err).WithField("port", port).Fatal("Cannot run server.")
 	}
+
+	logrus.WithField("port", port).Trace("Server started successful.")
 }
