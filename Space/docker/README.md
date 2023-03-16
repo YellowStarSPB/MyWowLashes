@@ -2,6 +2,8 @@
 - For start local DB:
 `docker-compose up -d`
 - For stop local DB:
+`docker-compose stop`
+- For delete local DB:
 `docker-compose down`
 
 # For connect to adminer(DB UI):
