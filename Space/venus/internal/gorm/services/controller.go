@@ -17,14 +17,17 @@ type dbController struct {
 func CreateDbController(config config.Config) (DbController, error) {
 	dbc := new(dbController)
 	var err error
+	// Open connection with DB
 	dbc.dbConn, err = gorm.Open(postgres.Open(config.DbConf.DSN()), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
+	// Set debug mode
 	if config.Debug {
 		dbc.dbConn.Debug()
 	}
 
+	// Run automigrate
 	if err := db_migration.AutoMigrate(dbc.dbConn); err != nil {
 		return nil, err
 	}

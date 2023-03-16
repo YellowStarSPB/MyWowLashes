@@ -7,11 +7,16 @@ import (
 	"gorm.io/gorm"
 )
 
+// AutoMigrate - function for run automigration
 func AutoMigrate(dbc *gorm.DB) error {
+	// Create list of migrations
 	migs := []*gormigrate.Migration{}
+	// NOTE: Add new migrations here
 	migs = append(migs, &m.Mig16032023)
 
+	// Create migration config
 	mm := gormigrate.New(dbc, gormigrate.DefaultOptions, migs)
+	// Start migrations
 	if err := mm.Migrate(); err != nil {
 		return err
 	}

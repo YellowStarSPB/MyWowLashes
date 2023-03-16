@@ -30,6 +30,8 @@ func createKateController(config config.Config) (kc *kateController, err error) 
 }
 
 func prepare(conf *config.Config) {
+	docs.SwaggerInfo.BasePath = "/api"
+
 	defaults.SetDefaults(conf)
 
 	debug := flag.Bool("d", false, "Debug mode. Default false.")
@@ -72,6 +74,7 @@ func main() {
 	// Init logger
 	logger.InitLogger()
 
+	// Set log level
 	logrus.SetLevel(logger.ParseLogLevel(config.LoggerConf.LogLevel))
 	logrus.Tracef("DebugMode: %v", config.Debug)
 
@@ -81,10 +84,8 @@ func main() {
 		logrus.WithError(err).Fatal("Couldn't create KateController")
 	}
 
-	docs.SwaggerInfo.BasePath = "/api"
-
 	// Start server
-	go kc.gin.Run(":1001")
+	go kc.gin.Run()
 
 	<-shutdown
 	logrus.Debug("Server is down!")
