@@ -4,8 +4,13 @@ import "fmt"
 
 type Config struct {
 	Debug      bool `default:"false"`
+	Servonfig  serConfig
 	DbConf     dbConfig
 	LoggerConf loggerConfig
+}
+
+type serConfig struct {
+	Port string `default:":1001"`
 }
 
 type dbConfig struct {

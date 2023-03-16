@@ -14,12 +14,15 @@ type dbController struct {
 	dbConn *gorm.DB
 }
 
-func CreateDbController(dbConfig config.Config) (DbController, error) {
+func CreateDbController(config config.Config) (DbController, error) {
 	dbc := new(dbController)
 	var err error
-	dbc.dbConn, err = gorm.Open(postgres.Open(dbConfig.DbConf.DSN()), &gorm.Config{})
+	dbc.dbConn, err = gorm.Open(postgres.Open(config.DbConf.DSN()), &gorm.Config{})
 	if err != nil {
 		return nil, err
+	}
+	if config.Debug {
+		dbc.dbConn.Debug()
 	}
 
 	if err := db_migration.AutoMigrate(dbc.dbConn); err != nil {

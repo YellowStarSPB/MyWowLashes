@@ -1,6 +1,7 @@
 package gin
 
 import (
+	"venus/internal/config"
 	"venus/internal/gin/api"
 
 	"github.com/gin-gonic/gin"
@@ -12,12 +13,19 @@ type GinController interface {
 }
 
 type ginController struct {
-	Engine *gin.Engine
+	Engine    *gin.Engine
+	GinConfig struct {
+		port  string
+		debug bool
+	}
 }
 
-func CreateGinController() GinController {
+func CreateGinController(config config.Config) GinController {
 	gc := new(ginController)
 
+	if !config.Debug {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	gc.Engine = gin.Default()
 
 	return gc

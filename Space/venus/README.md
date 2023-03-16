@@ -6,6 +6,8 @@
 
 # For start server:
 `go run main.go`
+## Keys for run:
+ - `-d` - run debug mode.
 
 # Requirenments
 - "Go" ver 1.20 or newer (`https://go.dev/`)

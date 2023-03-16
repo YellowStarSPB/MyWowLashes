@@ -1,13 +1,13 @@
 package main
 
 import (
+	"flag"
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/mcuadros/go-defaults"
 	"github.com/sirupsen/logrus"
-	log "github.com/sirupsen/logrus"
 
 	docs "venus/docs"
 	"venus/internal/config"
@@ -21,12 +21,25 @@ type kateController struct {
 	gorm db_services.DbController
 }
 
-func CreateKateController(config config.Config) (kc *kateController, err error) {
+func createKateController(config config.Config) (kc *kateController, err error) {
 	kc = new(kateController)
-	kc.gin = gin.CreateGinController()
+	kc.gin = gin.CreateGinController(config)
 	kc.gorm, err = db_services.CreateDbController(config)
 
 	return kc, err
+}
+
+func prepare(conf *config.Config) {
+	defaults.SetDefaults(conf)
+
+	debug := flag.Bool("d", false, "Debug mode. Default false.")
+	flag.Parse()
+
+	conf.Debug = *debug
+	if conf.Debug {
+		conf.LoggerConf.LogLevel = "DEBUG"
+
+	}
 }
 
 // @title Kate Shop testing API
@@ -47,22 +60,23 @@ func main() {
 	go func() {
 		// Wait any of signal in Signal Channel
 		sig := <-sigChan
-		log.Info("Signal received: ", sig.String())
+		logrus.Info("Signal received: ", sig.String())
 		// Set shutdown = true
 		shutdown <- true
 	}()
 
-	// Create config file
 	config := new(config.Config)
-	defaults.SetDefaults(config)
+	// Prepare config
+	prepare(config)
 
 	// Init logger
 	logger.InitLogger()
 
-	log.SetLevel(logger.ParseLogLevel(config.LoggerConf.LogLevel))
+	logrus.SetLevel(logger.ParseLogLevel(config.LoggerConf.LogLevel))
+	logrus.Tracef("DebugMode: %v", config.Debug)
 
 	// Create kate controller
-	kc, err := CreateKateController(*config)
+	kc, err := createKateController(*config)
 	if err != nil {
 		logrus.WithError(err).Fatal("Couldn't create KateController")
 	}
@@ -73,5 +87,5 @@ func main() {
 	go kc.gin.Run(":1001")
 
 	<-shutdown
-	log.Debug("Server is down!")
+	logrus.Debug("Server is down!")
 }
