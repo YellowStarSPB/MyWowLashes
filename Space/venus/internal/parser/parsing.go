@@ -1,4 +1,4 @@
-package main
+package parser
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 )
 
 // парсер
-func Parsed() {
+func Parser() {
 	url := "https://habr.com/ru/post/493088/"
 	// вставляем ссылку, с которой будем парсить страницу
 	resp, err := http.Get(url)

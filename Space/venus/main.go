@@ -5,15 +5,14 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/mcuadros/go-defaults"
-	"github.com/sirupsen/logrus"
-
 	docs "venus/docs"
 	"venus/internal/config"
 	"venus/internal/gin"
 	db_services "venus/internal/gorm/services"
 	"venus/internal/logger"
+
+	"github.com/mcuadros/go-defaults"
+	"github.com/sirupsen/logrus"
 )
 
 type kateController struct {
@@ -86,7 +85,7 @@ func main() {
 
 	// Start server
 	go kc.gin.Run()
-
 	<-shutdown
 	logrus.Debug("Server is down!")
+
 }
