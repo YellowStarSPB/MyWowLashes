@@ -85,7 +85,7 @@ func main() {
 
 	// Start server
 	go kc.gin.Run()
+
 	<-shutdown
 	logrus.Debug("Server is down!")
-
 }

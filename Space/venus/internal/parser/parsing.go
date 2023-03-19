@@ -1,25 +1,25 @@
-package parser
+package parsing
 
 import (
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
+	"github.com/sirupsen/logrus"
 	"log"
 	"net/http"
-
-	"github.com/PuerkitoBio/goquery"
+	"venus/internal/config"
 )
 
 // парсер
-func Parser() {
-	url := "https://habr.com/ru/post/493088/"
+func parsing(config config.Config) {
 	// вставляем ссылку, с которой будем парсить страницу
-	resp, err := http.Get(url)
+	resp, err := http.Get(config.ParseConfig.UrlParser)
 	if err != nil {
-		log.Fatalln(err)
+		logrus.WithError(err).WithField("URL", config.ParseConfig.UrlParser).Fatal("Couldn't get url")
 		//проверяем, что ссылка рабочая
 	} else if resp.StatusCode == 200 {
-		fmt.Println("We can scrape this")
+		logrus.Debug("HTML-page ready for parsed!")
 	} else {
-		log.Fatalln("Do not scrape this")
+		logrus.WithError(err).WithField("URL", resp.StatusCode).Fatal("HTML-page is not found or work!")
 	}
 	//парсим документ страницы
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
@@ -35,5 +35,4 @@ func Parser() {
 }
 
 //TODO сделать структуры для url фоток
-//TODO всё отпарскенное перекинуть в json структуры (а надо?)
 //TODO перекидывать список url ссылок на фото в баззу данных

@@ -3,10 +3,11 @@ package config
 import "fmt"
 
 type Config struct {
-	Debug      bool `default:"false"`
-	Servonfig  serConfig
-	DbConf     dbConfig
-	LoggerConf loggerConfig
+	Debug       bool `default:"false"`
+	Servonfig   serConfig
+	DbConf      dbConfig
+	LoggerConf  loggerConfig
+	ParseConfig parseConfig
 }
 
 type serConfig struct {
@@ -29,4 +30,7 @@ func (dbc *dbConfig) DSN() string {
 
 type loggerConfig struct {
 	LogLevel string `default:"TRACE"`
+}
+type parseConfig struct {
+	UrlParser string `default:"https://habr.com/ru/post/493088/"`
 }
