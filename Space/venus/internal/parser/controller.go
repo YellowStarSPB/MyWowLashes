@@ -1,12 +1,11 @@
 package parser
 
 import (
+	"github.com/PuerkitoBio/goquery"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
 	"venus/internal/config"
-
-	"github.com/PuerkitoBio/goquery"
-	"github.com/sirupsen/logrus"
 )
 
 type ParserController interface {
@@ -20,6 +19,7 @@ type parserController struct {
 
 func CreateParserController(config config.Config) ParserController {
 	pc := new(parserController)
+	pc.Timer = config.ParserConfig.Timer * (time.Hour * 12)
 	pc.Url = config.ParserConfig.Url
 	return pc
 }
