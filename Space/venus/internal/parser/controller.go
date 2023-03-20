@@ -54,6 +54,9 @@ func (pc *parserController) parse() {
 	//Searth info for parsing
 	doc.Find("a.tm-main-menu__item").Each(func(i int, selector *goquery.Selection) {
 		linkAll, err := selector.Attr("href")
+		if err != nil {
+			logrus.WithError(err).WithField("URL", pc.Url).Fatal("Couldn't get url")
+		}
 		logrus.Debug("%s\n", linkAll)
 		logrus.Error("Error in parsing", err)
 	})
