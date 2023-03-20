@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import { ImVk, ImTelegram, ImInstagram, } from 'react-icons/im'
 import Logo from '../img/header/logo.svg'
-import MobileMenu from './MobileMenu';
+import MobileMenu from '../components/MobileMenu';
 
 function Header() {
     return (
         <header className="header">
             <nav className='navBar'>
                 <div>
-                    <img src={Logo} alt="logo" />
+                    <Link to={'/'}><img src={Logo} alt="logo" /></Link>
                 </div>
                 <div className="navBar__menuWrapper">
                     <div>
