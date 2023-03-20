@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"errors"
+	"fmt"
 	"net/http"
 	"time"
 	"venus/internal/config"
@@ -10,7 +12,7 @@ import (
 )
 
 type ParserController interface {
-	parse()
+	parse() error
 	StartRepeatedParcing()
 }
 
@@ -27,33 +29,38 @@ func CreateParserController(config config.Config) ParserController {
 }
 func (pc *parserController) StartRepeatedParcing() {
 	logrus.Info("First Parsing")
-	pc.parse()
+	if err := pc.parse(); err != nil {
+		logrus.WithField("url", pc.Url).WithError(err).Error("Error on parcing url")
+	}
 
 	go func() {
 		for now := range time.Tick(pc.Timer) {
 			logrus.WithField("time", now).Info("Parse start")
-			pc.parse()
+			if err := pc.parse(); err != nil {
+				logrus.WithField("url", pc.Url).WithError(err).Error("Error on parcing url")
+			}
 		}
 	}()
 }
 
 // StartParsing - function for starting parsing
-func (pc *parserController) parse() {
+func (pc *parserController) parse() error {
 	// Open HTML-page
 	res, err := http.Get(pc.Url)
 	if err != nil {
-		logrus.WithError(err).WithField("URL", pc.Url).Fatal("Couldn't get url")
+		return errors.New(fmt.Sprintf("Couldn't open url. url: '%s'. Error: '%s'", pc.Url, err.Error()))
 		//Check if the page is working
-	} else if res.StatusCode == 200 {
-		logrus.Debug("HTML-page ready for parsed!")
-	} else {
-		logrus.WithError(err).WithField("URL", res.StatusCode).Fatal("HTML-page is not found or work!")
+	} else if res.StatusCode != 200 {
+		return errors.New(fmt.Sprintf("HTML-page is not found or work! url: '%d'. Error: '%s'", res.StatusCode, err.Error()))
 	}
 	doc, err := goquery.NewDocumentFromReader(res.Body)
-	logrus.WithError(err).WithField("body", res.Body).Fatal("Couldn't create new document from reader")
+	if err != nil {
+		logrus.WithError(err).WithField("body", res.Body).Fatal("Couldn't create new document from reader")
+	}
 	//Searth info for parsing
 	doc.Find("a.tm-main-menu__item").Each(func(i int, selector *goquery.Selection) {
 		linkAll, _ := selector.Attr("href")
-		logrus.WithField("Link List", linkAll).Debug("From parser")
+		logrus.WithField("URL ", linkAll).Debug("From parser")
 	})
+	return nil
 }
