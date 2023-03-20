@@ -1,5 +1,9 @@
 import React from "react";
 import WomanImg from '../img/contact/woman.png'
+
+/* TODO 
+* убрать статику фото, заменить на ссылки
+*/
 import { motion } from "framer-motion";
 import { transition1 } from "../transition1";
 
@@ -21,7 +25,6 @@ function Order() {
 
     function addNewOrder(e) {
         /* e.preventDefault() */
-
         const newOrder = {
             talon: { ...formData }
         }

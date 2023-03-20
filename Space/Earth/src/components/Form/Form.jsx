@@ -1,5 +1,6 @@
 import React from "react";
 import TimeOrder from "../TimeOrder/TimeOrder";
+import { IMaskInput } from "react-imask";
 import CommunicationMethod from "./Communicationmethod/CommunicationMethod";
 
 import classes from './Form.module.scss'
@@ -31,12 +32,12 @@ function Form({ formData, setFormData, onChangeTime, onChangeMethod, addNewOrder
                     type="text"
                     placeholder='Ваш Instagram' />
 
-                <input
+                <IMaskInput
                     onClick={() => setShowTime(true)}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     value={formData.phone}
+                    mask={"+7(000)000-00-00"}
                     type="tel"
-                    maxLength={11}
                     placeholder='Ваш Телефон' />
             </div>
 
@@ -45,6 +46,7 @@ function Form({ formData, setFormData, onChangeTime, onChangeMethod, addNewOrder
                     onClick={() => setShowTime(true)}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                     value={formData.date}
+                    min={new Date()}
                     type="date" />
             </div>
 
