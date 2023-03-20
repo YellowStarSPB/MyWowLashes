@@ -35,6 +35,6 @@ type loggerConfig struct {
 	LogLevel string `default:"TRACE"`
 }
 type parserConfig struct {
-	Url   string        `default:"https://habr.com/ru/post/493088/"`
-	Timer time.Duration ``
+	Url   string `default:"https://habr.com/ru/post/493088/"`
+	Timer time.Duration
 }
