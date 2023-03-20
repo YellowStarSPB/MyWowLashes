@@ -86,6 +86,7 @@ func main() {
 
 	// Start server
 	go kc.gin.Run()
+	kc.parser.StartRepeatedParcing()
 
 	<-shutdown
 	logrus.Debug("Server is down!")

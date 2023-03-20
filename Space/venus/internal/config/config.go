@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"time"
 )
 
 type Config struct {
@@ -36,5 +35,5 @@ type loggerConfig struct {
 }
 type parserConfig struct {
 	Url   string `default:"https://habr.com/ru/post/493088/"`
-	Timer time.Duration
+	Timer uint   `default:"12"`
 }

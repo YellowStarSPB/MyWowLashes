@@ -1,15 +1,17 @@
 package parser
 
 import (
-	"github.com/PuerkitoBio/goquery"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
 	"venus/internal/config"
+
+	"github.com/PuerkitoBio/goquery"
+	"github.com/sirupsen/logrus"
 )
 
 type ParserController interface {
-	StartParsing()
+	parse()
+	StartRepeatedParcing()
 }
 
 type parserController struct {
@@ -19,13 +21,24 @@ type parserController struct {
 
 func CreateParserController(config config.Config) ParserController {
 	pc := new(parserController)
-	pc.Timer = config.ParserConfig.Timer * (time.Hour * 12)
+	pc.Timer = time.Duration(config.ParserConfig.Timer) * time.Hour
 	pc.Url = config.ParserConfig.Url
 	return pc
 }
+func (pc *parserController) StartRepeatedParcing() {
+	logrus.Info("First Parsing")
+	pc.parse()
+
+	go func() {
+		for now := range time.Tick(pc.Timer) {
+			logrus.WithField("time", now).Info("Parse start")
+			pc.parse()
+		}
+	}()
+}
 
 // StartParsing - function for starting parsing
-func (pc *parserController) StartParsing() {
+func (pc *parserController) parse() {
 	// Open HTML-page
 	res, err := http.Get(pc.Url)
 	if err != nil {
