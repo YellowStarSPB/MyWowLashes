@@ -1,7 +1,7 @@
 import React from "react";
-import CardPrice from "./CardPrice/CardPrice";
+import CardPrice from "../components/CardPrice/CardPrice";
 import { motion } from "framer-motion";
-import { transition1 } from "../../transition1";
+import { transition1 } from "../transition1";
 import { Link } from "react-router-dom";
 
 

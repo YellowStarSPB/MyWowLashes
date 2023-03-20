@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Woman2 from '../img/about/woman.png'
+import AboutImg from '../img/about/about.jpg'
 import { transition1 } from "../transition1";
 import { motion } from "framer-motion";
 
@@ -21,7 +21,7 @@ function About() {
                 whileHover={{ scale: 1.1 }}
                 transition={transition1}
                 className="sectionAbout__img" id={'about'}>
-                <img src={Woman2} alt="Me" />
+                <img src={AboutImg} alt="Me" />
             </motion.div>
             {/* text */}
             <motion.div
