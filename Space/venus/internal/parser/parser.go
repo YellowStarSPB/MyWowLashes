@@ -10,7 +10,7 @@ import (
 )
 
 // парсер
-func parsing(config config.Config) {
+func Parsing(config config.Config) (link *goquery.Selection) {
 	// вставляем ссылку, с которой будем парсить страницу
 	resp, err := http.Get(config.ParserConfig.Url)
 	if err != nil {
@@ -27,9 +27,9 @@ func parsing(config config.Config) {
 		logrus.Fatal(err)
 	}
 	//ищем по странице ссылки
-	doc.Find("a.tm-main-menu__item").Each(func(i int, selector *goquery.Selection) {
-		link, _ := selector.Attr("href")
-		fmt.Printf("%s\n", link)
-
+	link = doc.Find("a.tm-main-menu__item").Each(func(i int, selector *goquery.Selection) {
+		linkAll, _ := selector.Attr("href")
+		fmt.Printf("%s\n", linkAll)
 	})
+	return link
 }
