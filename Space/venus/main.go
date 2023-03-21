@@ -2,30 +2,30 @@ package main
 
 import (
 	"flag"
+	"github.com/mcuadros/go-defaults"
+	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/mcuadros/go-defaults"
-	"github.com/sirupsen/logrus"
-
 	docs "venus/docs"
 	"venus/internal/config"
 	"venus/internal/gin"
 	db_services "venus/internal/gorm/services"
 	"venus/internal/logger"
+	"venus/internal/parser"
 )
 
 type kateController struct {
-	gin  gin.GinController
-	gorm db_services.DbController
+	gin    gin.GinController
+	gorm   db_services.DbController
+	parser parser.ParserController
 }
 
 func createKateController(config config.Config) (kc *kateController, err error) {
 	kc = new(kateController)
 	kc.gin = gin.CreateGinController(config)
 	kc.gorm, err = db_services.CreateDbController(config)
-
+	kc.parser = parser.CreateParserController(config)
 	return kc, err
 }
 
@@ -86,6 +86,7 @@ func main() {
 
 	// Start server
 	go kc.gin.Run()
+	kc.parser.StartRepeatedParcing()
 
 	<-shutdown
 	logrus.Debug("Server is down!")

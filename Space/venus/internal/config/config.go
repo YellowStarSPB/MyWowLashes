@@ -1,12 +1,15 @@
 package config
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Config struct {
-	Debug      bool `default:"false"`
-	Servonfig  serConfig
-	DbConf     dbConfig
-	LoggerConf loggerConfig
+	Debug        bool `default:"false"`
+	Servonfig    serConfig
+	DbConf       dbConfig
+	LoggerConf   loggerConfig
+	ParserConfig parserConfig
 }
 
 type serConfig struct {
@@ -29,4 +32,8 @@ func (dbc *dbConfig) DSN() string {
 
 type loggerConfig struct {
 	LogLevel string `default:"TRACE"`
+}
+type parserConfig struct {
+	Url   string `default:"https://habr.com/ru/post/493088/"`
+	Timer uint   `default:"12"`
 }
