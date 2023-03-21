@@ -6,10 +6,12 @@ function FullItemGallery({ fullItem, onShowItem }) {
 
     return (
         <div className={classes.bg}>
+            <div className={classes.closeBtn} onClick={() => onShowItem({})}>X</div>
             <div >
-                <div onClick={() => onShowItem({})}>X</div>
+                
                 <img src={fullItem.imageUrl} alt="" />
             </div>
+
         </div>
     )
 }
