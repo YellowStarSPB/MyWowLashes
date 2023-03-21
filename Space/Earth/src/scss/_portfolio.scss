@@ -1,3 +1,6 @@
+.sectionPortfolio {
+    padding-bottom: 40px;
+}
 .portfolioContent {
     h2 {
         font-family: 'Playfair Display';
@@ -68,7 +71,8 @@
         flex-direction: column;
         
     }
-    div {
+}
+/*     div {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -96,4 +100,4 @@
         vertical-align: middle;
         display: inline-block;
     }
-}
+} */
