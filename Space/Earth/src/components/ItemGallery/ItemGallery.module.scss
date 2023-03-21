@@ -1,0 +1,29 @@
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    @media (max-width: 930px) {
+        cursor: auto;
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+        transition: 0.3s ease-in-out;
+        will-change: transform;
+        &:hover {
+            transform: scale(1.03);
+
+            @media (max-width: 930px) {
+                transform: scale(1);
+            }
+        }
+    }
+
+    &:nth-child(4n) {
+        grid-row: span 2;
+    }
+}
+
