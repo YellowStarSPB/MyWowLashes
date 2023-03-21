@@ -12,7 +12,19 @@ import Form from "../components/Form/Form";
 
 function Order() {
     const [formData, setFormData] = React.useState(
-        { name: '', email: '', inst: '', date: '', message: '', time: '', methodConnect: 'Мессенджер', phone: '' })
+        {
+            name: '',
+            email: '',
+            inst: '',
+            phone: '',
+            vk: '',
+            date: new Date().toISOString().substring(0, 10),
+            time: '10:00 - 13:00',
+            message: '',
+            methodConnect: 'Мессенджер',
+
+        })
+
     const [newOrder, setNewOrder] = React.useState({})
 
 
@@ -21,15 +33,31 @@ function Order() {
     }
     const onChangeMethod = (value) => {
         setFormData({ ...formData, methodConnect: value })
+        setFormData({
+            name: formData.name,
+            email: '',
+            inst: '',
+            phone: '',
+            vk: '',
+            date: new Date().toISOString().substring(0, 10),
+            time: formData.time,
+            message: '',
+            methodConnect: 'Мессенджер',
+
+        })
+
     }
 
     function addNewOrder(e) {
-        /* e.preventDefault() */
-        const newOrder = {
+        e.preventDefault()
+        const newTalon = {
             talon: { ...formData }
         }
-        setNewOrder(JSON.stringify(newOrder))
+        setNewOrder(newTalon)
+        /* console.log(newOrder) */
+        /* console.log(JSON.stringify(newOrder)) */
     }
+    
 
     return (
         <motion.section
@@ -58,7 +86,7 @@ function Order() {
                         initial={{ opacity: 0, y: '100%' }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: '100%' }}
-                        transition={{ transition: transition1, duration: 1.5 }}
+                        transition={{ transition: transition1, duration: 0.7 }}
                         className='imageWrapper'
                     >
                         <img src={WomanImg} alt="img" />
@@ -69,12 +97,13 @@ function Order() {
                     <p>name: {formData.name}</p>
                     <p>email: {formData.email}</p>
                     <p>inst: {formData.inst}</p>
+                    <p>vk: {formData.vk}</p>
+                    <p>phone: {formData.phone}</p>
+                    <p>message: {formData.message}</p>
                     <p>time: {formData.time}</p>
                     <p>date: {formData.date}</p>
-                    <p>message: {formData.message}</p>
                     <p>methodConnect: {formData.methodConnect}</p>
                 </div>
-
             </div>
         </motion.section>
     )

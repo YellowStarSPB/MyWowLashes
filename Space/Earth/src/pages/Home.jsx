@@ -15,9 +15,9 @@ function Home() {
             <div className="sectionPreview__wrapper">
                 {/* text */}
                 {<motion.div
-                    initial={{ opacity: 0, y: '-50%' }}
+                    initial={{ opacity: 0, y: '-100%' }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: '-50%' }}
+                    exit={{ opacity: 0, y: '-100%' }}
                     transition={transition1}
                     className="textContainer">
                     <h1 className="textContainer__title">Lash Maker <br />& Photographer</h1>
@@ -29,11 +29,10 @@ function Home() {
 
                 {/* img */}
                 <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    whileHover={{ scale: 1.1 }}
-                    transition={transition1}
+                    initial={{ opacity: 0, y: '100%' }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: '100%' }}
+                    transition={{ transition: transition1, duration: 0.7 }}
                     className="img__wrapper">
                     <img src={Woman} alt="Me" />
                 </motion.div>

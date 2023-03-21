@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    h2 {
+        margin-bottom: 20px;
+    }
     &__info {
         display: flex;
         justify-content: space-between;
