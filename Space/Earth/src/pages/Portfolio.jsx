@@ -34,7 +34,8 @@ function Portfolio() {
 
 
     return (
-        <section className="sectionPortfolio">
+        <section
+            className="sectionPortfolio">
             <motion.div
                 initial={{ opacity: 0, y: '100%' }}
                 animate={{ opacity: 1, y: 0 }}
@@ -53,12 +54,13 @@ function Portfolio() {
                         </li>
                     ))}
                 </ul>
+
                 <div className="grid-wrapper">
                     {images.map(item => <ItemGallery key={item.id} item={item} onShowItem={onShowItem} />)}
                 </div>
-                {showFullitem ? <FullItemGallery fullItem={fullItem} onShowItem={onShowItem} /> : ''}
-
             </motion.div>
+
+            {showFullitem ? <FullItemGallery fullItem={fullItem} onShowItem={onShowItem} /> : ''}
         </section>
     )
 }

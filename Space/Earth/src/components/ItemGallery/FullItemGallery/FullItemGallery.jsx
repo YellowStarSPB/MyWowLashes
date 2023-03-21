@@ -1,5 +1,4 @@
 import React from "react";
-
 import classes from './FullItemGallery.module.scss'
 
 function FullItemGallery({ fullItem, onShowItem }) {
