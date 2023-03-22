@@ -79,6 +79,7 @@ function Form({ formData, setFormData, onChangeTime, onChangeMethod, addNewOrder
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                     value={formData.date}
                     min={formData.date}
+                    onKeyDown={(e) => e.preventDefault()}
                     /* max={`${new Date().toISOString().substring(0, 7)}-31`} */
                     type="date" />
             </div>

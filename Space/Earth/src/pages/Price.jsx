@@ -10,26 +10,23 @@ function Price() {
 
     return (
         <motion.section
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0 }}
-            transition={transition1}
-            /* initial={{ opacity: 0, y: '-50%' }}
+            initial={{ opacity: 0, y: '100%' }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: '-50%' }}
-            transition={transition1} */
+            exit={{ opacity: 0, y: '100%' }}
+            transition={transition1}
             className="sectionPrice">
             <div>
                 <h2>Цены на услуги</h2>
             </div>
             <motion.div
-                initial={{ opacity: 0, y: '-50%' }}
+                initial={{ opacity: 0, y: '100%' }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: '-50%' }}
+                exit={{ opacity: 0, y: '100%' }}
                 transition={transition1}
-                className="cardWrapper">
+                className="cards">
 
-                {[...Array(10)].map(item => <Link to={'/order'} ><CardPrice /></Link>)}
+                {[...Array(10)].map((item, index) => <CardPrice key={`${item}_${index}`}/>)}
+
 
             </motion.div>
         </motion.section>
