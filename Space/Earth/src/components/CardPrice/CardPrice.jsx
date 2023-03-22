@@ -4,18 +4,18 @@ import './_cardPrice.scss'
 function CardPrice() {
     return (
         <div className="card">
-            {/* image */}
-            <div className='cardImage'>
-                <img src="https://images.unsplash.com/photo-1541845157-a6d2d100c931?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" alt="item" />
-            </div>
-            {/* text */}
-            <div className='cardInfo'>
-                <div className='cardNameProduct'>
-                    <h3>Вид наращивания</h3>
+            <img className='card__image'
+            src="https://makeup.ru/storage/articles/70098/JJfngsYd17DKxHXroso0PI88Y344U7qUbxFgEmW5.png" 
+            alt="" />
+            <div className="card__overlay">
+                <div className="card__header">
+                    {/* <svg className="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg> */}
+                    <div className="card__header-text">
+                        <h3 className="card__title">Эффект "Барби"</h3>
+                        <span className="card__price">2500 ₽</span>
+                    </div>
                 </div>
-                <div className='cardPriceBlock'>
-                    <p>1900₽</p>
-                </div>
+                <p className="card__description">Описание эффекта</p>
             </div>
         </div>
     )
