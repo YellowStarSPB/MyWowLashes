@@ -3,6 +3,7 @@ package gin
 import (
 	"venus/internal/config"
 	"venus/internal/gin/api"
+	db_services "venus/internal/gorm/services"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -13,13 +14,14 @@ type GinController interface {
 }
 
 type ginController struct {
-	Engine    *gin.Engine
-	GinConfig struct {
+	Engine       *gin.Engine
+	DbController db_services.DbController
+	GinConfig    struct {
 		port string
 	}
 }
 
-func CreateGinController(config config.Config) GinController {
+func CreateGinController(config config.Config, dbc db_services.DbController) GinController {
 	gc := new(ginController)
 
 	if !config.Debug {
@@ -27,13 +29,14 @@ func CreateGinController(config config.Config) GinController {
 	}
 	gc.Engine = gin.Default()
 	gc.GinConfig.port = config.Servonfig.Port
+	gc.DbController = dbc
 
 	return gc
 }
 
 // Run - function for starting server
 func (gc *ginController) Run() {
-	api.CreateApiGroups(gc.Engine)
+	api.CreateApiGroups(gc.Engine, gc.DbController)
 	// Start server
 	if err := gc.Engine.Run(gc.GinConfig.port); err != nil {
 		logrus.WithError(err).WithField("port", gc.GinConfig.port).Fatal("Cannot run server.")

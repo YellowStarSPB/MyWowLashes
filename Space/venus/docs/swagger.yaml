@@ -6,6 +6,36 @@ definitions:
         example: oleg loh
         type: string
     type: object
+  domain.GetTalonByIdResponse:
+    properties:
+      orderId:
+        example: 1
+        type: integer
+      time:
+        example: 10.03.2023,10:30PM
+        type: string
+      userId:
+        example: 1
+        type: integer
+    type: object
+  domain.PostTalonRequest:
+    properties:
+      orderId:
+        example: 1
+        type: integer
+      time:
+        example: 10.03.2023,10:30PM
+        type: string
+      userId:
+        example: 1
+        type: integer
+    type: object
+  domain.PostTalonResponse:
+    properties:
+      talonId:
+        example: 1
+        type: integer
+    type: object
 info:
   contact: {}
   description: This is a Kate server.
@@ -28,4 +58,42 @@ paths:
           schema:
             $ref: '#/definitions/domain.GetExampleResponse'
       summary: Example api test
+  /admin/talon:
+    get:
+      consumes:
+      - application/json
+      description: get talon ID by ID
+      parameters:
+      - description: place here talon ID
+        in: query
+        name: talonId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetTalonByIdResponse'
+      summary: Get talon ID
+    post:
+      consumes:
+      - application/json
+      description: Insert new talon
+      parameters:
+      - description: place here talon ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostTalonRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostTalonResponse'
+      summary: Post talon
 swagger: "2.0"

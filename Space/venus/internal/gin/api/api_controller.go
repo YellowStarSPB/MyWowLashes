@@ -2,17 +2,21 @@ package api
 
 import (
 	"venus/internal/gin/api/controller"
+	db_services "venus/internal/gorm/services"
 
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func CreateApiGroups(g *gin.Engine) {
+func CreateApiGroups(g *gin.Engine, dbController db_services.DbController) {
 	base := g.Group("/api")
 	adminGroup := base.Group("/admin")
 	{
 		adminGroup.GET("/example", controller.GetExample)
+		adminGroup.GET("/talon", func(c *gin.Context) { controller.GetTalonById(c, dbController) })
+		adminGroup.POST("/talon", func(c *gin.Context) { controller.PostTalon(c, dbController) })
+
 	}
 
 	// userGroup := base.Group("/user")

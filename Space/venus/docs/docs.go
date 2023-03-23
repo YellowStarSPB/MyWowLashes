@@ -38,6 +38,64 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/admin/talon": {
+            "get": {
+                "description": "get talon ID by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get talon ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "place here talon ID",
+                        "name": "talonId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetTalonByIdResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Insert new talon",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Post talon",
+                "parameters": [
+                    {
+                        "description": "place here talon ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostTalonRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostTalonResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -47,6 +105,49 @@ const docTemplate = `{
                 "example": {
                     "type": "string",
                     "example": "oleg loh"
+                }
+            }
+        },
+        "domain.GetTalonByIdResponse": {
+            "type": "object",
+            "properties": {
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "time": {
+                    "type": "string",
+                    "example": "10.03.2023,10:30PM"
+                },
+                "userId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.PostTalonRequest": {
+            "type": "object",
+            "properties": {
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "time": {
+                    "type": "string",
+                    "example": "10.03.2023,10:30PM"
+                },
+                "userId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.PostTalonResponse": {
+            "type": "object",
+            "properties": {
+                "talonId": {
+                    "type": "integer",
+                    "example": 1
                 }
             }
         }

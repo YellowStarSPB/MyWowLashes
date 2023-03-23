@@ -2,8 +2,6 @@ package main
 
 import (
 	"flag"
-	"github.com/mcuadros/go-defaults"
-	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"syscall"
@@ -13,6 +11,9 @@ import (
 	db_services "venus/internal/gorm/services"
 	"venus/internal/logger"
 	"venus/internal/parser"
+
+	"github.com/mcuadros/go-defaults"
+	"github.com/sirupsen/logrus"
 )
 
 type kateController struct {
@@ -23,8 +24,8 @@ type kateController struct {
 
 func createKateController(config config.Config) (kc *kateController, err error) {
 	kc = new(kateController)
-	kc.gin = gin.CreateGinController(config)
 	kc.gorm, err = db_services.CreateDbController(config)
+	kc.gin = gin.CreateGinController(config, kc.gorm)
 	kc.parser = parser.CreateParserController(config)
 	return kc, err
 }
