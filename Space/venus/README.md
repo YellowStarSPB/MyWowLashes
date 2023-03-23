@@ -2,7 +2,7 @@
 `swag init /docs`
 
 # swagger url: 
-`http://localhost:8080/swagger/index.html`
+`http://localhost:1001/swagger/index.html`
 
 # For start server:
 `go run main.go`
