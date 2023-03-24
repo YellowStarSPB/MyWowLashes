@@ -18,13 +18,31 @@ definitions:
         example: 1
         type: integer
     type: object
+  domain.GetUserByIdResponse:
+    properties:
+      callpreferences:
+        example: "1"
+        type: string
+      instagram:
+        example: lololo
+        type: string
+      orderId:
+        example: 1
+        type: integer
+      phonenumber:
+        example: "9833211233212"
+        type: string
+      username:
+        example: OLEG
+        type: string
+    type: object
   domain.PostTalonRequest:
     properties:
       orderId:
         example: 1
         type: integer
       time:
-        example: 10.03.2023,10:30PM
+        example: "2023-01-02T10:30:00Z"
         type: string
       userId:
         example: 1
@@ -33,6 +51,30 @@ definitions:
   domain.PostTalonResponse:
     properties:
       talonId:
+        example: 1
+        type: integer
+    type: object
+  domain.PostUserRequest:
+    properties:
+      callpreferences:
+        example: "1"
+        type: string
+      instagram:
+        example: lololo
+        type: string
+      orderId:
+        example: 1
+        type: integer
+      phonenumber:
+        example: "9833211233212"
+        type: string
+      username:
+        example: OLEG
+        type: string
+    type: object
+  domain.PostUserResponse:
+    properties:
+      userId:
         example: 1
         type: integer
     type: object
@@ -96,4 +138,42 @@ paths:
           schema:
             $ref: '#/definitions/domain.PostTalonResponse'
       summary: Post talon
+  /admin/user:
+    get:
+      consumes:
+      - application/json
+      description: get user ID by ID
+      parameters:
+      - description: place here user ID
+        in: query
+        name: userId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetUserByIdResponse'
+      summary: Get user ID
+    post:
+      consumes:
+      - application/json
+      description: Insert new user
+      parameters:
+      - description: place here user ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostUserResponse'
+      summary: Post user
 swagger: "2.0"

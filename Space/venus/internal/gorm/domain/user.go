@@ -1,6 +1,8 @@
 package db_domain
 
 import (
+	"venus/internal/gin/api/domain"
+
 	"gorm.io/gorm"
 )
 
@@ -10,6 +12,17 @@ type User struct {
 	PhoneNumber     string
 	Instagram       string
 	CallPreferences string
-	Talon           Talon
+	TalonID         uint
 	OrderID         uint
+}
+
+// ConvertToAPI - function for converting DB struct into API struct
+func (u User) ConvertToAPI() *domain.GetUserByIdResponse {
+	return &domain.GetUserByIdResponse{
+		UserName:        u.UserName,
+		PhoneNumber:     u.PhoneNumber,
+		Instagram:       u.Instagram,
+		CallPreferences: u.CallPreferences,
+		OrderID:         u.OrderID,
+	}
 }

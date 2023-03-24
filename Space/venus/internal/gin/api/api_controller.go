@@ -16,6 +16,8 @@ func CreateApiGroups(g *gin.Engine, dbController db_services.DbController) {
 		adminGroup.GET("/example", controller.GetExample)
 		adminGroup.GET("/talon", func(c *gin.Context) { controller.GetTalonById(c, dbController) })
 		adminGroup.POST("/talon", func(c *gin.Context) { controller.PostTalon(c, dbController) })
+		adminGroup.GET("/user", func(c *gin.Context) { controller.GetUserById(c, dbController) })
+		adminGroup.POST("/user", func(c *gin.Context) { controller.PostUser(c, dbController) })
 
 	}
 

@@ -14,6 +14,9 @@ type DbController interface {
 	// Talon
 	TalonNew(time time.Time, userId, orderId uint) (*uint, error)
 	TalonGetById(talonId uint) (*db_domain.Talon, error)
+	// User
+	UserNew(username, phonenumber, instagram, callpreferences string, orderid uint) (*uint, error)
+	UserGetById(userId uint) (*db_domain.User, error)
 }
 
 type dbController struct {
