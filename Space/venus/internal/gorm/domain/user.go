@@ -12,7 +12,7 @@ type User struct {
 	PhoneNumber     string
 	Instagram       string
 	CallPreferences string
-	TalonID         uint
+	Talon           Talon
 	OrderID         uint
 }
 

@@ -27,14 +27,14 @@ func GetUserById(c *gin.Context, dbc db_services.DbController) {
 	}
 	logrus.WithField("userId", req.UserId).Info("Start 'GetUserById' API method")
 	if err := checkGetUserByIdRequestBody(req); err != nil {
-		logrus.WithError(err).Error("couldn't bind request data")
-		c.JSON(400, fmt.Sprintf("Error on binding request. err: %v", err))
+		logrus.WithError(err).Error("failed to check UserId")
+		c.JSON(400, fmt.Sprintf("Error to check UserId. err: %v", err))
 		return
 	}
 
 	resp, err := service.GetUserById(req.UserId, dbc)
 	if err != nil {
-		logrus.WithError(err).Error("couldn't get talon from DB")
+		logrus.WithError(err).Error("couldn't get user from DB")
 		c.JSON(500, fmt.Sprintf("Error on getting data from DB. err: %v", err))
 		return
 	}

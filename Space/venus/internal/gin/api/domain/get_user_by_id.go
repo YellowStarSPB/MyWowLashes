@@ -1,13 +1,13 @@
 package domain
 
 type GetUserByIdRequest struct {
-	UserId uint `json:"userId"  example:"1"`
+	UserId uint `json:"userId" required:"true" example:"1"`
 }
 
 type GetUserByIdResponse struct {
-	UserName        string `json:"username" required:"true" example:"OLEG"`
-	PhoneNumber     string `json:"phonenumber" required:"true" example:"9833211233212"`
-	Instagram       string `json:"instagram" required:"true" example:"lololo"`
-	CallPreferences string `json:"callpreferences" required:"true" example:"1"`
-	OrderID         uint   `json:"orderId" required:"true" example:"1"`
+	UserName        string `json:"username"  example:"OLEG"`
+	PhoneNumber     string `json:"phonenumber"  example:"9833211233212"`
+	Instagram       string `json:"instagram"  example:"lololo"`
+	CallPreferences string `json:"callpreferences"  example:"1"`
+	OrderID         uint   `json:"orderId"  example:"1"`
 }

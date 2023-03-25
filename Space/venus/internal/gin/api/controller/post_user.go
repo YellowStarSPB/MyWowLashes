@@ -33,8 +33,8 @@ func PostUser(c *gin.Context, dbc db_services.DbController) {
 		"orderId":         req.OrderID,
 	}).Info("Start 'PostUser' API method")
 	if err := checkPostUserRequestBody(req); err != nil {
-		logrus.WithError(err).Error("couldn't bind request data")
-		c.JSON(400, fmt.Sprintf("Error on binding request. err: %v", err))
+		logrus.WithError(err).Error("failed to check UserId")
+		c.JSON(400, fmt.Sprintf("Error to check UserId. err: %v", err))
 		return
 	}
 
@@ -53,7 +53,7 @@ func checkPostUserRequestBody(req domain.PostUserRequest) error {
 	if req.UserName != "" {
 		return errors.New("username must have a value")
 	}
-	if req.PhoneNumber != "" {
+	if len([]rune(req.PhoneNumber)) == 10 {
 		return errors.New("phonenumber must have a value")
 	}
 	if req.CallPreferences != "" {
