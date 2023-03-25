@@ -53,6 +53,9 @@ const MobileMenu = () => {
                     <li>
                         <Link onClick={() => setOpenMenu(false)} to={'/order'}>Записаться</Link>
                     </li>
+                    <li>
+                        <Link className={classes.menuListBtn} onClick={() => setOpenMenu(false)} to={'/login'}>Войти</Link>
+                    </li>
                 </ul>
             </motion.div>
         </nav>

@@ -1,0 +1,63 @@
+.loginFormWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 15%;
+
+    form {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+
+        input {
+            width: 100%;
+            height: 40px;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid #000;
+            background: transparent;
+            font-size: 16px;
+            font-weight: 400;
+            transition: transform 0.15s ease-in-out;
+            margin-bottom: 40px;
+            cursor: pointer;
+
+            &::placeholder {
+                color: #000;
+            }
+
+            &:focus {
+                transform: scale(1.2);
+            }
+        }
+
+        button {
+            padding: 18px 50px;
+            background-color: #000;
+            box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.25);
+            color: #fff;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 194.19%;
+            text-align: center;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            transition: transform 0.15s ease-in-out;
+            cursor: pointer;
+
+            @media (max-width: 500px) {
+                padding: 10px 30px;
+                font-size: 14px;
+                width: 100%;
+            }
+
+            &:hover {
+                transform: translateY(-5px);
+            }
+
+            &:active {
+                transform: translate(0);
+            }
+        }
+    }
+}
