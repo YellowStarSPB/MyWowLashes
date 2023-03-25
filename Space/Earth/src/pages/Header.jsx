@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ImVk, ImTelegram, ImInstagram, } from 'react-icons/im'
 import Logo from '../img/header/logo.svg'
-import MobileMenu from '../components/MobileMenu';
+import MobileMenu from '../components/MobileMenu/MobileMenu';
 
 function Header() {
     return (

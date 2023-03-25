@@ -4,6 +4,8 @@ import { CgMenuRight } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 import { motion } from "framer-motion"
 
+import classes from './MobileMenu.module.scss'
+
 const variants = {
     open: { opacity: 1, x: 0 },
     closed: { opacity: 0, x: "100%" },
@@ -19,9 +21,9 @@ const MobileMenu = () => {
     }
 
     return (
-        <nav className='mobileNav' >
+        <nav className={classes.mobileNav} >
             {/* nav open button */}
-            <div onClick={() => onOpenMenu()} className='btnMenu'>
+            <div onClick={() => onOpenMenu()} className={classes.btnMenu}>
                 <CgMenuRight />
             </div>
             {/* menu */}
@@ -29,13 +31,13 @@ const MobileMenu = () => {
             <motion.div
                 animate={openMenu ? "open" : "closed"}
                 variants={variants}
-                className='menuWrapper'>
+                className={classes.menuWrapper}>
                 {/* icons close */}
-                <div onClick={() => onOpenMenu()} className={`btnClose ${openMenu ? 'active' : ''}`}>
+                <div onClick={() => onOpenMenu()} className={`${classes.btnClose} ${openMenu ? `${classes.active}` : ''}`}>
                     <IoMdClose />
                 </div>
                 {/* menu list */}
-                <ul className='menuList'>
+                <ul className={classes.menuList}>
                     <li>
                         <Link onClick={() => setOpenMenu(false)} to='/'>Главная</Link>
                     </li>
