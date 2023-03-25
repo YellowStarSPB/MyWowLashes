@@ -9,26 +9,39 @@ import Login from "./pages/Login";
 import Order from "./pages/Order";
 import Portfolio from "./pages/Portfolio";
 import Price from "./pages/Price";
+import Layout from "./components/Layout";
+import AdminPage from "./Admin/AdminPage";
+
+import RequireAuth from "./hoc/RequireAuth";
+import AuthProvider from "./hoc/AuthProvider";
 
 function App() {
-    const location = useLocation();
-    return (
-        <>
-            <Header />
-            <main className="container">
-                <AnimatePresence initial={true} mode='wait'>
-                    <Routes key={location.pathname} location={location}>
-                        <Route path={'/'} element={<Home />} />
-                        <Route path={'/about'} element={<About />} />
-                        <Route path={'/price'} element={<Price />} />
-                        <Route path={'/portfolio'} element={<Portfolio />} />
-                        <Route path={'/order'} element={<Order />} />
-                        <Route path={'/login'} element={<Login />} />
-                    </Routes>
-                </AnimatePresence>
+    /* const location = useLocation(); */
 
-            </main>
-        </>
+    return (
+        <AuthProvider>
+            <Header />
+
+            <AnimatePresence initial={true} mode='wait'>
+                <Routes >
+                    <Route path="/" element={<Layout />}>
+                        <Route index element={<Home />} />
+                        <Route path={'about'} element={<About />} />
+                        <Route path={'price'} element={<Price />} />
+                        <Route path={'portfolio'} element={<Portfolio />} />
+                        <Route path={'order'} element={<Order />} />
+                        <Route path={'login'} element={<Login />} />
+                    </Route>
+                    <Route path="/admin" element={
+                        <RequireAuth>
+                            <AdminPage />
+                        </RequireAuth>}>
+                    </Route>
+
+
+                </Routes>
+            </AnimatePresence>
+        </AuthProvider>
 
     );
 }

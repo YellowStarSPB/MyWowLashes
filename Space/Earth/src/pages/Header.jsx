@@ -20,7 +20,7 @@ function Header() {
                             <Link className="navBar__link" to={'/order'}>Записаться</Link>
                         </ul>
                     </div>
-                    <Link className='loginBtn' to={'/login'}>Войти</Link>
+                    <Link className='loginBtn' to={'/admin'}>Войти</Link>
                     <div>
                         <ul className="navBar__social">
                             <li>
