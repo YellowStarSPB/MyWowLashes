@@ -5,6 +5,7 @@ import About from "./pages/About";
 
 import Header from "./pages/Header";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Order from "./pages/Order";
 import Portfolio from "./pages/Portfolio";
 import Price from "./pages/Price";
@@ -22,6 +23,7 @@ function App() {
                         <Route path={'/price'} element={<Price />} />
                         <Route path={'/portfolio'} element={<Portfolio />} />
                         <Route path={'/order'} element={<Order />} />
+                        <Route path={'/login'} element={<Login />} />
                     </Routes>
                 </AnimatePresence>
 
