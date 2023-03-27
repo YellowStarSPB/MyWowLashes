@@ -155,9 +155,43 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/admin/users": {
+            "get": {
+                "description": "get users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get Users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetAllUsersResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "domain.GetAllUsersResponse": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.GetUserByIdResponse"
+                    }
+                }
+            }
+        },
         "domain.GetExampleResponse": {
             "type": "object",
             "properties": {
@@ -202,6 +236,10 @@ const docTemplate = `{
                 "phonenumber": {
                     "type": "string",
                     "example": "9833211233212"
+                },
+                "talon": {
+                    "type": "integer",
+                    "example": 1
                 },
                 "username": {
                     "type": "string",
@@ -253,6 +291,10 @@ const docTemplate = `{
                 "phonenumber": {
                     "type": "string",
                     "example": "9833211233212"
+                },
+                "talon": {
+                    "type": "integer",
+                    "example": 1
                 },
                 "username": {
                     "type": "string",

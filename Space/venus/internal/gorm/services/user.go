@@ -29,3 +29,11 @@ func (dc *dbController) UserGetById(userId uint) (*db_domain.User, error) {
 
 	return res, nil
 }
+func (dc *dbController) GetAllUsers() ([]db_domain.User, error) {
+	var res []db_domain.User
+	if err := dc.dbConn.Find(&res).Error; err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}

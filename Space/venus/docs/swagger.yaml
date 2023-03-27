@@ -1,5 +1,12 @@
 basePath: /api
 definitions:
+  domain.GetAllUsersResponse:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/domain.GetUserByIdResponse'
+        type: array
+    type: object
   domain.GetExampleResponse:
     properties:
       example:
@@ -32,6 +39,9 @@ definitions:
       phonenumber:
         example: "9833211233212"
         type: string
+      talon:
+        example: 1
+        type: integer
       username:
         example: OLEG
         type: string
@@ -68,6 +78,9 @@ definitions:
       phonenumber:
         example: "9833211233212"
         type: string
+      talon:
+        example: 1
+        type: integer
       username:
         example: OLEG
         type: string
@@ -176,4 +189,19 @@ paths:
           schema:
             $ref: '#/definitions/domain.PostUserResponse'
       summary: Post user
+  /admin/users:
+    get:
+      consumes:
+      - application/json
+      description: get users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetAllUsersResponse'
+      summary: Get Users
+      tags:
+      - Users
 swagger: "2.0"

@@ -17,6 +17,7 @@ type DbController interface {
 	// User
 	UserNew(username, phonenumber, instagram, callpreferences string, orderid uint) (*uint, error)
 	UserGetById(userId uint) (*db_domain.User, error)
+	GetAllUsers() ([]db_domain.User, error)
 }
 
 type dbController struct {
