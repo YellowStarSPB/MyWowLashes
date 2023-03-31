@@ -4,17 +4,10 @@ import (
 	"gorm.io/gorm"
 )
 
-type services string
-
-const (
-	services_nails     services = "nails"
-	services_eyelashes services = "eyelashes"
-	services_brows     services = "brows"
-)
-
 type Photo struct {
 	gorm.Model
-	Services services `gorm:"type:services"`
-	User     User
-	Talon    Talon
+	ImageName  string
+	ImageUrl   string
+	Hidden     bool
+	ServicesId uint
 }

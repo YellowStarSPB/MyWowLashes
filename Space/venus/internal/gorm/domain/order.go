@@ -1,6 +1,8 @@
 package db_domain
 
 import (
+	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -15,6 +17,6 @@ const (
 type Order struct {
 	gorm.Model
 	Status status `gorm:"type:status"`
+	Time   time.Time
 	User   User
-	Talon  Talon
 }

@@ -6,8 +6,8 @@ import (
 
 type Services struct {
 	gorm.Model
-	Price   uint
-	Name    string
-	ImageID uint
-	Hidden  bool
+	Price  uint
+	Type   string
+	Hidden bool
+	Photo  Photo
 }

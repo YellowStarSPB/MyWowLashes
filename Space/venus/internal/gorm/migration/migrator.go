@@ -12,7 +12,7 @@ func AutoMigrate(dbc *gorm.DB) error {
 	// Create list of migrations
 	migs := []*gormigrate.Migration{}
 	// NOTE: Add new migrations here
-	migs = append(migs, &m.Mig16032023, &m.Mig17032023)
+	migs = append(migs, &m.Mig16032023, &m.Mig17032023, &m.Mig29032023)
 
 	// Create migration config
 	mm := gormigrate.New(dbc, gormigrate.DefaultOptions, migs)
