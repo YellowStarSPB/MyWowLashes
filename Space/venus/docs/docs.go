@@ -40,6 +40,64 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/photo": {
+            "get": {
+                "description": "get photo ID by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get photo ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "place here photo ID",
+                        "name": "photoId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetPhotoByIdResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Insert new photo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Post photo",
+                "parameters": [
+                    {
+                        "description": "place here photo ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostPhotoRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostPhotoResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/talon": {
             "get": {
                 "description": "get talon ID by ID",
@@ -201,6 +259,27 @@ const docTemplate = `{
                 }
             }
         },
+        "domain.GetPhotoByIdResponse": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "imagename": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "servicesId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "url": {
+                    "type": "string",
+                    "example": "1"
+                }
+            }
+        },
         "domain.GetTalonByIdResponse": {
             "type": "object",
             "properties": {
@@ -244,6 +323,36 @@ const docTemplate = `{
                 "username": {
                     "type": "string",
                     "example": "OLEG"
+                }
+            }
+        },
+        "domain.PostPhotoRequest": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "imagename": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "servicesId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "url": {
+                    "type": "string",
+                    "example": "1"
+                }
+            }
+        },
+        "domain.PostPhotoResponse": {
+            "type": "object",
+            "properties": {
+                "photoId": {
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },

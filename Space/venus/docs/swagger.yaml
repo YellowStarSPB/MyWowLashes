@@ -13,6 +13,21 @@ definitions:
         example: oleg loh
         type: string
     type: object
+  domain.GetPhotoByIdResponse:
+    properties:
+      hidden:
+        example: true
+        type: boolean
+      imagename:
+        example: "1"
+        type: string
+      servicesId:
+        example: 1
+        type: integer
+      url:
+        example: "1"
+        type: string
+    type: object
   domain.GetTalonByIdResponse:
     properties:
       orderId:
@@ -45,6 +60,27 @@ definitions:
       username:
         example: OLEG
         type: string
+    type: object
+  domain.PostPhotoRequest:
+    properties:
+      hidden:
+        example: true
+        type: boolean
+      imagename:
+        example: "1"
+        type: string
+      servicesId:
+        example: 1
+        type: integer
+      url:
+        example: "1"
+        type: string
+    type: object
+  domain.PostPhotoResponse:
+    properties:
+      photoId:
+        example: 1
+        type: integer
     type: object
   domain.PostTalonRequest:
     properties:
@@ -113,6 +149,44 @@ paths:
           schema:
             $ref: '#/definitions/domain.GetExampleResponse'
       summary: Example api test
+  /admin/photo:
+    get:
+      consumes:
+      - application/json
+      description: get photo ID by ID
+      parameters:
+      - description: place here photo ID
+        in: query
+        name: photoId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetPhotoByIdResponse'
+      summary: Get photo ID
+    post:
+      consumes:
+      - application/json
+      description: Insert new photo
+      parameters:
+      - description: place here photo ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostPhotoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostPhotoResponse'
+      summary: Post photo
   /admin/talon:
     get:
       consumes:
