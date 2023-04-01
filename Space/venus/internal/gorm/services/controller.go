@@ -18,6 +18,11 @@ type DbController interface {
 	UserNew(username, phonenumber, instagram, callpreferences string, orderid uint) (*uint, error)
 	UserGetById(userId uint) (*db_domain.User, error)
 	GetAllUsers() ([]db_domain.User, error)
+	//Photo
+	PhotoNew(imagename, imageurl string, hidden bool, servicesId uint) (*uint, error)
+	PhotoGetById(photoId uint) (*db_domain.Photo, error)
+	//Order
+	//Services
 }
 
 type dbController struct {
