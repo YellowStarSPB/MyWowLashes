@@ -12,6 +12,7 @@ import (
 )
 
 // @Summary Post user
+// @Tags Users
 // @Description Insert new user
 // @Accept  json
 // @Produce  json

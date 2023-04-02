@@ -22,6 +22,8 @@ type DbController interface {
 	PhotoNew(imagename, imageurl string, hidden bool, servicesId uint) (*uint, error)
 	PhotoGetById(photoId uint) (*db_domain.Photo, error)
 	//Order
+	OrderNew(status db_domain.Status, time time.Time) (*uint, error)
+	OrderGetById(orderId uint) (*db_domain.Order, error)
 	//Services
 }
 

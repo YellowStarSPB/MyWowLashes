@@ -12,6 +12,7 @@ import (
 )
 
 // @Summary Post photo
+// @Tags Photo
 // @Description Insert new photo
 // @Accept  json
 // @Produce  json

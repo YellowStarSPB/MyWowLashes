@@ -13,6 +13,17 @@ definitions:
         example: oleg loh
         type: string
     type: object
+  domain.GetOrderByIdResponse:
+    properties:
+      status:
+        $ref: '#/definitions/domain.Status'
+      time:
+        example: 10.03.2023,10:30PM
+        type: string
+      userId:
+        example: 1
+        type: integer
+    type: object
   domain.GetPhotoByIdResponse:
     properties:
       hidden:
@@ -60,6 +71,23 @@ definitions:
       username:
         example: OLEG
         type: string
+    type: object
+  domain.PostOrderRequest:
+    properties:
+      status:
+        $ref: '#/definitions/domain.Status'
+      time:
+        example: 10.03.2023,10:30PM
+        type: string
+      userId:
+        example: 1
+        type: integer
+    type: object
+  domain.PostOrderResponse:
+    properties:
+      orderId:
+        example: 1
+        type: integer
     type: object
   domain.PostPhotoRequest:
     properties:
@@ -127,6 +155,16 @@ definitions:
         example: 1
         type: integer
     type: object
+  domain.Status:
+    enum:
+    - accepted
+    - canceled
+    - pending
+    type: string
+    x-enum-varnames:
+    - status_accepted
+    - status_canceled
+    - status_pending
 info:
   contact: {}
   description: This is a Kate server.
@@ -149,6 +187,48 @@ paths:
           schema:
             $ref: '#/definitions/domain.GetExampleResponse'
       summary: Example api test
+  /admin/order:
+    get:
+      consumes:
+      - application/json
+      description: get order ID by ID
+      parameters:
+      - description: place here order ID
+        in: query
+        name: orderId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetOrderByIdResponse'
+      summary: Get order ID
+      tags:
+      - Order
+    post:
+      consumes:
+      - application/json
+      description: Insert new order
+      parameters:
+      - description: place here order ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostOrderRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostOrderResponse'
+      summary: Post order
+      tags:
+      - Order
   /admin/photo:
     get:
       consumes:
@@ -168,6 +248,8 @@ paths:
           schema:
             $ref: '#/definitions/domain.GetPhotoByIdResponse'
       summary: Get photo ID
+      tags:
+      - Photo
     post:
       consumes:
       - application/json
@@ -187,6 +269,8 @@ paths:
           schema:
             $ref: '#/definitions/domain.PostPhotoResponse'
       summary: Post photo
+      tags:
+      - Photo
   /admin/talon:
     get:
       consumes:
@@ -244,6 +328,8 @@ paths:
           schema:
             $ref: '#/definitions/domain.GetUserByIdResponse'
       summary: Get user ID
+      tags:
+      - Users
     post:
       consumes:
       - application/json
@@ -263,6 +349,8 @@ paths:
           schema:
             $ref: '#/definitions/domain.PostUserResponse'
       summary: Post user
+      tags:
+      - Users
   /admin/users:
     get:
       consumes:

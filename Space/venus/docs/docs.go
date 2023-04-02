@@ -40,6 +40,70 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/order": {
+            "get": {
+                "description": "get order ID by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get order ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "place here order ID",
+                        "name": "orderId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetOrderByIdResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Insert new order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Post order",
+                "parameters": [
+                    {
+                        "description": "place here order ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostOrderRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostOrderResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/photo": {
             "get": {
                 "description": "get photo ID by ID",
@@ -48,6 +112,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Photo"
                 ],
                 "summary": "Get photo ID",
                 "parameters": [
@@ -75,6 +142,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Photo"
                 ],
                 "summary": "Post photo",
                 "parameters": [
@@ -165,6 +235,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Users"
+                ],
                 "summary": "Get user ID",
                 "parameters": [
                     {
@@ -191,6 +264,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Users"
                 ],
                 "summary": "Post user",
                 "parameters": [
@@ -259,6 +335,22 @@ const docTemplate = `{
                 }
             }
         },
+        "domain.GetOrderByIdResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "$ref": "#/definitions/domain.Status"
+                },
+                "time": {
+                    "type": "string",
+                    "example": "10.03.2023,10:30PM"
+                },
+                "userId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
         "domain.GetPhotoByIdResponse": {
             "type": "object",
             "properties": {
@@ -323,6 +415,31 @@ const docTemplate = `{
                 "username": {
                     "type": "string",
                     "example": "OLEG"
+                }
+            }
+        },
+        "domain.PostOrderRequest": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "$ref": "#/definitions/domain.Status"
+                },
+                "time": {
+                    "type": "string",
+                    "example": "10.03.2023,10:30PM"
+                },
+                "userId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.PostOrderResponse": {
+            "type": "object",
+            "properties": {
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
@@ -419,6 +536,19 @@ const docTemplate = `{
                     "example": 1
                 }
             }
+        },
+        "domain.Status": {
+            "type": "string",
+            "enum": [
+                "accepted",
+                "canceled",
+                "pending"
+            ],
+            "x-enum-varnames": [
+                "status_accepted",
+                "status_canceled",
+                "status_pending"
+            ]
         }
     }
 }`

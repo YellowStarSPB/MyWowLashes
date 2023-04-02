@@ -12,6 +12,7 @@ import (
 )
 
 // @Summary Get user ID
+// @Tags Users
 // @Description get user ID by ID
 // @Accept  json
 // @Produce  json

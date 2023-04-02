@@ -17,7 +17,14 @@ func (dc *dbController) UserNew(username, phonenumber, instagram, callpreference
 	if err := dc.dbConn.Create(&user).Error; err != nil {
 		return nil, err
 	}
-
+	order, err := dc.OrderGetById(orderid)
+	if err != nil {
+		return nil, err
+	}
+	order.User = user
+	if err := dc.dbConn.Updates(&order).Error; err != nil {
+		return nil, err
+	}
 	return &user.ID, nil
 }
 
