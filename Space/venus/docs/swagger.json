@@ -160,6 +160,70 @@
                 }
             }
         },
+        "/admin/services": {
+            "get": {
+                "description": "get services ID by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get services ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "place here services ID",
+                        "name": "servicesId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetServicesByIdResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Insert new services",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Post services",
+                "parameters": [
+                    {
+                        "description": "place here services ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostServicesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostServicesResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/talon": {
             "get": {
                 "description": "get talon ID by ID",
@@ -364,6 +428,27 @@
                 }
             }
         },
+        "domain.GetServicesByIdResponse": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "photoId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "price": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "type": {
+                    "type": "string",
+                    "example": "long"
+                }
+            }
+        },
         "domain.GetTalonByIdResponse": {
             "type": "object",
             "properties": {
@@ -460,6 +545,36 @@
             "type": "object",
             "properties": {
                 "photoId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.PostServicesRequest": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "photoId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "price": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "type": {
+                    "type": "string",
+                    "example": "long"
+                }
+            }
+        },
+        "domain.PostServicesResponse": {
+            "type": "object",
+            "properties": {
+                "servicesId": {
                     "type": "integer",
                     "example": 1
                 }

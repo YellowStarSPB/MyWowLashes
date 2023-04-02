@@ -25,6 +25,8 @@ type DbController interface {
 	OrderNew(status db_domain.Status, time time.Time) (*uint, error)
 	OrderGetById(orderId uint) (*db_domain.Order, error)
 	//Services
+	ServicesNew(price uint, types string, hidden bool) (*uint, error)
+	ServicesGetById(servicesId uint) (*db_domain.Services, error)
 }
 
 type dbController struct {

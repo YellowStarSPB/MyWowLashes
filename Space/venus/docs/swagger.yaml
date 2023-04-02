@@ -39,6 +39,21 @@ definitions:
         example: "1"
         type: string
     type: object
+  domain.GetServicesByIdResponse:
+    properties:
+      hidden:
+        example: false
+        type: boolean
+      photoId:
+        example: 1
+        type: integer
+      price:
+        example: 1000
+        type: integer
+      type:
+        example: long
+        type: string
+    type: object
   domain.GetTalonByIdResponse:
     properties:
       orderId:
@@ -107,6 +122,27 @@ definitions:
   domain.PostPhotoResponse:
     properties:
       photoId:
+        example: 1
+        type: integer
+    type: object
+  domain.PostServicesRequest:
+    properties:
+      hidden:
+        example: false
+        type: boolean
+      photoId:
+        example: 1
+        type: integer
+      price:
+        example: 1000
+        type: integer
+      type:
+        example: long
+        type: string
+    type: object
+  domain.PostServicesResponse:
+    properties:
+      servicesId:
         example: 1
         type: integer
     type: object
@@ -271,6 +307,48 @@ paths:
       summary: Post photo
       tags:
       - Photo
+  /admin/services:
+    get:
+      consumes:
+      - application/json
+      description: get services ID by ID
+      parameters:
+      - description: place here services ID
+        in: query
+        name: servicesId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetServicesByIdResponse'
+      summary: Get services ID
+      tags:
+      - Services
+    post:
+      consumes:
+      - application/json
+      description: Insert new services
+      parameters:
+      - description: place here services ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostServicesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostServicesResponse'
+      summary: Post services
+      tags:
+      - Services
   /admin/talon:
     get:
       consumes:
