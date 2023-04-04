@@ -16,7 +16,14 @@ func (dc *dbController) TalonNew(time time.Time, userId, orderId uint) (*uint, e
 	if err := dc.dbConn.Create(&talon).Error; err != nil {
 		return nil, err
 	}
-
+	user, err := dc.UserGetById(userId)
+	if err != nil {
+		return nil, err
+	}
+	user.Talon = talon
+	if err := dc.dbConn.Updates(&user).Error; err != nil {
+		return nil, err
+	}
 	return &talon.ID, nil
 }
 

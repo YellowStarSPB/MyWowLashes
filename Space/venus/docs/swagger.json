@@ -32,6 +32,198 @@
                 }
             }
         },
+        "/admin/order": {
+            "get": {
+                "description": "get order ID by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get order ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "place here order ID",
+                        "name": "orderId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetOrderByIdResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Insert new order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Post order",
+                "parameters": [
+                    {
+                        "description": "place here order ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostOrderRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostOrderResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/photo": {
+            "get": {
+                "description": "get photo ID by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Photo"
+                ],
+                "summary": "Get photo ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "place here photo ID",
+                        "name": "photoId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetPhotoByIdResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Insert new photo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Photo"
+                ],
+                "summary": "Post photo",
+                "parameters": [
+                    {
+                        "description": "place here photo ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostPhotoRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostPhotoResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/services": {
+            "get": {
+                "description": "get services ID by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get services ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "place here services ID",
+                        "name": "servicesId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetServicesByIdResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Insert new services",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Post services",
+                "parameters": [
+                    {
+                        "description": "place here services ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostServicesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostServicesResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/talon": {
             "get": {
                 "description": "get talon ID by ID",
@@ -89,15 +281,171 @@
                     }
                 }
             }
+        },
+        "/admin/user": {
+            "get": {
+                "description": "get user ID by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "place here user ID",
+                        "name": "userId",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetUserByIdResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Insert new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Post user",
+                "parameters": [
+                    {
+                        "description": "place here user ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users": {
+            "get": {
+                "description": "get users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get Users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.GetAllUsersResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "domain.GetAllUsersResponse": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.GetUserByIdResponse"
+                    }
+                }
+            }
+        },
         "domain.GetExampleResponse": {
             "type": "object",
             "properties": {
                 "example": {
                     "type": "string",
                     "example": "oleg loh"
+                }
+            }
+        },
+        "domain.GetOrderByIdResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "$ref": "#/definitions/domain.Status"
+                },
+                "time": {
+                    "type": "string",
+                    "example": "10.03.2023,10:30PM"
+                },
+                "userId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.GetPhotoByIdResponse": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "imagename": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "servicesId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "url": {
+                    "type": "string",
+                    "example": "1"
+                }
+            }
+        },
+        "domain.GetServicesByIdResponse": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "photoId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "price": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "type": {
+                    "type": "string",
+                    "example": "long"
                 }
             }
         },
@@ -118,6 +466,120 @@
                 }
             }
         },
+        "domain.GetUserByIdResponse": {
+            "type": "object",
+            "properties": {
+                "callpreferences": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "instagram": {
+                    "type": "string",
+                    "example": "lololo"
+                },
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "phonenumber": {
+                    "type": "string",
+                    "example": "9833211233212"
+                },
+                "talon": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "username": {
+                    "type": "string",
+                    "example": "OLEG"
+                }
+            }
+        },
+        "domain.PostOrderRequest": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "$ref": "#/definitions/domain.Status"
+                },
+                "time": {
+                    "type": "string",
+                    "example": "10.03.2023,10:30PM"
+                },
+                "userId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.PostOrderResponse": {
+            "type": "object",
+            "properties": {
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.PostPhotoRequest": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "imagename": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "servicesId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "url": {
+                    "type": "string",
+                    "example": "1"
+                }
+            }
+        },
+        "domain.PostPhotoResponse": {
+            "type": "object",
+            "properties": {
+                "photoId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.PostServicesRequest": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "photoId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "price": {
+                    "type": "integer",
+                    "example": 1000
+                },
+                "type": {
+                    "type": "string",
+                    "example": "long"
+                }
+            }
+        },
+        "domain.PostServicesResponse": {
+            "type": "object",
+            "properties": {
+                "servicesId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
         "domain.PostTalonRequest": {
             "type": "object",
             "properties": {
@@ -127,7 +589,7 @@
                 },
                 "time": {
                     "type": "string",
-                    "example": "10.03.2023,10:30PM"
+                    "example": "2023-01-02T10:30:00Z"
                 },
                 "userId": {
                     "type": "integer",
@@ -143,6 +605,57 @@
                     "example": 1
                 }
             }
+        },
+        "domain.PostUserRequest": {
+            "type": "object",
+            "properties": {
+                "callpreferences": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "instagram": {
+                    "type": "string",
+                    "example": "lololo"
+                },
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "phonenumber": {
+                    "type": "string",
+                    "example": "9833211233212"
+                },
+                "talon": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "username": {
+                    "type": "string",
+                    "example": "OLEG"
+                }
+            }
+        },
+        "domain.PostUserResponse": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "domain.Status": {
+            "type": "string",
+            "enum": [
+                "accepted",
+                "canceled",
+                "pending"
+            ],
+            "x-enum-varnames": [
+                "status_accepted",
+                "status_canceled",
+                "status_pending"
+            ]
         }
     }
 }

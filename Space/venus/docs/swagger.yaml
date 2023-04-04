@@ -1,9 +1,57 @@
 basePath: /api
 definitions:
+  domain.GetAllUsersResponse:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/domain.GetUserByIdResponse'
+        type: array
+    type: object
   domain.GetExampleResponse:
     properties:
       example:
         example: oleg loh
+        type: string
+    type: object
+  domain.GetOrderByIdResponse:
+    properties:
+      status:
+        $ref: '#/definitions/domain.Status'
+      time:
+        example: 10.03.2023,10:30PM
+        type: string
+      userId:
+        example: 1
+        type: integer
+    type: object
+  domain.GetPhotoByIdResponse:
+    properties:
+      hidden:
+        example: true
+        type: boolean
+      imagename:
+        example: "1"
+        type: string
+      servicesId:
+        example: 1
+        type: integer
+      url:
+        example: "1"
+        type: string
+    type: object
+  domain.GetServicesByIdResponse:
+    properties:
+      hidden:
+        example: false
+        type: boolean
+      photoId:
+        example: 1
+        type: integer
+      price:
+        example: 1000
+        type: integer
+      type:
+        example: long
         type: string
     type: object
   domain.GetTalonByIdResponse:
@@ -18,13 +66,93 @@ definitions:
         example: 1
         type: integer
     type: object
+  domain.GetUserByIdResponse:
+    properties:
+      callpreferences:
+        example: "1"
+        type: string
+      instagram:
+        example: lololo
+        type: string
+      orderId:
+        example: 1
+        type: integer
+      phonenumber:
+        example: "9833211233212"
+        type: string
+      talon:
+        example: 1
+        type: integer
+      username:
+        example: OLEG
+        type: string
+    type: object
+  domain.PostOrderRequest:
+    properties:
+      status:
+        $ref: '#/definitions/domain.Status'
+      time:
+        example: 10.03.2023,10:30PM
+        type: string
+      userId:
+        example: 1
+        type: integer
+    type: object
+  domain.PostOrderResponse:
+    properties:
+      orderId:
+        example: 1
+        type: integer
+    type: object
+  domain.PostPhotoRequest:
+    properties:
+      hidden:
+        example: true
+        type: boolean
+      imagename:
+        example: "1"
+        type: string
+      servicesId:
+        example: 1
+        type: integer
+      url:
+        example: "1"
+        type: string
+    type: object
+  domain.PostPhotoResponse:
+    properties:
+      photoId:
+        example: 1
+        type: integer
+    type: object
+  domain.PostServicesRequest:
+    properties:
+      hidden:
+        example: false
+        type: boolean
+      photoId:
+        example: 1
+        type: integer
+      price:
+        example: 1000
+        type: integer
+      type:
+        example: long
+        type: string
+    type: object
+  domain.PostServicesResponse:
+    properties:
+      servicesId:
+        example: 1
+        type: integer
+    type: object
   domain.PostTalonRequest:
     properties:
       orderId:
         example: 1
         type: integer
       time:
-        example: 10.03.2023,10:30PM
+        example: "2023-01-02T10:30:00Z"
         type: string
       userId:
         example: 1
@@ -36,6 +164,43 @@ definitions:
         example: 1
         type: integer
     type: object
+  domain.PostUserRequest:
+    properties:
+      callpreferences:
+        example: "1"
+        type: string
+      instagram:
+        example: lololo
+        type: string
+      orderId:
+        example: 1
+        type: integer
+      phonenumber:
+        example: "9833211233212"
+        type: string
+      talon:
+        example: 1
+        type: integer
+      username:
+        example: OLEG
+        type: string
+    type: object
+  domain.PostUserResponse:
+    properties:
+      userId:
+        example: 1
+        type: integer
+    type: object
+  domain.Status:
+    enum:
+    - accepted
+    - canceled
+    - pending
+    type: string
+    x-enum-varnames:
+    - status_accepted
+    - status_canceled
+    - status_pending
 info:
   contact: {}
   description: This is a Kate server.
@@ -58,6 +223,132 @@ paths:
           schema:
             $ref: '#/definitions/domain.GetExampleResponse'
       summary: Example api test
+  /admin/order:
+    get:
+      consumes:
+      - application/json
+      description: get order ID by ID
+      parameters:
+      - description: place here order ID
+        in: query
+        name: orderId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetOrderByIdResponse'
+      summary: Get order ID
+      tags:
+      - Order
+    post:
+      consumes:
+      - application/json
+      description: Insert new order
+      parameters:
+      - description: place here order ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostOrderRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostOrderResponse'
+      summary: Post order
+      tags:
+      - Order
+  /admin/photo:
+    get:
+      consumes:
+      - application/json
+      description: get photo ID by ID
+      parameters:
+      - description: place here photo ID
+        in: query
+        name: photoId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetPhotoByIdResponse'
+      summary: Get photo ID
+      tags:
+      - Photo
+    post:
+      consumes:
+      - application/json
+      description: Insert new photo
+      parameters:
+      - description: place here photo ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostPhotoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostPhotoResponse'
+      summary: Post photo
+      tags:
+      - Photo
+  /admin/services:
+    get:
+      consumes:
+      - application/json
+      description: get services ID by ID
+      parameters:
+      - description: place here services ID
+        in: query
+        name: servicesId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetServicesByIdResponse'
+      summary: Get services ID
+      tags:
+      - Services
+    post:
+      consumes:
+      - application/json
+      description: Insert new services
+      parameters:
+      - description: place here services ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostServicesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostServicesResponse'
+      summary: Post services
+      tags:
+      - Services
   /admin/talon:
     get:
       consumes:
@@ -96,4 +387,61 @@ paths:
           schema:
             $ref: '#/definitions/domain.PostTalonResponse'
       summary: Post talon
+  /admin/user:
+    get:
+      consumes:
+      - application/json
+      description: get user ID by ID
+      parameters:
+      - description: place here user ID
+        in: query
+        name: userId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetUserByIdResponse'
+      summary: Get user ID
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: Insert new user
+      parameters:
+      - description: place here user ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostUserResponse'
+      summary: Post user
+      tags:
+      - Users
+  /admin/users:
+    get:
+      consumes:
+      - application/json
+      description: get users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetAllUsersResponse'
+      summary: Get Users
+      tags:
+      - Users
 swagger: "2.0"

@@ -14,6 +14,19 @@ type DbController interface {
 	// Talon
 	TalonNew(time time.Time, userId, orderId uint) (*uint, error)
 	TalonGetById(talonId uint) (*db_domain.Talon, error)
+	// User
+	UserNew(username, phonenumber, instagram, callpreferences string, orderid uint) (*uint, error)
+	UserGetById(userId uint) (*db_domain.User, error)
+	GetAllUsers() ([]db_domain.User, error)
+	//Photo
+	PhotoNew(imagename, imageurl string, hidden bool, servicesId uint) (*uint, error)
+	PhotoGetById(photoId uint) (*db_domain.Photo, error)
+	//Order
+	OrderNew(status db_domain.Status, time time.Time) (*uint, error)
+	OrderGetById(orderId uint) (*db_domain.Order, error)
+	//Services
+	ServicesNew(price uint, types string, hidden bool) (*uint, error)
+	ServicesGetById(servicesId uint) (*db_domain.Services, error)
 }
 
 type dbController struct {
