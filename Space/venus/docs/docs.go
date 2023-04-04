@@ -168,6 +168,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/record": {
+            "post": {
+                "description": "Insert new record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Post record",
+                "parameters": [
+                    {
+                        "description": "place here  ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostRecordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostRecordResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/services": {
             "get": {
                 "description": "get services ID by ID",
@@ -555,6 +586,34 @@ const docTemplate = `{
                 "photoId": {
                     "type": "integer",
                     "example": 1
+                }
+            }
+        },
+        "domain.PostRecordRequest": {
+            "type": "object",
+            "properties": {
+                "order": {
+                    "$ref": "#/definitions/domain.PostOrderRequest"
+                },
+                "talon": {
+                    "$ref": "#/definitions/domain.PostTalonRequest"
+                },
+                "user": {
+                    "$ref": "#/definitions/domain.PostUserRequest"
+                }
+            }
+        },
+        "domain.PostRecordResponse": {
+            "type": "object",
+            "properties": {
+                "orderId": {
+                    "$ref": "#/definitions/domain.PostOrderResponse"
+                },
+                "talonId": {
+                    "$ref": "#/definitions/domain.PostTalonResponse"
+                },
+                "userId": {
+                    "$ref": "#/definitions/domain.PostUserResponse"
                 }
             }
         },

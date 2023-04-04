@@ -125,6 +125,24 @@ definitions:
         example: 1
         type: integer
     type: object
+  domain.PostRecordRequest:
+    properties:
+      order:
+        $ref: '#/definitions/domain.PostOrderRequest'
+      talon:
+        $ref: '#/definitions/domain.PostTalonRequest'
+      user:
+        $ref: '#/definitions/domain.PostUserRequest'
+    type: object
+  domain.PostRecordResponse:
+    properties:
+      orderId:
+        $ref: '#/definitions/domain.PostOrderResponse'
+      talonId:
+        $ref: '#/definitions/domain.PostTalonResponse'
+      userId:
+        $ref: '#/definitions/domain.PostUserResponse'
+    type: object
   domain.PostServicesRequest:
     properties:
       hidden:
@@ -307,6 +325,26 @@ paths:
       summary: Post photo
       tags:
       - Photo
+  /admin/record:
+    post:
+      consumes:
+      - application/json
+      description: Insert new record
+      parameters:
+      - description: place here  ID
+        in: body
+        name: rquestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostRecordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostRecordResponse'
+      summary: Post record
   /admin/services:
     get:
       consumes:
