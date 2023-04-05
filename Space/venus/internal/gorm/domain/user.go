@@ -8,21 +8,17 @@ import (
 
 type User struct {
 	gorm.Model
-	UserName        string
-	PhoneNumber     string
-	Instagram       string
-	CallPreferences string
-	Talon           Talon
-	OrderID         uint
+	UserName string
+	Call     string
+	Email    string
+	Order    []Order
 }
 
 // ConvertToAPI - function for converting DB struct into API struct
 func (u User) ConvertToAPI() *domain.GetUserByIdResponse {
 	return &domain.GetUserByIdResponse{
-		UserName:        u.UserName,
-		PhoneNumber:     u.PhoneNumber,
-		Instagram:       u.Instagram,
-		CallPreferences: u.CallPreferences,
-		OrderID:         u.OrderID,
+		UserName: u.UserName,
+		Call:     u.Call,
+		Email:    u.Email,
 	}
 }

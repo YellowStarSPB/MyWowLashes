@@ -1,13 +1,11 @@
 package domain
 
 type PostRecordRequest struct {
-	Talon PostTalonRequest
-	User  PostUserRequest
-	Order PostOrderRequest
+	User  *PostUserRequest  `json:"user" required:"true"`
+	Order *PostOrderRequest `json:"order" required:"true"`
 }
 
 type PostRecordResponse struct {
-	TalonId PostTalonResponse
-	UserId  PostUserResponse
-	OrderId PostOrderResponse
+	UserId  uint `json:"userId"  example:"1"`
+	OrderId uint `json:"orderId"  example:"1"`
 }

@@ -17,12 +17,9 @@ func GetAllUsers(dbc db_services.DbController) ([]domain.PostUserRequest, error)
 func convertUsers(dbUsers []db_domain.User) (users []domain.PostUserRequest) {
 	for _, dbUser := range dbUsers {
 		users = append(users, domain.PostUserRequest{
-			UserName:        dbUser.UserName,
-			PhoneNumber:     dbUser.PhoneNumber,
-			Instagram:       dbUser.Instagram,
-			CallPreferences: dbUser.CallPreferences,
-			Talon:           dbUser.Talon.ID,
-			OrderID:         dbUser.OrderID,
+			UserName: dbUser.UserName,
+			Call:     dbUser.Call,
+			Email:    dbUser.Email,
 		})
 	}
 	return

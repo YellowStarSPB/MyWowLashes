@@ -7,25 +7,18 @@ import (
 	"gorm.io/gorm"
 )
 
-type Status string
-
-const (
-	status_accepted Status = "accepted"
-	status_canceled Status = "canceled"
-	status_pending  Status = "pending"
-)
-
 type Order struct {
 	gorm.Model
-	Status Status `gorm:"type:Status"`
+	Status string
 	Time   time.Time
-	User   User
+	UserId uint
 }
 
 // ConvertToAPI - function for converting DB struct into API struct
 func (o Order) ConvertToAPI() *domain.GetOrderByIdResponse {
 	return &domain.GetOrderByIdResponse{
-		Status: domain.Status(o.Status),
+		Status: o.Status,
 		Time:   o.Time,
+		UserId: o.UserId,
 	}
 }

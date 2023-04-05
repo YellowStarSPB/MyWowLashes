@@ -7,16 +7,11 @@ definitions:
           $ref: '#/definitions/domain.GetUserByIdResponse'
         type: array
     type: object
-  domain.GetExampleResponse:
-    properties:
-      example:
-        example: oleg loh
-        type: string
-    type: object
   domain.GetOrderByIdResponse:
     properties:
       status:
-        $ref: '#/definitions/domain.Status'
+        example: accepted
+        type: string
       time:
         example: 10.03.2023,10:30PM
         type: string
@@ -54,33 +49,15 @@ definitions:
         example: long
         type: string
     type: object
-  domain.GetTalonByIdResponse:
-    properties:
-      orderId:
-        example: 1
-        type: integer
-      time:
-        example: 10.03.2023,10:30PM
-        type: string
-      userId:
-        example: 1
-        type: integer
-    type: object
   domain.GetUserByIdResponse:
     properties:
-      callpreferences:
-        example: "1"
-        type: string
-      instagram:
-        example: lololo
-        type: string
-      orderId:
-        example: 1
-        type: integer
-      phonenumber:
+      call:
         example: "9833211233212"
         type: string
-      talon:
+      email:
+        example: banan@mail.ru
+        type: string
+      orderId:
         example: 1
         type: integer
       username:
@@ -90,9 +67,10 @@ definitions:
   domain.PostOrderRequest:
     properties:
       status:
-        $ref: '#/definitions/domain.Status'
+        example: accepted
+        type: string
       time:
-        example: 10.03.2023,10:30PM
+        example: "2023-01-02T10:30:00Z"
         type: string
       userId:
         example: 1
@@ -129,19 +107,17 @@ definitions:
     properties:
       order:
         $ref: '#/definitions/domain.PostOrderRequest'
-      talon:
-        $ref: '#/definitions/domain.PostTalonRequest'
       user:
         $ref: '#/definitions/domain.PostUserRequest'
     type: object
   domain.PostRecordResponse:
     properties:
       orderId:
-        $ref: '#/definitions/domain.PostOrderResponse'
-      talonId:
-        $ref: '#/definitions/domain.PostTalonResponse'
+        example: 1
+        type: integer
       userId:
-        $ref: '#/definitions/domain.PostUserResponse'
+        example: 1
+        type: integer
     type: object
   domain.PostServicesRequest:
     properties:
@@ -164,40 +140,15 @@ definitions:
         example: 1
         type: integer
     type: object
-  domain.PostTalonRequest:
-    properties:
-      orderId:
-        example: 1
-        type: integer
-      time:
-        example: "2023-01-02T10:30:00Z"
-        type: string
-      userId:
-        example: 1
-        type: integer
-    type: object
-  domain.PostTalonResponse:
-    properties:
-      talonId:
-        example: 1
-        type: integer
-    type: object
   domain.PostUserRequest:
     properties:
-      callpreferences:
-        example: "1"
+      call:
+        example: vk:nah
         type: string
-      instagram:
-        example: lololo
+      email:
+        example: banan@mail.ru
         type: string
       orderId:
-        example: 1
-        type: integer
-      phonenumber:
-        example: "9833211233212"
-        type: string
-      talon:
-        example: 1
         type: integer
       username:
         example: OLEG
@@ -209,16 +160,6 @@ definitions:
         example: 1
         type: integer
     type: object
-  domain.Status:
-    enum:
-    - accepted
-    - canceled
-    - pending
-    type: string
-    x-enum-varnames:
-    - status_accepted
-    - status_canceled
-    - status_pending
 info:
   contact: {}
   description: This is a Kate server.
@@ -228,19 +169,6 @@ info:
   title: Kate Shop testing API
   version: "0.1"
 paths:
-  /admin/example:
-    get:
-      consumes:
-      - application/json
-      description: get example message
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/domain.GetExampleResponse'
-      summary: Example api test
   /admin/order:
     get:
       consumes:
@@ -345,6 +273,8 @@ paths:
           schema:
             $ref: '#/definitions/domain.PostRecordResponse'
       summary: Post record
+      tags:
+      - Record
   /admin/services:
     get:
       consumes:
@@ -387,44 +317,6 @@ paths:
       summary: Post services
       tags:
       - Services
-  /admin/talon:
-    get:
-      consumes:
-      - application/json
-      description: get talon ID by ID
-      parameters:
-      - description: place here talon ID
-        in: query
-        name: talonId
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/domain.GetTalonByIdResponse'
-      summary: Get talon ID
-    post:
-      consumes:
-      - application/json
-      description: Insert new talon
-      parameters:
-      - description: place here talon ID
-        in: body
-        name: rquestBody
-        required: true
-        schema:
-          $ref: '#/definitions/domain.PostTalonRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/domain.PostTalonResponse'
-      summary: Post talon
   /admin/user:
     get:
       consumes:

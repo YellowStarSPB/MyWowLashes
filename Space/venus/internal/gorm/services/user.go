@@ -6,23 +6,13 @@ import (
 	"gorm.io/gorm"
 )
 
-func (dc *dbController) UserNew(username, phonenumber, instagram, callpreferences string, orderid uint) (*uint, error) {
+func (dc *dbController) UserNew(username, call, email string) (*uint, error) {
 	user := db_domain.User{
-		UserName:        username,
-		PhoneNumber:     phonenumber,
-		Instagram:       instagram,
-		CallPreferences: callpreferences,
-		OrderID:         orderid,
+		UserName: username,
+		Call:     call,
+		Email:    email,
 	}
 	if err := dc.dbConn.Create(&user).Error; err != nil {
-		return nil, err
-	}
-	order, err := dc.OrderGetById(orderid)
-	if err != nil {
-		return nil, err
-	}
-	order.User = user
-	if err := dc.dbConn.Updates(&order).Error; err != nil {
 		return nil, err
 	}
 	return &user.ID, nil

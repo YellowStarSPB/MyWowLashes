@@ -20,26 +20,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/example": {
-            "get": {
-                "description": "get example message",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Example api test",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/domain.GetExampleResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/admin/order": {
             "get": {
                 "description": "get order ID by ID",
@@ -177,6 +157,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Record"
+                ],
                 "summary": "Post record",
                 "parameters": [
                     {
@@ -258,64 +241,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/domain.PostServicesResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/admin/talon": {
-            "get": {
-                "description": "get talon ID by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get talon ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "place here talon ID",
-                        "name": "talonId",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/domain.GetTalonByIdResponse"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Insert new talon",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Post talon",
-                "parameters": [
-                    {
-                        "description": "place here talon ID",
-                        "name": "rquestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/domain.PostTalonRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/domain.PostTalonResponse"
                         }
                     }
                 }
@@ -421,20 +346,12 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.GetExampleResponse": {
-            "type": "object",
-            "properties": {
-                "example": {
-                    "type": "string",
-                    "example": "oleg loh"
-                }
-            }
-        },
         "domain.GetOrderByIdResponse": {
             "type": "object",
             "properties": {
                 "status": {
-                    "$ref": "#/definitions/domain.Status"
+                    "type": "string",
+                    "example": "accepted"
                 },
                 "time": {
                     "type": "string",
@@ -488,43 +405,18 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.GetTalonByIdResponse": {
-            "type": "object",
-            "properties": {
-                "orderId": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "time": {
-                    "type": "string",
-                    "example": "10.03.2023,10:30PM"
-                },
-                "userId": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
         "domain.GetUserByIdResponse": {
             "type": "object",
             "properties": {
-                "callpreferences": {
-                    "type": "string",
-                    "example": "1"
-                },
-                "instagram": {
-                    "type": "string",
-                    "example": "lololo"
-                },
-                "orderId": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "phonenumber": {
+                "call": {
                     "type": "string",
                     "example": "9833211233212"
                 },
-                "talon": {
+                "email": {
+                    "type": "string",
+                    "example": "banan@mail.ru"
+                },
+                "orderId": {
                     "type": "integer",
                     "example": 1
                 },
@@ -538,11 +430,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "status": {
-                    "$ref": "#/definitions/domain.Status"
+                    "type": "string",
+                    "example": "accepted"
                 },
                 "time": {
                     "type": "string",
-                    "example": "10.03.2023,10:30PM"
+                    "example": "2023-01-02T10:30:00Z"
                 },
                 "userId": {
                     "type": "integer",
@@ -595,9 +488,6 @@ const docTemplate = `{
                 "order": {
                     "$ref": "#/definitions/domain.PostOrderRequest"
                 },
-                "talon": {
-                    "$ref": "#/definitions/domain.PostTalonRequest"
-                },
                 "user": {
                     "$ref": "#/definitions/domain.PostUserRequest"
                 }
@@ -607,13 +497,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "orderId": {
-                    "$ref": "#/definitions/domain.PostOrderResponse"
-                },
-                "talonId": {
-                    "$ref": "#/definitions/domain.PostTalonResponse"
+                    "type": "integer",
+                    "example": 1
                 },
                 "userId": {
-                    "$ref": "#/definitions/domain.PostUserResponse"
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
@@ -647,54 +536,19 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.PostTalonRequest": {
-            "type": "object",
-            "properties": {
-                "orderId": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "time": {
-                    "type": "string",
-                    "example": "2023-01-02T10:30:00Z"
-                },
-                "userId": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
-        "domain.PostTalonResponse": {
-            "type": "object",
-            "properties": {
-                "talonId": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
         "domain.PostUserRequest": {
             "type": "object",
             "properties": {
-                "callpreferences": {
+                "call": {
                     "type": "string",
-                    "example": "1"
+                    "example": "vk:nah"
                 },
-                "instagram": {
+                "email": {
                     "type": "string",
-                    "example": "lololo"
+                    "example": "banan@mail.ru"
                 },
                 "orderId": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "phonenumber": {
-                    "type": "string",
-                    "example": "9833211233212"
-                },
-                "talon": {
-                    "type": "integer",
-                    "example": 1
+                    "type": "integer"
                 },
                 "username": {
                     "type": "string",
@@ -710,19 +564,6 @@ const docTemplate = `{
                     "example": 1
                 }
             }
-        },
-        "domain.Status": {
-            "type": "string",
-            "enum": [
-                "accepted",
-                "canceled",
-                "pending"
-            ],
-            "x-enum-varnames": [
-                "status_accepted",
-                "status_canceled",
-                "status_pending"
-            ]
         }
     }
 }`

@@ -7,26 +7,25 @@ import (
 	"gorm.io/gorm"
 )
 
-var Mig29032023 gormigrate.Migration = gormigrate.Migration{
+var Mig05042023 gormigrate.Migration = gormigrate.Migration{
 	// ID - is date of migration creation
-	ID: "29032023",
+	ID: "05042023",
 	// In this case you do migration
 	Migrate: func(d *gorm.DB) error {
-
-		type Talon struct {
+		// Create table
+		// NOTE: in this case you can create many of tables and etc.
+		type Order struct {
 			gorm.Model
-			Time    time.Time
-			UserID  uint
-			OrderID uint
+			Status string
+			Time   time.Time
+			UserId uint
 		}
 		type User struct {
 			gorm.Model
-			UserName        string
-			PhoneNumber     string
-			Instagram       string
-			CallPreferences string
-			Talon           Talon
-			OrderID         uint
+			UserName string
+			Call     string
+			Email    string
+			Order    []Order
 		}
 		type Photo struct {
 			gorm.Model
@@ -43,7 +42,7 @@ var Mig29032023 gormigrate.Migration = gormigrate.Migration{
 			Photo  Photo
 		}
 
-		return d.AutoMigrate(&User{}, &Talon{}, &Services{}, &Photo{})
+		return d.AutoMigrate(&User{}, &Order{}, &Services{}, &Photo{})
 	},
 	// Rollback is return migration if its needed. Can be nil.
 	Rollback: func(d *gorm.DB) error {
