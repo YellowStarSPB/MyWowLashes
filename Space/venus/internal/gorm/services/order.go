@@ -7,11 +7,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func (dc *dbController) OrderNew(status string, time time.Time, userId uint) (*uint, error) {
+func (dc *dbController) OrderNew(status string, time time.Time, description string, userId uint) (*uint, error) {
 	order := db_domain.Order{
-		Status: status,
-		Time:   time,
-		UserId: userId,
+		Status:      status,
+		Time:        time,
+		Description: description,
+		UserId:      userId,
 	}
 	if err := dc.dbConn.Create(&order).Error; err != nil {
 		return nil, err

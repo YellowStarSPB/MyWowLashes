@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/go-gormigrate/gormigrate/v2"
+	pq "github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -16,14 +17,15 @@ var Mig05042023 gormigrate.Migration = gormigrate.Migration{
 		// NOTE: in this case you can create many of tables and etc.
 		type Order struct {
 			gorm.Model
-			Status string
-			Time   time.Time
-			UserId uint
+			Status      string
+			Time        time.Time
+			Description string
+			UserId      uint
 		}
 		type User struct {
 			gorm.Model
 			UserName string
-			Call     string
+			Calls    pq.StringArray `gorm:"type:text[]"`
 			Email    string
 			Order    []Order
 		}

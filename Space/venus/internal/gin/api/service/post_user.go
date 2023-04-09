@@ -11,5 +11,5 @@ func PostUser(req domain.PostUserRequest, dbc db_services.DbController) (*domain
 		return nil, err
 	}
 
-	return &domain.PostUserResponse{UserId: *resp}, nil
+	return &domain.PostUserResponse{UserId: resp.ID}, nil
 }

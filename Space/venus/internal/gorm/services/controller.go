@@ -12,14 +12,16 @@ import (
 
 type DbController interface {
 	// User
-	UserNew(username, call, email string) (*uint, error)
+	UserNew(username string, call string, email string) (*db_domain.User, error)
 	UserGetById(userId uint) (*db_domain.User, error)
+	UserGetByEmail(email string) (*db_domain.User, error)
 	GetAllUsers() ([]db_domain.User, error)
+	UserUpdate(user db_domain.User) (*db_domain.User, error)
 	//Photo
 	PhotoNew(imagename, imageurl string, hidden bool, servicesId uint) (*uint, error)
 	PhotoGetById(photoId uint) (*db_domain.Photo, error)
 	//Order
-	OrderNew(status string, time time.Time, userId uint) (*uint, error)
+	OrderNew(status string, time time.Time, description string, userId uint) (*uint, error)
 	OrderGetById(orderId uint) (*db_domain.Order, error)
 	//Services
 	ServicesNew(price uint, types string, hidden bool) (*uint, error)

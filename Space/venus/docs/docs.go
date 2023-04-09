@@ -341,17 +341,47 @@ const docTemplate = `{
                 "users": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/domain.GetUserByIdResponse"
+                        "$ref": "#/definitions/domain.GetAllUsersUser"
                     }
+                }
+            }
+        },
+        "domain.GetAllUsersUser": {
+            "type": "object",
+            "properties": {
+                "calls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "vk:nah"
+                    ]
+                },
+                "email": {
+                    "type": "string",
+                    "example": "banan@mail.ru"
+                },
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "username": {
+                    "type": "string",
+                    "example": "OLEG"
                 }
             }
         },
         "domain.GetOrderByIdResponse": {
             "type": "object",
             "properties": {
+                "Description": {
+                    "type": "string",
+                    "example": "описание"
+                },
                 "status": {
                     "type": "string",
-                    "example": "accepted"
+                    "example": "waiting"
                 },
                 "time": {
                     "type": "string",
@@ -409,8 +439,13 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "call": {
-                    "type": "string",
-                    "example": "9833211233212"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "9833211233212"
+                    ]
                 },
                 "email": {
                     "type": "string",
@@ -429,9 +464,13 @@ const docTemplate = `{
         "domain.PostOrderRequest": {
             "type": "object",
             "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "описание"
+                },
                 "status": {
                     "type": "string",
-                    "example": "accepted"
+                    "example": "waiting"
                 },
                 "time": {
                     "type": "string",
@@ -485,24 +524,39 @@ const docTemplate = `{
         "domain.PostRecordRequest": {
             "type": "object",
             "properties": {
-                "order": {
-                    "$ref": "#/definitions/domain.PostOrderRequest"
+                "call": {
+                    "type": "string",
+                    "example": "vk:nah"
                 },
-                "user": {
-                    "$ref": "#/definitions/domain.PostUserRequest"
+                "description": {
+                    "type": "string",
+                    "example": "описание"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "banan@mail.ru"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "waiting"
+                },
+                "time": {
+                    "type": "string",
+                    "example": "2023-01-02T10:30:00Z"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "OLEG"
                 }
             }
         },
         "domain.PostRecordResponse": {
             "type": "object",
             "properties": {
-                "orderId": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "userId": {
-                    "type": "integer",
-                    "example": 1
+                "error": {},
+                "statusOk": {
+                    "type": "boolean",
+                    "example": true
                 }
             }
         },
@@ -539,7 +593,7 @@ const docTemplate = `{
         "domain.PostUserRequest": {
             "type": "object",
             "properties": {
-                "call": {
+                "calls": {
                     "type": "string",
                     "example": "vk:nah"
                 },
@@ -548,7 +602,8 @@ const docTemplate = `{
                     "example": "banan@mail.ru"
                 },
                 "orderId": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
                 "username": {
                     "type": "string",

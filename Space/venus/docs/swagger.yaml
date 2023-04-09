@@ -4,13 +4,34 @@ definitions:
     properties:
       users:
         items:
-          $ref: '#/definitions/domain.GetUserByIdResponse'
+          $ref: '#/definitions/domain.GetAllUsersUser'
         type: array
+    type: object
+  domain.GetAllUsersUser:
+    properties:
+      calls:
+        example:
+        - vk:nah
+        items:
+          type: string
+        type: array
+      email:
+        example: banan@mail.ru
+        type: string
+      orderId:
+        example: 1
+        type: integer
+      username:
+        example: OLEG
+        type: string
     type: object
   domain.GetOrderByIdResponse:
     properties:
+      Description:
+        example: описание
+        type: string
       status:
-        example: accepted
+        example: waiting
         type: string
       time:
         example: 10.03.2023,10:30PM
@@ -52,8 +73,11 @@ definitions:
   domain.GetUserByIdResponse:
     properties:
       call:
-        example: "9833211233212"
-        type: string
+        example:
+        - "9833211233212"
+        items:
+          type: string
+        type: array
       email:
         example: banan@mail.ru
         type: string
@@ -66,8 +90,11 @@ definitions:
     type: object
   domain.PostOrderRequest:
     properties:
+      description:
+        example: описание
+        type: string
       status:
-        example: accepted
+        example: waiting
         type: string
       time:
         example: "2023-01-02T10:30:00Z"
@@ -105,19 +132,31 @@ definitions:
     type: object
   domain.PostRecordRequest:
     properties:
-      order:
-        $ref: '#/definitions/domain.PostOrderRequest'
-      user:
-        $ref: '#/definitions/domain.PostUserRequest'
+      call:
+        example: vk:nah
+        type: string
+      description:
+        example: описание
+        type: string
+      email:
+        example: banan@mail.ru
+        type: string
+      status:
+        example: waiting
+        type: string
+      time:
+        example: "2023-01-02T10:30:00Z"
+        type: string
+      username:
+        example: OLEG
+        type: string
     type: object
   domain.PostRecordResponse:
     properties:
-      orderId:
-        example: 1
-        type: integer
-      userId:
-        example: 1
-        type: integer
+      error: {}
+      statusOk:
+        example: true
+        type: boolean
     type: object
   domain.PostServicesRequest:
     properties:
@@ -142,13 +181,14 @@ definitions:
     type: object
   domain.PostUserRequest:
     properties:
-      call:
+      calls:
         example: vk:nah
         type: string
       email:
         example: banan@mail.ru
         type: string
       orderId:
+        example: 1
         type: integer
       username:
         example: OLEG

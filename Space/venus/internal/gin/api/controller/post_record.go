@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"errors"
 	"fmt"
 	"venus/internal/gin/api/domain"
 	"venus/internal/gin/api/service"
@@ -27,31 +26,30 @@ func PostRecord(c *gin.Context, dbc db_services.DbController) {
 		return
 	}
 	logrus.WithFields(logrus.Fields{
-		"user":  req.User,
-		"order": req.Order,
+		"username":    req.UserName,
+		"calls":       req.Call,
+		"description": req.Description,
+		"email":       req.Email,
+		"order":       req.Time,
 	}).Info("Start 'PostRecord' API method")
-	if err := checkPostRecordRequestBody(req); err != nil {
-		logrus.WithError(err).Error("failed to check Record")
-		c.JSON(400, fmt.Sprintf("Error to check Record. err: %v", err))
-		return
-	}
 	resp, err := service.PostRecord(req, dbc)
 	if err != nil {
 		logrus.WithError(err).Error("couldn't insert data to DB")
-		c.JSON(500, fmt.Sprintf("Error on inserting data to DB. err: %v", err))
+		c.JSON(500, domain.PostRecordResponse{Error: err, StatusOk: resp})
 		return
 	}
 	logrus.WithField("response", resp).Debug("Data from DB")
 
-	c.JSON(200, resp)
+	c.JSON(200, domain.PostRecordResponse{Error: err, StatusOk: resp})
 }
-func checkPostRecordRequestBody(req domain.PostRecordRequest) error {
-	if req.User == nil {
-		return errors.New("user must have a value")
-	}
-	if req.Order == nil {
-		return errors.New("Order must have a value")
-	}
 
-	return nil
-}
+// func checkPostRecordRequestBody(req domain.PostRecordRequest) error {
+// 	if req.User == nil {
+// 		return errors.New("user must have a value")
+// 	}
+// 	if req.Order == nil {
+// 		return errors.New("Order must have a value")
+// 	}
+
+// 	return nil
+// }

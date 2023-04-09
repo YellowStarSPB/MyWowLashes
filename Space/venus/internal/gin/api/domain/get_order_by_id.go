@@ -7,7 +7,8 @@ type GetOrderByIdRequest struct {
 }
 
 type GetOrderByIdResponse struct {
-	Status string    `json:"status"  example:"accepted"`
-	Time   time.Time `json:"time"  example:"10.03.2023,10:30PM"`
-	UserId uint      `json:"userId" example:"1"`
+	Status      string    `json:"status"  example:"waiting"`
+	Time        time.Time `json:"time"  example:"10.03.2023,10:30PM"`
+	Description string    `json:"Description"  example:"описание"`
+	UserId      uint      `json:"userId" example:"1"`
 }

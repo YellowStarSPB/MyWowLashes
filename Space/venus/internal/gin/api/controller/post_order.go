@@ -28,7 +28,6 @@ func PostOrder(c *gin.Context, dbc db_services.DbController) {
 	logrus.WithFields(logrus.Fields{
 		"status": req.Status,
 		"time":   req.Time,
-		"userId": req.UserId,
 	}).Info("Start 'PostOrder' API method")
 	resp, err := service.PostOrder(req, dbc)
 	if err != nil {
