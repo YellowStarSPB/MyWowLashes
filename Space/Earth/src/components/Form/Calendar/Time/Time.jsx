@@ -3,27 +3,27 @@ import classes from './Time.module.scss'
 import { date } from '../data'
 
 
+const arr = [1, 2, 3]
 
+function Time({ onSelectTime, currentDay, date }) {
+    const [activeTime, setActiveTime] = React.useState(0)
 
-function Time({ onSelectTime, currentDay, timeOrder, secondMonth, currentMonth }) {
-    const [activeTime, setActiveTime] = React.useState(timeOrder[0])
-
-    const handleActiveTime = (item) => {
-        setActiveTime(item)
+    const handleActiveTime = (item, index) => {
+        setActiveTime(index)
         onSelectTime(item)
     }
 
     return (
-        <div className={classes.timeWrapper}>
-            {timeOrder.map((item, index) => (
-                <div
-                    className={`${classes.itemTime} ${!date[currentDay - 1].time.includes(item) && classes.disabled} ${activeTime === item && classes.active} `}
-                    key={index}
-                    onClick={() => handleActiveTime(item)}
-                >
-                    {item}
-                </div>
-            ))}
+        <div className={classes.wrapper}>
+            <div className={classes.timeWrapper}>
+                {date.current[currentDay - 1].time.map((item, index) => (
+                    <div key={`${item}_${index}`} onClick={() => handleActiveTime(item, index)} className={`${classes.itemTime} ${activeTime === index && classes.active}`}>
+                        {item}
+                    </div>
+                ))
+
+                }
+            </div >
         </div>
     )
 }

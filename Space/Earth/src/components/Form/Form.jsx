@@ -4,10 +4,11 @@ import CommunicationMethod from "./Communicationmethod/CommunicationMethod";
 import Calendar from './Calendar/Calendar'
 import classes from './Form.module.scss'
 import Time from "./Calendar/Time/Time";
+import { date } from './Calendar/data'
 
 
 const method = ['Мессенджер', 'E-mail', 'Instagram', 'ВКонтакте']
-const timeOrder = ['10:00 - 13:00', '13:00 - 16:00', '16:00 - 19:00']
+
 
 function Form() {
     //Method state
@@ -16,12 +17,10 @@ function Form() {
     const [newOrder, setNewOrder] = React.useState({})
     //Current day in calendar
     const [currentDay, setCurrentDay] = React.useState(Number(new Date().toISOString().slice(8, 10)))
-    //Active time state
-    const [activeTime, setActiveTime] = React.useState(timeOrder[0])
-    //Current month
-    const [currentMonth, setCurrentMonth] = React.useState([])
-    const [secondMonth, setSecondMonth] = React.useState([])
-    console.log(secondMonth)
+
+
+    const [fetchData, setFetchData] = React.useState(date)
+
     //Form data state
     const [formData, setFormData] = React.useState(
         {
@@ -37,7 +36,7 @@ function Form() {
 
         })
 
-
+        console.log(newOrder)
     //Функция изменения стейта для поля метод связи
     const onSelectMethod = React.useCallback((value) => {
         setChecked(value)
@@ -58,24 +57,9 @@ function Form() {
         })
     }, [])
 
-    React.useEffect(() => {
-        setCurrentMonth(getDaysInMonth(new Date().getMonth(), new Date().getFullYear()))
-        setSecondMonth(getDaysInMonth(new Date().getMonth() + 1, new Date().getFullYear()))
-
-    }, [])
-
-    const getDaysInMonth = (month, year) => {
-        let date = new Date(year, month, 1);
-        let days = [];
-        while (date.getMonth() === month) {
-            days.push(new Date(date).getDate());
-            date.setDate(date.getDate() + 1);
-        }
-        return days;
-    }
-
     function addNewOrder(e) {
         e.preventDefault()
+        
         const newTalon = {
             talon: {
                 name: formData.name.trim(),
@@ -94,7 +78,7 @@ function Form() {
 
 
     return (
-        <form className={classes.form}>
+        fetchData.error !== '' ? (<div>Что-то пошло не так</div>) : (<form className={classes.form}>
             <CommunicationMethod method={method} checked={checked} onSelectMethod={onSelectMethod} />
 
             {/* form input */}
@@ -149,22 +133,14 @@ function Form() {
             </div>
 
             <Calendar
-                activeTime={activeTime}
-                setActiveTime={setActiveTime}
                 currentDay={currentDay}
                 setCurrentDay={setCurrentDay}
                 onSelectDate={onSelectDate}
-                currentMonth={currentMonth}
+                fetchData={fetchData}
             />
-            <Calendar
-                activeTime={activeTime}
-                setActiveTime={setActiveTime}
-                currentDay={currentDay}
-                setCurrentDay={setCurrentDay}
-                onSelectDate={onSelectDate}
-                secondMonth={secondMonth}
-            />
-            <Time currentDay={currentDay} timeOrder={timeOrder} onSelectTime={onSelectTime} currentMonth={currentMonth} secondMonth={secondMonth}/>
+
+
+            {<Time date={date} currentDay={currentDay}  onSelectTime={onSelectTime} />}
 
 
             <div className={classes.form__message}>
@@ -175,7 +151,9 @@ function Form() {
             </div>
 
             <button onClick={(e) => addNewOrder(e)} type="submit" className='btn'>Записаться</button>
-        </form>
+        </form>)
+
+
     )
 }
 
