@@ -3,7 +3,7 @@ package domain
 import "time"
 
 type PostRecordRequest struct {
-	UserName    string    `json:"username" required:"true" example:"OLEG"`
+	UserName    string    `json:"userName" required:"true" example:"OLEG"`
 	Call        string    `json:"call" example:"vk:nah"`
 	Email       string    `json:"email" required:"true" example:"banan@mail.ru"`
 	Status      string    `json:"status" required:"true" example:"waiting"`
