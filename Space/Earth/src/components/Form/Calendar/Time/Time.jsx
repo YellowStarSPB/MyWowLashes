@@ -1,11 +1,11 @@
-/* import React from 'react'
+import React from 'react'
 import classes from './Time.module.scss'
 import { date } from '../data'
 
 
-const timeOrder = ['10:00 - 13:00', '13:00 - 16:00', '16:00 - 19:00']
 
-function Time({ onSelectTime }) {
+
+function Time({ onSelectTime, currentDay, timeOrder, secondMonth, currentMonth }) {
     const [activeTime, setActiveTime] = React.useState(timeOrder[0])
 
     const handleActiveTime = (item) => {
@@ -28,4 +28,4 @@ function Time({ onSelectTime }) {
     )
 }
 
-export default Time */
+export default Time

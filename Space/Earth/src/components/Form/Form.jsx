@@ -7,12 +7,22 @@ import Time from "./Calendar/Time/Time";
 
 
 const method = ['Мессенджер', 'E-mail', 'Instagram', 'ВКонтакте']
-
+const timeOrder = ['10:00 - 13:00', '13:00 - 16:00', '16:00 - 19:00']
 
 function Form() {
+    //Method state
     const [checked, setChecked] = React.useState('Мессенджер')
+    //Talon/order state
     const [newOrder, setNewOrder] = React.useState({})
-
+    //Current day in calendar
+    const [currentDay, setCurrentDay] = React.useState(Number(new Date().toISOString().slice(8, 10)))
+    //Active time state
+    const [activeTime, setActiveTime] = React.useState(timeOrder[0])
+    //Current month
+    const [currentMonth, setCurrentMonth] = React.useState([])
+    const [secondMonth, setSecondMonth] = React.useState([])
+    console.log(secondMonth)
+    //Form data state
     const [formData, setFormData] = React.useState(
         {
             name: '',
@@ -27,6 +37,7 @@ function Form() {
 
         })
 
+
     //Функция изменения стейта для поля метод связи
     const onSelectMethod = React.useCallback((value) => {
         setChecked(value)
@@ -34,24 +45,34 @@ function Form() {
             return { ...prev, methodConnect: value }
         })
     }, [])
-    //Функция выбора времени
-    /* const onSelectTime = (time) => {
-        setFormData({ ...formData, time: time })
-    } */
+
     const onSelectTime = React.useCallback((time) => {
         setFormData(prev => {
             return { ...prev, time: time }
         })
     }, [])
-    //Функция выбора даты в календаре
-    /* const onSelectDate = (day) => {
-        setFormData({ ...formData, date: `${new Date().toISOString().substring(0, 8)}${day}` })
-    } */
+
     const onSelectDate = React.useCallback((day) => {
         setFormData(prev => {
             return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
         })
     }, [])
+
+    React.useEffect(() => {
+        setCurrentMonth(getDaysInMonth(new Date().getMonth(), new Date().getFullYear()))
+        setSecondMonth(getDaysInMonth(new Date().getMonth() + 1, new Date().getFullYear()))
+
+    }, [])
+
+    const getDaysInMonth = (month, year) => {
+        let date = new Date(year, month, 1);
+        let days = [];
+        while (date.getMonth() === month) {
+            days.push(new Date(date).getDate());
+            date.setDate(date.getDate() + 1);
+        }
+        return days;
+    }
 
     function addNewOrder(e) {
         e.preventDefault()
@@ -70,7 +91,8 @@ function Form() {
         }
         setNewOrder(newTalon)
     }
-    console.log(newOrder)
+
+
     return (
         <form className={classes.form}>
             <CommunicationMethod method={method} checked={checked} onSelectMethod={onSelectMethod} />
@@ -126,7 +148,23 @@ function Form() {
                     placeholder='Ваш E-mail' />)}
             </div>
 
-            <Calendar onSelectTime={onSelectTime} onSelectDate={onSelectDate} />
+            <Calendar
+                activeTime={activeTime}
+                setActiveTime={setActiveTime}
+                currentDay={currentDay}
+                setCurrentDay={setCurrentDay}
+                onSelectDate={onSelectDate}
+                currentMonth={currentMonth}
+            />
+            <Calendar
+                activeTime={activeTime}
+                setActiveTime={setActiveTime}
+                currentDay={currentDay}
+                setCurrentDay={setCurrentDay}
+                onSelectDate={onSelectDate}
+                secondMonth={secondMonth}
+            />
+            <Time currentDay={currentDay} timeOrder={timeOrder} onSelectTime={onSelectTime} currentMonth={currentMonth} secondMonth={secondMonth}/>
 
 
             <div className={classes.form__message}>
