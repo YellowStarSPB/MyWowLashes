@@ -1,0 +1,30 @@
+.timeWrapper {
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+    width: 100%;
+
+    @media screen and (max-width: 425px) {
+        flex-direction: column;
+    }
+
+    .itemTime {
+        padding: 10px;
+        color: #15162b;
+        border-radius: 3px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .disabled {
+        background-color: dimgrey;
+        color: linen;
+        opacity: 1;
+        pointer-events: none;
+    }
+
+    .active {
+        background-color: #15162b;
+        color: #fff;
+    }
+}

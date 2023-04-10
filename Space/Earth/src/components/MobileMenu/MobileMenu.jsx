@@ -13,7 +13,7 @@ const variants = {
 
 
 
-const MobileMenu = () => {
+const MobileMenu = ({ admin }) => {
     const [openMenu, setOpenMenu] = useState(false);
 
     const onOpenMenu = () => {
@@ -54,7 +54,7 @@ const MobileMenu = () => {
                         <Link onClick={() => setOpenMenu(false)} to={'/order'}>Записаться</Link>
                     </li>
                     <li>
-                        <Link className={classes.menuListBtn} onClick={() => setOpenMenu(false)} to={'/admin'}>Войти</Link>
+                        <Link className={classes.menuListBtn} onClick={() => setOpenMenu(false)} to={'/admin'}>{admin.login ? 'Админка' : 'Войти'}</Link>
                     </li>
                 </ul>
             </motion.div>

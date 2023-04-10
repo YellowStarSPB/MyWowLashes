@@ -4,7 +4,6 @@ export const AuthContext = createContext(null)
 
 function AuthProvider({ children }) {
     const [admin, setAdmin] = useState({ login: '', password: '' })
-    console.log(admin)
     const singIn = ( cb) => {
         cb();
     }

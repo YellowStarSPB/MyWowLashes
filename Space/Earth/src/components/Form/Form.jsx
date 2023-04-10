@@ -1,21 +1,76 @@
 import React from "react";
-import TimeOrder from "./TimeOrder/TimeOrder";
 import { IMaskInput } from "react-imask";
 import CommunicationMethod from "./Communicationmethod/CommunicationMethod";
-
+import Calendar from './Calendar/Calendar'
 import classes from './Form.module.scss'
+import Time from "./Calendar/Time/Time";
 
-function Form({ formData, setFormData, onChangeTime, onChangeMethod, addNewOrder }) {
-    const method = ['Мессенджер', 'E-mail', 'Instagram', 'ВКонтакте']
+
+const method = ['Мессенджер', 'E-mail', 'Instagram', 'ВКонтакте']
+
+
+function Form() {
     const [checked, setChecked] = React.useState('Мессенджер')
+    const [newOrder, setNewOrder] = React.useState({})
 
-    const [showTime, setShowTime] = React.useState(false)
+    const [formData, setFormData] = React.useState(
+        {
+            name: '',
+            email: '',
+            inst: '',
+            phone: '',
+            vk: '',
+            date: `${new Date().toISOString().substring(0, 10)}`,
+            time: '10:00 - 13:00',
+            message: '',
+            methodConnect: 'Мессенджер',
 
+        })
 
-    const onSelectMethod = (value) => {
-        onChangeMethod(value)
+    //Функция изменения стейта для поля метод связи
+    const onSelectMethod = React.useCallback((value) => {
         setChecked(value)
+        setFormData(prev => {
+            return { ...prev, methodConnect: value }
+        })
+    }, [])
+    //Функция выбора времени
+    /* const onSelectTime = (time) => {
+        setFormData({ ...formData, time: time })
+    } */
+    const onSelectTime = React.useCallback((time) => {
+        setFormData(prev => {
+            return { ...prev, time: time }
+        })
+    }, [])
+    //Функция выбора даты в календаре
+    /* const onSelectDate = (day) => {
+        setFormData({ ...formData, date: `${new Date().toISOString().substring(0, 8)}${day}` })
+    } */
+    const onSelectDate = React.useCallback((day) => {
+        setFormData(prev => {
+            return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
+        })
+    }, [])
+
+    function addNewOrder(e) {
+        e.preventDefault()
+        const newTalon = {
+            talon: {
+                name: formData.name.trim(),
+                email: formData.email.trim(),
+                inst: formData.inst.trim(),
+                phone: formData.phone,
+                vk: formData.vk.trim(),
+                date: formData.date,
+                time: formData.time,
+                message: formData.message.trim(),
+                methodConnect: formData.methodConnect,
+            }
+        }
+        setNewOrder(newTalon)
     }
+    console.log(newOrder)
     return (
         <form className={classes.form}>
             <CommunicationMethod method={method} checked={checked} onSelectMethod={onSelectMethod} />
@@ -27,35 +82,33 @@ function Form({ formData, setFormData, onChangeTime, onChangeMethod, addNewOrder
                     value={formData.name}
                     type="text"
                     placeholder='Ваше Имя' />
-                {checked === 'Мессенджер' ? (
-                    <IMaskInput
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        value={formData.phone}
-                        mask={"+7(000)000-00-00"}
-                        type="tel"
-                        placeholder='Ваш Телефон' />
-                ) : ''}
-                {checked === 'E-mail' ? (
-                    <input
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        value={formData.email}
-                        type="email"
-                        placeholder='Ваш E-mail' />
-                ) : ''}
-                {checked === 'Instagram' ? (
-                    <input
-                        onChange={(e) => setFormData({ ...formData, inst: e.target.value })}
-                        value={formData.inst}
-                        type="text"
-                        placeholder='Ваш Instagram' />
-                ) : ''}
-                {checked === 'ВКонтакте' ? (
-                    <input
-                        onChange={(e) => setFormData({ ...formData, vk: e.target.value })}
-                        value={formData.vk}
-                        type="text"
-                        placeholder='Ваш ВКонтакте' />
-                ) : ''}
+
+                {checked === 'Мессенджер' && <IMaskInput
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    value={formData.phone}
+                    mask={"+7(000)000-00-00"}
+                    type="tel"
+                    placeholder='Ваш Телефон' />}
+
+                {checked === 'E-mail' && <input
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    value={formData.email}
+                    type="email"
+                    placeholder='Ваш E-mail' />}
+
+                {checked === 'Instagram' && <input
+                    onChange={(e) => setFormData({ ...formData, inst: e.target.value })}
+                    value={formData.inst}
+                    type="text"
+                    placeholder='Ваш Instagram' />}
+
+                {checked === 'ВКонтакте' && <input
+                    onChange={(e) => setFormData({ ...formData, vk: e.target.value })}
+                    value={formData.vk}
+                    type="text"
+                    placeholder='Ваш ВКонтакте' />
+                }
+
             </div>
             <h2>Дополнительный способ связи</h2>
             <div className={`${classes.form__info} ${classes.form__info_date}`}>
@@ -73,21 +126,9 @@ function Form({ formData, setFormData, onChangeTime, onChangeMethod, addNewOrder
                     placeholder='Ваш E-mail' />)}
             </div>
 
-            <div className={`${classes.form__info} ${classes.form__info_date}`}>
-                <input
-                    onClick={() => setShowTime(true)}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    value={formData.date}
-                    min={formData.date}
-                    onKeyDown={(e) => e.preventDefault()}
-                    /* max={`${new Date().toISOString().substring(0, 7)}-31`} */
-                    type="date" />
-            </div>
+            <Calendar onSelectTime={onSelectTime} onSelectDate={onSelectDate} />
 
-            {/* show/hidden time */}
-            {/* {showTime ? <TimeOrder onChangeTime={onChangeTime} /> : ''} */}
-            <TimeOrder onChangeTime={onChangeTime} />
-            {/* message input */}
+
             <div className={classes.form__message}>
                 <textarea
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}

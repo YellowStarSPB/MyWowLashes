@@ -32,12 +32,17 @@ function App() {
                         <Route path={'order'} element={<Order />} />
                         <Route path={'login'} element={<Login />} />
                     </Route>
-                    <Route path="/admin" element={
-                        <RequireAuth>
+                    <Route path="/admin/*" element={<AdminPage />} />
+                    {/* <RequireAuth>
                             <AdminPage />
                         </RequireAuth>}>
-                    </Route>
+                    </Route> */}
+                    {/* <Route path="/admin/*" element={<AdminPage />} /> */}
 
+                    {/* <Route path="/admin/*" element={<RequireAuth>
+                            <AdminPage />
+                        </RequireAuth>}>
+                    </Route> */}
 
                 </Routes>
             </AnimatePresence>

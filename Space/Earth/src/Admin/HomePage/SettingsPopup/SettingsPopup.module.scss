@@ -1,0 +1,32 @@
+.popup {
+    position: absolute;
+    top: 100px;
+    right: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #E8E9EE;
+    z-index: 1000;
+    button {
+        border: 0;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 20px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    .delite {
+        background: red;
+    }
+    .accept {
+        background: green;
+    }
+    .panding {
+        background: yellow;
+    }
+}
