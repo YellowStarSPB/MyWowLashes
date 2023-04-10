@@ -1,0 +1,38 @@
+.navBar {
+    width: 300px;
+    border-radius: 30px;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    ul {
+
+        li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            img {
+                width: 30px;
+                height: 30px;
+                margin-right: 20px;
+            }
+
+            a {
+                font-size: 20px;
+                color: #8B8F9A;
+                transition: color 0.15s ease-in-out, text-shadow 0.15s ease-in-out;
+
+                &:hover {
+                    color: #000;
+                    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+                }
+            }
+        }
+    }
+}

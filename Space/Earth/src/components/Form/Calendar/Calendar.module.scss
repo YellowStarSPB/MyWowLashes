@@ -1,0 +1,107 @@
+.calendarWrapper {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .calendar {
+        width: 300px;
+        border-radius: 30px;
+        background-color: #15162b;
+        color: #fff;
+        padding: 20px;
+        margin-bottom: 30px;
+
+        @media screen and (max-width: 640px) {
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+
+            .month {
+                text-transform: uppercase;
+                font-size: 24px;
+            }
+
+            .year {
+                text-transform: uppercase;
+                font-size: 24px;
+            }
+        }
+
+        .date {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+
+            @media screen and (max-width: 640px) {
+                gap: 10px;
+            }
+
+            &__item {
+                display: grid;
+                width: 30px;
+                height: 30px;
+                border-radius: 5px;
+                align-items: center;
+                justify-items: center;
+                cursor: pointer;
+
+                @media screen and (max-width: 640px) {
+                    width: 100%;
+                    font-size: 16px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            .active {
+                background: #6D5FB3;
+            }
+
+            .disabled {
+                background-color: dimgrey;
+                color: linen;
+                opacity: 1;
+                pointer-events: none;
+                cursor: not-allowed;
+            }
+
+        }
+    }
+
+    .timeWrapper {
+        display: flex;
+        gap: 5px;
+        justify-content: space-between;
+        width: 100%;
+
+        @media screen and (max-width: 425px) {
+            flex-direction: column;
+        }
+
+        .itemTime {
+            padding: 10px;
+            color: #15162b;
+            border-radius: 3px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .disabled {
+            background-color: dimgrey;
+            color: linen;
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        .active {
+            background-color: #15162b;
+            color: #fff;
+        }
+    }
+}

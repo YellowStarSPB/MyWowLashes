@@ -1,0 +1,36 @@
+.statistics {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+
+    &__item {
+        border-radius: 20px;
+        width: 32%;
+        padding: 40px 35px;
+        background-color: #fff;
+        display: flex;
+        border: 1px solid #ECEDEF;
+        align-items: center;
+
+        h2 {
+            font-size: 48px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 20px;
+            color: #8B8F9A;
+        }
+
+        img {
+            margin-right: 20px;
+            width: 50px;
+            height: 50px;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

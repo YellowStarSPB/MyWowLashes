@@ -9,6 +9,9 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 40px;
+        @media screen and (max-width: 660px) {
+            flex-direction: column;
+        }
         
         input {
             width: 45%;
@@ -21,6 +24,13 @@
             font-weight: 400;
             transition: transform 0.15s ease-in-out;
             cursor: pointer;
+            @media screen and (max-width: 660px) {
+                width: 100%;
+                margin-bottom: 40px;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
 
             &::placeholder {
                 color: #000;
@@ -28,6 +38,11 @@
 
             &:focus {
                 transform: scale(1.2);
+            }
+            @media screen and (max-width: 660px) {
+                &:focus {
+                    transform: scale(1);
+                }
             }
         }
     }
@@ -47,6 +62,7 @@
             margin-bottom: 40px;
             transition: transform 0.15s ease-in-out;
             cursor: pointer;
+            
 
             &::placeholder {
                 color: #000;
@@ -54,6 +70,9 @@
 
             &:focus {
                 transform: scale(1.2);
+                @media screen and (max-width: 660px) {
+                    transform: scale(1);
+                }
             }
         }
     }

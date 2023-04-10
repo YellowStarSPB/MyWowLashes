@@ -24,4 +24,4 @@ function CommunicationMethod({ onSelectMethod, method, checked }) {
     )
 }
 
-export default CommunicationMethod;
+export default React.memo(CommunicationMethod);

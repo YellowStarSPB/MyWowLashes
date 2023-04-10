@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ImVk, ImTelegram, ImInstagram, } from 'react-icons/im'
 import Logo from '../img/header/logo.svg'
-import MobileMenu from '../components/MobileMenu';
+import MobileMenu from '../components/MobileMenu/MobileMenu';
+import useAuth from '../hook/useAuth';
 
 function Header() {
+    const { admin } = useAuth()
+
     return (
         <header className="header">
             <nav className='navBar'>
@@ -20,7 +23,7 @@ function Header() {
                             <Link className="navBar__link" to={'/order'}>Записаться</Link>
                         </ul>
                     </div>
-
+                    <Link className='loginBtn' to={'/admin'}>{admin.login ? 'Login' : 'Привет'}</Link>
                     <div>
                         <ul className="navBar__social">
                             <li>
@@ -34,7 +37,7 @@ function Header() {
                             </li>
                         </ul>
                     </div>
-                    <MobileMenu />
+                    <MobileMenu admin={admin}/>
                 </div>
             </nav>
         </header>
