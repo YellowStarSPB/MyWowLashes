@@ -1,8 +1,18 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+
+}
+
 .timeWrapper {
     display: flex;
     gap: 5px;
     justify-content: space-between;
-    width: 100%;
+    width: 300px;
+    background-color: #15162b;
+    margin-bottom: 40px;
+    border-radius: 0 0 30px 30px;
+    padding: 20px;
 
     @media screen and (max-width: 425px) {
         flex-direction: column;
@@ -10,9 +20,9 @@
 
     .itemTime {
         padding: 10px;
-        color: #15162b;
-        border-radius: 3px;
+        color: #fff;
         cursor: pointer;
+        border-radius: 10px;
         text-align: center;
     }
 
@@ -24,7 +34,8 @@
     }
 
     .active {
-        background-color: #15162b;
+        padding: 10px;
+        background-color: #6D5FB3;
         color: #fff;
     }
 }

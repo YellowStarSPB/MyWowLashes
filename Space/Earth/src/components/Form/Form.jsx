@@ -4,15 +4,24 @@ import CommunicationMethod from "./Communicationmethod/CommunicationMethod";
 import Calendar from './Calendar/Calendar'
 import classes from './Form.module.scss'
 import Time from "./Calendar/Time/Time";
+import { date } from './Calendar/data'
 
 
 const method = ['Мессенджер', 'E-mail', 'Instagram', 'ВКонтакте']
 
 
 function Form() {
+    //Method state
     const [checked, setChecked] = React.useState('Мессенджер')
+    //Talon/order state
     const [newOrder, setNewOrder] = React.useState({})
+    //Current day in calendar
+    const [currentDay, setCurrentDay] = React.useState(Number(new Date().toISOString().slice(8, 10)))
 
+
+    const [fetchData, setFetchData] = React.useState(date)
+
+    //Form data state
     const [formData, setFormData] = React.useState(
         {
             name: '',
@@ -27,6 +36,7 @@ function Form() {
 
         })
 
+        console.log(newOrder)
     //Функция изменения стейта для поля метод связи
     const onSelectMethod = React.useCallback((value) => {
         setChecked(value)
@@ -34,19 +44,13 @@ function Form() {
             return { ...prev, methodConnect: value }
         })
     }, [])
-    //Функция выбора времени
-    /* const onSelectTime = (time) => {
-        setFormData({ ...formData, time: time })
-    } */
+
     const onSelectTime = React.useCallback((time) => {
         setFormData(prev => {
             return { ...prev, time: time }
         })
     }, [])
-    //Функция выбора даты в календаре
-    /* const onSelectDate = (day) => {
-        setFormData({ ...formData, date: `${new Date().toISOString().substring(0, 8)}${day}` })
-    } */
+
     const onSelectDate = React.useCallback((day) => {
         setFormData(prev => {
             return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
@@ -55,6 +59,7 @@ function Form() {
 
     function addNewOrder(e) {
         e.preventDefault()
+        
         const newTalon = {
             talon: {
                 name: formData.name.trim(),
@@ -70,9 +75,10 @@ function Form() {
         }
         setNewOrder(newTalon)
     }
-    console.log(newOrder)
+
+
     return (
-        <form className={classes.form}>
+        fetchData.error !== '' ? (<div>Что-то пошло не так</div>) : (<form className={classes.form}>
             <CommunicationMethod method={method} checked={checked} onSelectMethod={onSelectMethod} />
 
             {/* form input */}
@@ -126,7 +132,15 @@ function Form() {
                     placeholder='Ваш E-mail' />)}
             </div>
 
-            <Calendar onSelectTime={onSelectTime} onSelectDate={onSelectDate} />
+            <Calendar
+                currentDay={currentDay}
+                setCurrentDay={setCurrentDay}
+                onSelectDate={onSelectDate}
+                fetchData={fetchData}
+            />
+
+
+            {<Time date={date} currentDay={currentDay}  onSelectTime={onSelectTime} />}
 
 
             <div className={classes.form__message}>
@@ -137,7 +151,9 @@ function Form() {
             </div>
 
             <button onClick={(e) => addNewOrder(e)} type="submit" className='btn'>Записаться</button>
-        </form>
+        </form>)
+
+
     )
 }
 
