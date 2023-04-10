@@ -11,5 +11,5 @@ func PostOrder(req domain.PostOrderRequest, dbc db_services.DbController) (*doma
 		return nil, err
 	}
 
-	return &domain.PostOrderResponse{OrderId: *resp}, nil
+	return &domain.PostOrderResponse{OrderId: resp.ID}, nil
 }

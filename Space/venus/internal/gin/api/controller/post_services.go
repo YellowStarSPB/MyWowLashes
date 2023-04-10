@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"errors"
 	"fmt"
 	"venus/internal/gin/api/domain"
 	"venus/internal/gin/api/service"
@@ -31,11 +30,6 @@ func PostServices(c *gin.Context, dbc db_services.DbController) {
 		"type":   req.Type,
 		"hidden": req.Hidden,
 	}).Info("Start 'PostServices' API method")
-	if err := checkPostServicesRequestBody(req); err != nil {
-		logrus.WithError(err).Error("couldn't bind request data")
-		c.JSON(400, fmt.Sprintf("Error on binding request. err: %v", err))
-		return
-	}
 
 	resp, err := service.PostServices(req, dbc)
 	if err != nil {
@@ -46,15 +40,4 @@ func PostServices(c *gin.Context, dbc db_services.DbController) {
 	logrus.WithField("response", resp).Debug("Data from DB")
 
 	c.JSON(200, resp)
-}
-
-func checkPostServicesRequestBody(req domain.PostServicesRequest) error {
-	if req.Price < 0 {
-		return errors.New("price must be above -1")
-	}
-	if req.Type == "" {
-		return errors.New("orderId must have a value")
-	}
-
-	return nil
 }

@@ -7,8 +7,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func (dc *dbController) OrderNew(status string, time time.Time, description string, userId uint) (*uint, error) {
-	order := db_domain.Order{
+func (dc *dbController) OrderNew(status string, time time.Time, description string, userId uint) (*db_domain.Order, error) {
+	order := &db_domain.Order{
 		Status:      status,
 		Time:        time,
 		Description: description,
@@ -21,11 +21,11 @@ func (dc *dbController) OrderNew(status string, time time.Time, description stri
 	if err != nil {
 		return nil, err
 	}
-	user.Order = append(user.Order, order)
+	user.Orders = append(user.Orders, *order)
 	if err := dc.dbConn.Updates(&user).Error; err != nil {
 		return nil, err
 	}
-	return &order.ID, nil
+	return order, nil
 }
 
 func (dc *dbController) OrderGetById(orderId uint) (*db_domain.Order, error) {

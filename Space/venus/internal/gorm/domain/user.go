@@ -12,7 +12,7 @@ type User struct {
 	UserName string
 	Calls    pq.StringArray `gorm:"type:text[]"`
 	Email    string
-	Order    []Order
+	Orders   []Order
 }
 
 // ConvertToAPI - function for converting DB struct into API struct
