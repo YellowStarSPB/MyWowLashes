@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"errors"
 	"fmt"
 	"venus/internal/gin/api/domain"
 	"venus/internal/gin/api/service"
@@ -32,11 +31,6 @@ func PostPhoto(c *gin.Context, dbc db_services.DbController) {
 		"hidden":     req.Hidden,
 		"servicesId": req.ServicesId,
 	}).Info("Start 'PostPhoto' API method")
-	if err := checkPostPhotoRequestBody(req); err != nil {
-		logrus.WithError(err).Error("failed to check PhotoId")
-		c.JSON(400, fmt.Sprintf("Error to check PhotoId. err: %v", err))
-		return
-	}
 
 	resp, err := service.PostPhoto(req, dbc)
 	if err != nil {
@@ -47,18 +41,4 @@ func PostPhoto(c *gin.Context, dbc db_services.DbController) {
 	logrus.WithField("response", resp).Debug("Data from DB")
 
 	c.JSON(200, resp)
-}
-
-func checkPostPhotoRequestBody(req domain.PostPhotoRequest) error {
-	if req.ImageName == "" {
-		return errors.New("imageName must have a value")
-	}
-	if req.ImageUrl == "" {
-		return errors.New("imageUrl must have a value")
-	}
-	if req.ServicesId <= 0 {
-		return errors.New("servicesId must be above 0")
-	}
-
-	return nil
 }

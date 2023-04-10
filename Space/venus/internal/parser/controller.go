@@ -58,9 +58,10 @@ func (pc *parserController) parse() error {
 		logrus.WithError(err).WithField("body", res.Body).Fatal("Couldn't create new document from reader")
 	}
 	//Searth info for parsing
-	doc.Find("a.tm-main-menu__item").Each(func(i int, selector *goquery.Selection) {
-		linkAll, _ := selector.Attr("href")
-		logrus.WithField("URL ", linkAll).Debug("From parser")
+	doc.Find("a").Each(func(i int, selector *goquery.Selection) {
+		linkAll, _ := selector.Find("img").Attr("src")
+		text := selector.Text()
+		fmt.Printf("link: %s, text: %s\n", linkAll, text)
 	})
 	return nil
 }

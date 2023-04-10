@@ -12,26 +12,6 @@
     },
     "basePath": "/api",
     "paths": {
-        "/admin/example": {
-            "get": {
-                "description": "get example message",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Example api test",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/domain.GetExampleResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/admin/order": {
             "get": {
                 "description": "get order ID by ID",
@@ -160,6 +140,40 @@
                 }
             }
         },
+        "/admin/record": {
+            "post": {
+                "description": "Insert new record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Record"
+                ],
+                "summary": "Post record",
+                "parameters": [
+                    {
+                        "description": "place here  ID",
+                        "name": "rquestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostRecordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostRecordResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/services": {
             "get": {
                 "description": "get services ID by ID",
@@ -219,64 +233,6 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/domain.PostServicesResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/admin/talon": {
-            "get": {
-                "description": "get talon ID by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get talon ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "place here talon ID",
-                        "name": "talonId",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/domain.GetTalonByIdResponse"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Insert new talon",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Post talon",
-                "parameters": [
-                    {
-                        "description": "place here talon ID",
-                        "name": "rquestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/domain.PostTalonRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/domain.PostTalonResponse"
                         }
                     }
                 }
@@ -377,25 +333,47 @@
                 "users": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/domain.GetUserByIdResponse"
+                        "$ref": "#/definitions/domain.GetAllUsersUser"
                     }
                 }
             }
         },
-        "domain.GetExampleResponse": {
+        "domain.GetAllUsersUser": {
             "type": "object",
             "properties": {
-                "example": {
+                "calls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "vk:nah"
+                    ]
+                },
+                "email": {
                     "type": "string",
-                    "example": "oleg loh"
+                    "example": "banan@mail.ru"
+                },
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "username": {
+                    "type": "string",
+                    "example": "OLEG"
                 }
             }
         },
         "domain.GetOrderByIdResponse": {
             "type": "object",
             "properties": {
+                "Description": {
+                    "type": "string",
+                    "example": "описание"
+                },
                 "status": {
-                    "$ref": "#/definitions/domain.Status"
+                    "type": "string",
+                    "example": "waiting"
                 },
                 "time": {
                     "type": "string",
@@ -449,43 +427,23 @@
                 }
             }
         },
-        "domain.GetTalonByIdResponse": {
-            "type": "object",
-            "properties": {
-                "orderId": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "time": {
-                    "type": "string",
-                    "example": "10.03.2023,10:30PM"
-                },
-                "userId": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
         "domain.GetUserByIdResponse": {
             "type": "object",
             "properties": {
-                "callpreferences": {
-                    "type": "string",
-                    "example": "1"
+                "call": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "9833211233212"
+                    ]
                 },
-                "instagram": {
+                "email": {
                     "type": "string",
-                    "example": "lololo"
+                    "example": "banan@mail.ru"
                 },
                 "orderId": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "phonenumber": {
-                    "type": "string",
-                    "example": "9833211233212"
-                },
-                "talon": {
                     "type": "integer",
                     "example": 1
                 },
@@ -498,12 +456,17 @@
         "domain.PostOrderRequest": {
             "type": "object",
             "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "описание"
+                },
                 "status": {
-                    "$ref": "#/definitions/domain.Status"
+                    "type": "string",
+                    "example": "waiting"
                 },
                 "time": {
                     "type": "string",
-                    "example": "10.03.2023,10:30PM"
+                    "example": "2023-01-02T10:30:00Z"
                 },
                 "userId": {
                     "type": "integer",
@@ -550,6 +513,45 @@
                 }
             }
         },
+        "domain.PostRecordRequest": {
+            "type": "object",
+            "properties": {
+                "call": {
+                    "type": "string",
+                    "example": "vk:nah"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "описание"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "banan@mail.ru"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "waiting"
+                },
+                "time": {
+                    "type": "string",
+                    "example": "2023-01-02T10:30:00Z"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "OLEG"
+                }
+            }
+        },
+        "domain.PostRecordResponse": {
+            "type": "object",
+            "properties": {
+                "error": {},
+                "statusOk": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
         "domain.PostServicesRequest": {
             "type": "object",
             "properties": {
@@ -580,52 +582,18 @@
                 }
             }
         },
-        "domain.PostTalonRequest": {
-            "type": "object",
-            "properties": {
-                "orderId": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "time": {
-                    "type": "string",
-                    "example": "2023-01-02T10:30:00Z"
-                },
-                "userId": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
-        "domain.PostTalonResponse": {
-            "type": "object",
-            "properties": {
-                "talonId": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
         "domain.PostUserRequest": {
             "type": "object",
             "properties": {
-                "callpreferences": {
+                "calls": {
                     "type": "string",
-                    "example": "1"
+                    "example": "vk:nah"
                 },
-                "instagram": {
+                "email": {
                     "type": "string",
-                    "example": "lololo"
+                    "example": "banan@mail.ru"
                 },
                 "orderId": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "phonenumber": {
-                    "type": "string",
-                    "example": "9833211233212"
-                },
-                "talon": {
                     "type": "integer",
                     "example": 1
                 },
@@ -643,19 +611,6 @@
                     "example": 1
                 }
             }
-        },
-        "domain.Status": {
-            "type": "string",
-            "enum": [
-                "accepted",
-                "canceled",
-                "pending"
-            ],
-            "x-enum-varnames": [
-                "status_accepted",
-                "status_canceled",
-                "status_pending"
-            ]
         }
     }
 }

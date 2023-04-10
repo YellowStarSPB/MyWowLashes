@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"errors"
 	"fmt"
 	"venus/internal/gin/api/domain"
 	"venus/internal/gin/api/service"
@@ -27,17 +26,10 @@ func PostUser(c *gin.Context, dbc db_services.DbController) {
 		return
 	}
 	logrus.WithFields(logrus.Fields{
-		"username":        req.UserName,
-		"phoneNumber":     req.PhoneNumber,
-		"instagram":       req.Instagram,
-		"callpreferences": req.CallPreferences,
-		"orderId":         req.OrderID,
+		"username": req.UserName,
+		"call":     req.Call,
+		"email":    req.Email,
 	}).Info("Start 'PostUser' API method")
-	if err := checkPostUserRequestBody(req); err != nil {
-		logrus.WithError(err).Error("failed to check UserId")
-		c.JSON(400, fmt.Sprintf("Error to check UserId. err: %v", err))
-		return
-	}
 
 	resp, err := service.PostUser(req, dbc)
 	if err != nil {
@@ -48,20 +40,4 @@ func PostUser(c *gin.Context, dbc db_services.DbController) {
 	logrus.WithField("response", resp).Debug("Data from DB")
 
 	c.JSON(200, resp)
-}
-
-func checkPostUserRequestBody(req domain.PostUserRequest) error {
-	if req.UserName == "" {
-		return errors.New("username must have a value")
-	}
-	if len([]rune(req.PhoneNumber)) != 10 {
-		return errors.New("phonenumber must have a value")
-	}
-	if req.CallPreferences == "" {
-		return errors.New("callpreferences must have a value")
-	}
-	if req.OrderID <= 0 {
-		return errors.New("orderId must be above 0")
-	}
-	return nil
 }

@@ -16,6 +16,14 @@ func (dc *dbController) PhotoNew(imagename, imageurl string, hidden bool, servic
 	if err := dc.dbConn.Create(&photo).Error; err != nil {
 		return nil, err
 	}
+	services, err := dc.ServicesGetById(servicesId)
+	if err != nil {
+		return nil, err
+	}
+	services.Photo.ID = photo.ID
+	if err := dc.dbConn.Updates(&services).Error; err != nil {
+		return nil, err
+	}
 	return &photo.ID, nil
 }
 

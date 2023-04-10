@@ -34,6 +34,6 @@ type loggerConfig struct {
 	LogLevel string `default:"TRACE"`
 }
 type parserConfig struct {
-	Url   string `default:"https://habr.com/ru/post/493088/"`
+	Url   string `default:"https://vk.com/uslugi-211296299?section=album_1"`
 	Timer uint   `default:"12"`
 }

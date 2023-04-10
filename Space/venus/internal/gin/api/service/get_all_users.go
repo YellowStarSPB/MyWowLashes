@@ -6,7 +6,7 @@ import (
 	db_services "venus/internal/gorm/services"
 )
 
-func GetAllUsers(dbc db_services.DbController) ([]domain.PostUserRequest, error) {
+func GetAllUsers(dbc db_services.DbController) (*domain.GetAllUsersResponse, error) {
 	resp, err := dbc.GetAllUsers()
 	if err != nil {
 		return nil, err
@@ -14,15 +14,13 @@ func GetAllUsers(dbc db_services.DbController) ([]domain.PostUserRequest, error)
 
 	return convertUsers(resp), nil
 }
-func convertUsers(dbUsers []db_domain.User) (users []domain.PostUserRequest) {
+func convertUsers(dbUsers []db_domain.User) (users *domain.GetAllUsersResponse) {
 	for _, dbUser := range dbUsers {
-		users = append(users, domain.PostUserRequest{
-			UserName:        dbUser.UserName,
-			PhoneNumber:     dbUser.PhoneNumber,
-			Instagram:       dbUser.Instagram,
-			CallPreferences: dbUser.CallPreferences,
-			Talon:           dbUser.Talon.ID,
-			OrderID:         dbUser.OrderID,
+		users.Users = append(users.Users, domain.GetAllUsersUser{
+			UsersId:  dbUser.ID,
+			UserName: dbUser.UserName,
+			Calls:    dbUser.Calls,
+			Email:    dbUser.Email,
 		})
 	}
 	return
