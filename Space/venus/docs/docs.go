@@ -574,10 +574,6 @@ const docTemplate = `{
                     "type": "string",
                     "example": "описание"
                 },
-                "status": {
-                    "type": "string",
-                    "example": "pending"
-                },
                 "time": {
                     "type": "string",
                     "example": "2023-01-02T10:30:00Z"
@@ -613,7 +609,9 @@ const docTemplate = `{
         "domain.PostOrderUpdateResponse": {
             "type": "object",
             "properties": {
-                "error": {},
+                "error": {
+                    "type": "string"
+                },
                 "statusOk": {
                     "type": "boolean",
                     "example": true
@@ -665,10 +663,6 @@ const docTemplate = `{
                     "type": "string",
                     "example": "banan@mail.ru"
                 },
-                "status": {
-                    "type": "string",
-                    "example": "pending"
-                },
                 "time": {
                     "type": "string",
                     "example": "2023-01-02T10:30:00Z"
@@ -682,7 +676,9 @@ const docTemplate = `{
         "domain.PostRecordResponse": {
             "type": "object",
             "properties": {
-                "error": {},
+                "error": {
+                    "type": "string"
+                },
                 "statusOk": {
                     "type": "boolean",
                     "example": true

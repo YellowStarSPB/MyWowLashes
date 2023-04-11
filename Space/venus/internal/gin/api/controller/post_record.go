@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"venus/internal/gin/api/domain"
 	"venus/internal/gin/api/service"
 	db_services "venus/internal/gorm/services"
@@ -28,7 +29,6 @@ func PostRecord(c *gin.Context, dbc db_services.DbController) {
 		"username":    req.UserName,
 		"call":        req.Call,
 		"email":       req.Email,
-		"status":      req.Status,
 		"time":        req.Time,
 		"description": req.Description,
 	}).Info("Start 'PostRecord' API method")
@@ -39,7 +39,7 @@ func PostRecord(c *gin.Context, dbc db_services.DbController) {
 		c.JSON(500, domain.PostRecordResponse{Error: err.Error(), StatusOk: resp})
 		return
 	}
-	logrus.WithField("response", domain.PostRecordResponse{Error: err.Error(), StatusOk: resp}).Debug("Data from DB")
+	logrus.WithField("response", domain.PostRecordResponse{Error: fmt.Sprintf("%v", err), StatusOk: resp}).Debug("Data from DB")
 
-	c.JSON(200, domain.PostRecordResponse{Error: err.Error(), StatusOk: resp})
+	c.JSON(200, domain.PostRecordResponse{Error: fmt.Sprintf("%v", err), StatusOk: resp})
 }

@@ -120,9 +120,6 @@ definitions:
       description:
         example: описание
         type: string
-      status:
-        example: pending
-        type: string
       time:
         example: "2023-01-02T10:30:00Z"
         type: string
@@ -147,7 +144,8 @@ definitions:
     type: object
   domain.PostOrderUpdateResponse:
     properties:
-      error: {}
+      error:
+        type: string
       statusOk:
         example: true
         type: boolean
@@ -184,9 +182,6 @@ definitions:
       email:
         example: banan@mail.ru
         type: string
-      status:
-        example: pending
-        type: string
       time:
         example: "2023-01-02T10:30:00Z"
         type: string
@@ -196,7 +191,8 @@ definitions:
     type: object
   domain.PostRecordResponse:
     properties:
-      error: {}
+      error:
+        type: string
       statusOk:
         example: true
         type: boolean

@@ -6,7 +6,7 @@ import (
 )
 
 func PostOrder(req domain.PostOrderRequest, dbc db_services.DbController) (*domain.PostOrderResponse, error) {
-	resp, err := dbc.OrderNew(req.Status, req.Time, req.Description, req.UserId)
+	resp, err := dbc.OrderNew(req.Time, req.Description, req.UserId)
 	if err != nil {
 		return nil, err
 	}

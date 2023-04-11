@@ -7,10 +7,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func (dc *dbController) OrderNew(status string, time time.Time, description string, userId uint) (*db_domain.Order, error) {
-	status = "Pending"
+func (dc *dbController) OrderNew(time time.Time, description string, userId uint) (*db_domain.Order, error) {
 	order := &db_domain.Order{
-		Status:      status,
+		Status:      "pending",
 		Time:        time,
 		Description: description,
 		UserId:      userId,
