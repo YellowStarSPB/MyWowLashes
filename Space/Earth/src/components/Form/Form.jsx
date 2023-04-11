@@ -50,18 +50,19 @@ function Form() {
     }, [])
 
     const onSelectDate = React.useCallback((day) => {
-        
+
         if (nextMonth) {
             setFormData(prev => {
                 return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
             })
-        } else if(!nextMonth) {
+        } else if (!nextMonth) {
             setFormData(prev => {
                 return { ...prev, date: `${new Date(new Date().getFullYear(), new Date().getMonth() + 2, 1).toISOString().substring(0, 8)}${day}` }
             })
         }
 
     }, [nextMonth])
+
 
     function addNewOrder(e) {
         e.preventDefault()
@@ -80,6 +81,24 @@ function Form() {
             }
         }
         setNewOrder(newTalon)
+        fetch('http://localhost:1001/api/admin/record', {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "call": "vk:nah",
+                "description": "описание",
+                "email": "banan@mail.ru",
+                "status": "waiting",
+                "time": "2023-01-02T10:30:00Z",
+                "username": "OLEG"
+            })
+        })
+            .then(res => res.json())
+            .then(json => console.log(json))
+
     }
 
 
