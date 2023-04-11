@@ -50,12 +50,12 @@ function Form() {
     }, [])
 
     const onSelectDate = React.useCallback((day) => {
-        
+
         if (nextMonth) {
             setFormData(prev => {
                 return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
             })
-        } else if(!nextMonth) {
+        } else if (!nextMonth) {
             setFormData(prev => {
                 return { ...prev, date: `${new Date(new Date().getFullYear(), new Date().getMonth() + 2, 1).toISOString().substring(0, 8)}${day}` }
             })
@@ -63,7 +63,16 @@ function Form() {
 
     }, [nextMonth])
 
-    function addNewOrder(e) {
+    React.useEffect(() => {
+        /* fetch('https://jsonplaceholder.typicode.com/posts/1', {
+            mode: 'no-cors'
+        })
+            .then((response) => response.json())
+            .then((json) => console.log(json)); */
+
+    }, [])
+
+    async function addNewOrder(e) {
         e.preventDefault()
 
         const newTalon = {
@@ -80,11 +89,32 @@ function Form() {
             }
         }
         setNewOrder(newTalon)
+        await fetch('http://localhost:1001/api/admin/record', {
+            method: 'POST',
+            body: JSON.stringify({
+                call: 'VK',
+                description: "опgggисание111",
+                email: "slava@mail.ru",
+                status: "waitinggg111",
+                time: "2023-04-02T10:30:00Z",
+                userName: "fdsf",
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => console.log(data))
     }
 
 
+
+
+
+
+
     return (
-        fetchData.error !== '' ? (<div>Что-то пошло не так</div>) : (<form className={classes.form}>
+        fetchData.error !== null ? (<div>Что-то пошло не так</div>) : (<form className={classes.form}>
             <CommunicationMethod method={method} checked={checked} onSelectMethod={onSelectMethod} />
 
             {/* form input */}
