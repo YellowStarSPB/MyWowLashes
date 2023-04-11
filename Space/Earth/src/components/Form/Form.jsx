@@ -63,6 +63,14 @@ function Form() {
 
     }, [nextMonth])
 
+    React.useEffect(() => {
+        /* fetch('https://jsonplaceholder.typicode.com/posts/1', {
+            mode: 'no-cors'
+        })
+            .then((response) => response.json())
+            .then((json) => console.log(json)); */
+
+    }, [])
 
     async function addNewOrder(e) {
         e.preventDefault()
@@ -81,28 +89,15 @@ function Form() {
             }
         }
         setNewOrder(newTalon)
-
-        postData("http://localhost:1001/api/admin/record", {
-            "call": "vk:nah",
-            "description": "описание",
-            "email": "banan@mail.ru",
-            "status": "waiting",
-            "time": "2023-01-02T10:30:00Z",
-            "username": "OLEG"
-        }).then((data) => {
-            console.log(data); // JSON data parsed by `data.json()` call
-        });
-        /* await fetch('http://localhost:1001/api/admin/record', {
+        await fetch('http://localhost:1001/api/admin/record', {
             method: 'POST',
-            mode: 'no-cors',
-
             body: JSON.stringify({
-                call: 'fdsfsd',
-                description: "опgggисание",
-                email: "bana22n@mail.ru",
-                status: "waitinggg",
+                call: 'VK',
+                description: "опgggисание111",
+                email: "slava@mail.ru",
+                status: "waitinggg111",
                 time: "2023-04-02T10:30:00Z",
-                username: "OLEG",
+                userName: "fdsf",
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
@@ -110,42 +105,16 @@ function Form() {
         })
             .then((res) => res.json())
             .then((data) => console.log(data))
-            .catch((err) => console.log(err)) */
-            fetch('https://jsonplaceholder.typicode.com/posts/1', {
-                method: 'PATCH',
-                body: JSON.stringify({
-                  title: 'foo',
-                }),
-                headers: {
-                  'Content-type': 'application/json; charset=UTF-8',
-                },
-              })
-                .then((response) => response.json())
-                .then((json) => console.log(json));
+    }
 
-    }
-    async function postData(url = "", data = {}) {
-        // Default options are marked with *
-        const response = await fetch(url, {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            mode: "no-cors", // no-cors, *cors, same-origin
-            headers: {
-                "Content-Type": "application/json",
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data), // body data type must match "Content-Type" header
-        });
-        return response; // parses JSON response into native JavaScript objects
-    }
+
 
 
 
 
 
     return (
-        fetchData.error !== '' ? (<div>Что-то пошло не так</div>) : (<form className={classes.form}>
+        fetchData.error !== null ? (<div>Что-то пошло не так</div>) : (<form className={classes.form}>
             <CommunicationMethod method={method} checked={checked} onSelectMethod={onSelectMethod} />
 
             {/* form input */}

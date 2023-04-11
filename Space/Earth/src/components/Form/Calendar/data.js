@@ -64,7 +64,7 @@ const date = {
         { time: ['10:00', '13:00', '16:00'], day: 30 },
         { time: ['10:00'], day: 31 },
     ],
-    error: ''
+    error: null
 }
 
 
