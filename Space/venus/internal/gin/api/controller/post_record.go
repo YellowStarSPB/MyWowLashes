@@ -20,7 +20,7 @@ import (
 // @Router /admin/record [post]
 func PostRecord(c *gin.Context, dbc db_services.DbController) {
 	var req domain.PostRecordRequest
-	if err := c.ShouldBind(&req); err != nil {
+	if err := c.BindJSON(&req); err != nil {
 		logrus.WithError(err).Error("couldn't bind request data")
 		c.JSON(500, domain.PostRecordResponse{Error: err, StatusOk: false})
 		return
@@ -47,6 +47,5 @@ func PostRecord(c *gin.Context, dbc db_services.DbController) {
 		return
 	}
 	logrus.WithField("response", domain.PostRecordResponse{Error: err, StatusOk: resp}).Debug("Data from DB")
-
 	c.JSON(200, domain.PostRecordResponse{Error: err, StatusOk: resp})
 }

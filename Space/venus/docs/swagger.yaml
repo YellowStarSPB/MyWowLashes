@@ -25,6 +25,33 @@ definitions:
         example: OLEG
         type: string
     type: object
+  domain.GetCalendarResponse:
+    properties:
+      current:
+        items:
+          $ref: '#/definitions/domain.GetCalendarTicket'
+        type: array
+      error:
+        example: Pasha sasat
+        type: string
+      next:
+        items:
+          $ref: '#/definitions/domain.GetCalendarTicket'
+        type: array
+    type: object
+  domain.GetCalendarTicket:
+    properties:
+      day:
+        example: 1
+        type: integer
+      times:
+        example:
+        - '[''10:30'''
+        - ' ''16:30'']'
+        items:
+          type: string
+        type: array
+    type: object
   domain.GetOrderByIdResponse:
     properties:
       Description:
@@ -72,7 +99,7 @@ definitions:
     type: object
   domain.GetUserByIdResponse:
     properties:
-      call:
+      calls:
         example:
         - "9833211233212"
         items:
@@ -84,7 +111,7 @@ definitions:
       orderId:
         example: 1
         type: integer
-      username:
+      userName:
         example: OLEG
         type: string
     type: object
@@ -147,7 +174,7 @@ definitions:
       time:
         example: "2023-01-02T10:30:00Z"
         type: string
-      username:
+      userName:
         example: OLEG
         type: string
     type: object
@@ -181,7 +208,7 @@ definitions:
     type: object
   domain.PostUserRequest:
     properties:
-      calls:
+      call:
         example: vk:nah
         type: string
       email:
@@ -190,7 +217,7 @@ definitions:
       orderId:
         example: 1
         type: integer
-      username:
+      userName:
         example: OLEG
         type: string
     type: object
@@ -209,6 +236,27 @@ info:
   title: Kate Shop testing API
   version: "0.1"
 paths:
+  /admin/calendar:
+    get:
+      consumes:
+      - application/json
+      description: Get calendar from database
+      parameters:
+      - description: start date
+        in: query
+        name: date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.GetCalendarResponse'
+      summary: Get calendar
+      tags:
+      - Calendar
   /admin/order:
     get:
       consumes:
@@ -237,7 +285,7 @@ paths:
       parameters:
       - description: place here order ID
         in: body
-        name: rquestBody
+        name: requestBody
         required: true
         schema:
           $ref: '#/definitions/domain.PostOrderRequest'
