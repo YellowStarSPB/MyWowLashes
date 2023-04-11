@@ -37,9 +37,9 @@ func CreateGinController(config config.Config, dbc db_services.DbController) Gin
 
 // Run - function for starting server
 func (gc *ginController) Run() {
-	api.CreateApiGroups(gc.Engine, gc.DbController)
 	// Set CORS
 	gc.setCors()
+	api.CreateApiGroups(gc.Engine, gc.DbController)
 	// Start server
 	if err := gc.Engine.Run(gc.GinConfig.port); err != nil {
 		logrus.WithError(err).WithField("port", gc.GinConfig.port).Fatal("Cannot run server.")
@@ -49,5 +49,7 @@ func (gc *ginController) Run() {
 }
 
 func (gc *ginController) setCors() {
-	gc.Engine.Use(cors.Default())
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowAllOrigins = true
+	gc.Engine.Use(cors.New(corsConfig))
 }
