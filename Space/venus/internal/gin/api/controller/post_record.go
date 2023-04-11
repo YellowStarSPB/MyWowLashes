@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"errors"
 	"venus/internal/gin/api/domain"
 	"venus/internal/gin/api/service"
 	db_services "venus/internal/gorm/services"
@@ -24,9 +25,16 @@ func PostRecord(c *gin.Context, dbc db_services.DbController) {
 		c.JSON(500, domain.PostRecordResponse{Error: err, StatusOk: false})
 		return
 	}
+
+	if len(req.Email) == 0 {
+		logrus.Error("couldn't bind request data")
+		c.JSON(500, domain.PostRecordResponse{Error: errors.New("couldn't bind request data"), StatusOk: false})
+		return
+	}
+
 	logrus.WithFields(logrus.Fields{
 		"username":    req.UserName,
-		"calls":       req.Call,
+		"call":        req.Call,
 		"email":       req.Email,
 		"status":      req.Status,
 		"time":        req.Time,
@@ -38,7 +46,7 @@ func PostRecord(c *gin.Context, dbc db_services.DbController) {
 		c.JSON(500, domain.PostRecordResponse{Error: err, StatusOk: resp})
 		return
 	}
-	logrus.WithField("response", resp).Debug("Data from DB")
+	logrus.WithField("response", domain.PostRecordResponse{Error: err, StatusOk: resp}).Debug("Data from DB")
 
 	c.JSON(200, domain.PostRecordResponse{Error: err, StatusOk: resp})
 }

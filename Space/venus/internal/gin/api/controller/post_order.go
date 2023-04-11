@@ -15,7 +15,7 @@ import (
 // @Description Insert new order
 // @Accept  json
 // @Produce  json
-// @Param rquestBody body domain.PostOrderRequest true "place here order ID"
+// @Param requestBody body domain.PostOrderRequest true "place here order ID"
 // @Success 200 {object} domain.PostOrderResponse
 // @Router /admin/order [post]
 func PostOrder(c *gin.Context, dbc db_services.DbController) {
