@@ -14,7 +14,8 @@ func GetAllUsers(dbc db_services.DbController) (*domain.GetAllUsersResponse, err
 
 	return convertUsers(resp), nil
 }
-func convertUsers(dbUsers []db_domain.User) (users *domain.GetAllUsersResponse) {
+func convertUsers(dbUsers []db_domain.User) *domain.GetAllUsersResponse {
+	users := new(domain.GetAllUsersResponse)
 	for _, dbUser := range dbUsers {
 		users.Users = append(users.Users, domain.GetAllUsersUser{
 			UsersId:  dbUser.ID,
@@ -23,5 +24,5 @@ func convertUsers(dbUsers []db_domain.User) (users *domain.GetAllUsersResponse) 
 			Email:    dbUser.Email,
 		})
 	}
-	return
+	return users
 }
