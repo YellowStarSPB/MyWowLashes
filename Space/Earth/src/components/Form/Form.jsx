@@ -17,8 +17,7 @@ function Form() {
     const [newOrder, setNewOrder] = React.useState({})
     //Current day in calendar
     const [currentDay, setCurrentDay] = React.useState(Number(new Date().toISOString().slice(8, 10)))
-
-
+    const [nextMonth, setNextMonth] = React.useState(true)
     const [fetchData, setFetchData] = React.useState(date)
 
     //Form data state
@@ -29,14 +28,13 @@ function Form() {
             inst: '',
             phone: '',
             vk: '',
-            date: `${new Date().toISOString().substring(0, 10)}`,
-            time: '10:00 - 13:00',
+            date: `${new Date().toISOString().substring(0, 8)}${currentDay}`,
+            time: '',
             message: '',
             methodConnect: 'Мессенджер',
 
         })
-
-        console.log(newOrder)
+    console.log(newOrder)
     //Функция изменения стейта для поля метод связи
     const onSelectMethod = React.useCallback((value) => {
         setChecked(value)
@@ -52,14 +50,22 @@ function Form() {
     }, [])
 
     const onSelectDate = React.useCallback((day) => {
-        setFormData(prev => {
-            return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
-        })
-    }, [])
+        
+        if (nextMonth) {
+            setFormData(prev => {
+                return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
+            })
+        } else if(!nextMonth) {
+            setFormData(prev => {
+                return { ...prev, date: `${new Date(new Date().getFullYear(), new Date().getMonth() + 2, 1).toISOString().substring(0, 8)}${day}` }
+            })
+        }
+
+    }, [nextMonth])
 
     function addNewOrder(e) {
         e.preventDefault()
-        
+
         const newTalon = {
             talon: {
                 name: formData.name.trim(),
@@ -137,10 +143,12 @@ function Form() {
                 setCurrentDay={setCurrentDay}
                 onSelectDate={onSelectDate}
                 fetchData={fetchData}
+                setNextMonth={setNextMonth}
+                nextMonth={nextMonth}
             />
 
 
-            {<Time date={date} currentDay={currentDay}  onSelectTime={onSelectTime} />}
+            {<Time date={date} currentDay={currentDay} onSelectTime={onSelectTime} nextMonth={nextMonth} />}
 
 
             <div className={classes.form__message}>

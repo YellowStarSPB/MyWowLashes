@@ -1,5 +1,5 @@
 import React from "react";
-import WomanImg from '../img/contact/woman.png'
+import WomanImg from '../img/order/woman.png'
 import { motion } from "framer-motion";
 import { transition1 } from "../transition1";
 
