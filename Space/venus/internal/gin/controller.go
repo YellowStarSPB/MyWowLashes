@@ -5,6 +5,7 @@ import (
 	"venus/internal/gin/api"
 	db_services "venus/internal/gorm/services"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
@@ -37,10 +38,16 @@ func CreateGinController(config config.Config, dbc db_services.DbController) Gin
 // Run - function for starting server
 func (gc *ginController) Run() {
 	api.CreateApiGroups(gc.Engine, gc.DbController)
+	// Set CORS
+	gc.setCors()
 	// Start server
 	if err := gc.Engine.Run(gc.GinConfig.port); err != nil {
 		logrus.WithError(err).WithField("port", gc.GinConfig.port).Fatal("Cannot run server.")
 	}
 
 	logrus.WithField("port", gc.GinConfig.port).Trace("Server started successful.")
+}
+
+func (gc *ginController) setCors() {
+	gc.Engine.Use(cors.Default())
 }
