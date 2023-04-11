@@ -24,6 +24,8 @@ type DbController interface {
 	OrderNew(status string, time time.Time, description string, userId uint) (*db_domain.Order, error)
 	OrderGetById(orderId uint) (*db_domain.Order, error)
 	OrderGetByTime(time time.Time) (*db_domain.Order, error)
+	GetAllOrders() ([]db_domain.Order, error)
+	OrderUpdate(order db_domain.Order) (*db_domain.Order, error)
 	GetCalendarOrders(time time.Time) ([]db_domain.Order, error)
 	//Services
 	ServicesNew(price uint, types string, hidden bool) (*uint, error)

@@ -108,6 +108,40 @@
                 }
             }
         },
+        "/admin/orderupdate": {
+            "post": {
+                "description": "Insert update order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Post orderupdate",
+                "parameters": [
+                    {
+                        "description": "update order",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostOrderUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostOrderUpdateResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/photo": {
             "get": {
                 "description": "get photo ID by ID",
@@ -534,7 +568,7 @@
                 },
                 "status": {
                     "type": "string",
-                    "example": "waiting"
+                    "example": "pending"
                 },
                 "time": {
                     "type": "string",
@@ -552,6 +586,29 @@
                 "orderId": {
                     "type": "integer",
                     "example": 1
+                }
+            }
+        },
+        "domain.PostOrderUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
+                    "type": "string",
+                    "example": "accepted"
+                }
+            }
+        },
+        "domain.PostOrderUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "error": {},
+                "statusOk": {
+                    "type": "boolean",
+                    "example": true
                 }
             }
         },
@@ -602,7 +659,7 @@
                 },
                 "status": {
                     "type": "string",
-                    "example": "waiting"
+                    "example": "pending"
                 },
                 "time": {
                     "type": "string",

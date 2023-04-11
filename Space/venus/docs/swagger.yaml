@@ -121,7 +121,7 @@ definitions:
         example: описание
         type: string
       status:
-        example: waiting
+        example: pending
         type: string
       time:
         example: "2023-01-02T10:30:00Z"
@@ -135,6 +135,22 @@ definitions:
       orderId:
         example: 1
         type: integer
+    type: object
+  domain.PostOrderUpdateRequest:
+    properties:
+      orderId:
+        example: 1
+        type: integer
+      status:
+        example: accepted
+        type: string
+    type: object
+  domain.PostOrderUpdateResponse:
+    properties:
+      error: {}
+      statusOk:
+        example: true
+        type: boolean
     type: object
   domain.PostPhotoRequest:
     properties:
@@ -169,7 +185,7 @@ definitions:
         example: banan@mail.ru
         type: string
       status:
-        example: waiting
+        example: pending
         type: string
       time:
         example: "2023-01-02T10:30:00Z"
@@ -297,6 +313,28 @@ paths:
           schema:
             $ref: '#/definitions/domain.PostOrderResponse'
       summary: Post order
+      tags:
+      - Order
+  /admin/orderupdate:
+    post:
+      consumes:
+      - application/json
+      description: Insert update order
+      parameters:
+      - description: update order
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostOrderUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PostOrderUpdateResponse'
+      summary: Post orderupdate
       tags:
       - Order
   /admin/photo:
