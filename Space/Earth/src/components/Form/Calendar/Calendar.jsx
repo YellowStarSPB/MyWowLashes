@@ -1,5 +1,7 @@
 import React from 'react'
 import classes from './Calendar.module.scss'
+import arrowLeft from '../../../img/order/arrowLeft.svg'
+import arrowRight from '../../../img/order/arrowRight.svg'
 import { date } from './data'
 
 
@@ -9,13 +11,14 @@ const closedDay = Number(new Date().toISOString().slice(8, 10))
 
 
 
-function Calendar({ fetchData, setCurrentDay, onSelectDate, currentDay }) {
+function Calendar({ nextMonth, setNextMonth, fetchData, setCurrentDay, onSelectDate, currentDay }) {
 
-    const [plus, setPlus] = React.useState(true)
+    
 
-    const onPlus = (e) => {
+    const handleChangeMonth = (e) => {
         e.preventDefault()
-        setPlus(!plus)
+        setNextMonth(!nextMonth)
+        setCurrentDay(Number(new Date().toISOString().slice(8, 10)))
     }
 
     const handleChangeDay = (day) => {
@@ -27,10 +30,14 @@ function Calendar({ fetchData, setCurrentDay, onSelectDate, currentDay }) {
         <div className={classes.calendarWrapper}>
 
             <div className={classes.navigate}>
-                <button className={classes.btn} onClick={onPlus}>{'<'}</button>
-                <button className={classes.btn} onClick={onPlus}>{'>'}</button>
+                <button className={classes.btn} onClick={handleChangeMonth}>
+                    <img src={arrowLeft} alt="arrowLeft" />
+                </button>
+                <button className={classes.btn} onClick={handleChangeMonth}>
+                    <img src={arrowRight} alt="arrowRight" />
+                </button>
             </div>
-            {plus ? (
+            {nextMonth ? (
                 <div className={classes.calendar}>
                     <div className={classes.header}>
                         <div className={classes.month}>{new Date(0, new Date().getMonth(), 1).toLocaleString('ru', { month: 'long' }).toUpperCase()}</div>
@@ -63,8 +70,7 @@ function Calendar({ fetchData, setCurrentDay, onSelectDate, currentDay }) {
                         {fetchData.next.map(({ day, time }) => (
                             <div key={day}
                                 className={`${classes.date__item} 
-                                ${currentDay === day && classes.active} 
-                                ${day < closedDay && classes.disabled}
+                                ${currentDay === day && classes.active}
                                 ${time.length === 0 && classes.disabled}`}
                                 onClick={() => handleChangeDay(day)}
                             >

@@ -13,9 +13,11 @@
     margin-bottom: 40px;
     border-radius: 0 0 30px 30px;
     padding: 20px;
-
-    @media screen and (max-width: 425px) {
-        flex-direction: column;
+    @media screen and (max-width: 640px) {
+        width: 80%;
+    }
+    @media screen and (max-width: 500px) {
+        width: 100%;
     }
 
     .itemTime {
