@@ -1,9 +1,9 @@
 import React from 'react'
 import classes from './Time.module.scss'
-import { currentMonth, date } from '../data'
 
 
-const arr = [1, 2, 3]
+
+
 
 function Time({ nextMonth, onSelectTime, currentDay, date }) {
     const [activeTime, setActiveTime] = React.useState('')

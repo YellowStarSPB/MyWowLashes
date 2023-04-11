@@ -2,7 +2,7 @@ import React from 'react'
 import classes from './Calendar.module.scss'
 import arrowLeft from '../../../img/order/arrowLeft.svg'
 import arrowRight from '../../../img/order/arrowRight.svg'
-import { date } from './data'
+
 
 
 
@@ -13,12 +13,13 @@ const closedDay = Number(new Date().toISOString().slice(8, 10))
 
 function Calendar({ nextMonth, setNextMonth, fetchData, setCurrentDay, onSelectDate, currentDay }) {
 
-    
+
 
     const handleChangeMonth = (e) => {
         e.preventDefault()
         setNextMonth(!nextMonth)
-        setCurrentDay(Number(new Date().toISOString().slice(8, 10)))
+        //TODO: фикс выбора даты
+        setCurrentDay(prev => prev = 1)
     }
 
     const handleChangeDay = (day) => {
