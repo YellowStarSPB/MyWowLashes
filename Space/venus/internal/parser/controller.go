@@ -12,7 +12,7 @@ import (
 )
 
 type ParserController interface {
-	parse() error
+	parse() ([]string, error)
 	StartRepeatedParcing()
 }
 
@@ -29,14 +29,14 @@ func CreateParserController(config config.Config) ParserController {
 }
 func (pc *parserController) StartRepeatedParcing() {
 	logrus.Info("First Parsing")
-	if err := pc.parse(); err != nil {
+	if _, err := pc.parse(); err != nil {
 		logrus.WithField("url", pc.Url).WithError(err).Error("Error on parcing url")
 	}
 
 	go func() {
 		for now := range time.Tick(pc.Timer) {
 			logrus.WithField("time", now).Info("Parse start")
-			if err := pc.parse(); err != nil {
+			if _, err := pc.parse(); err != nil {
 				logrus.WithField("url", pc.Url).WithError(err).Error("Error on parcing url")
 			}
 		}
@@ -44,14 +44,15 @@ func (pc *parserController) StartRepeatedParcing() {
 }
 
 // StartParsing - function for starting parsing
-func (pc *parserController) parse() error {
+func (pc *parserController) parse() ([]string, error) {
+	links := []string{}
 	// Open HTML-page
 	res, err := http.Get(pc.Url)
 	if err != nil {
-		return errors.New(fmt.Sprintf("Couldn't open url. url: '%s'. Error: '%s'", pc.Url, err.Error()))
+		return nil, errors.New(fmt.Sprintf("Couldn't open url. url: '%s'. Error: '%s'", pc.Url, err.Error()))
 		//Check if the page is working
 	} else if res.StatusCode != 200 {
-		return errors.New(fmt.Sprintf("HTML-page is not found or work! url: '%d'. Error: '%s'", res.StatusCode, err.Error()))
+		return nil, errors.New(fmt.Sprintf("HTML-page is not found or work! url: '%d'. Error: '%s'", res.StatusCode, err.Error()))
 	}
 	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
@@ -60,8 +61,7 @@ func (pc *parserController) parse() error {
 	//Searth info for parsing
 	doc.Find("a").Each(func(i int, selector *goquery.Selection) {
 		linkAll, _ := selector.Find("img").Attr("src")
-		text := selector.Text()
-		fmt.Printf("link: %s, text: %s\n", linkAll, text)
+		links = append(links, linkAll)
 	})
-	return nil
+	return links, nil
 }
