@@ -18,8 +18,18 @@ function Calendar({ nextMonth, setNextMonth, fetchData, setCurrentDay, onSelectD
     const handleChangeMonth = (e) => {
         e.preventDefault()
         setNextMonth(!nextMonth)
+
         //TODO: фикс выбора даты
-        setCurrentDay(prev => prev = 1)
+        setCurrentDay(prev => {
+            if (nextMonth) {
+                return prev = Number(new Date().toISOString().slice(8, 10))
+            } else {
+                onSelectDate(1)
+                return prev = 1
+            }
+        })
+
+
     }
 
     const handleChangeDay = (day) => {
@@ -38,7 +48,7 @@ function Calendar({ nextMonth, setNextMonth, fetchData, setCurrentDay, onSelectD
                     <img src={arrowRight} alt="arrowRight" />
                 </button>
             </div>
-            {nextMonth ? (
+            {!nextMonth ? (
                 <div className={classes.calendar}>
                     <div className={classes.header}>
                         <div className={classes.month}>{new Date(0, new Date().getMonth(), 1).toLocaleString('ru', { month: 'long' }).toUpperCase()}</div>

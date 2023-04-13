@@ -8,7 +8,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"net/http"
 )
 
 // @Summary Post record
