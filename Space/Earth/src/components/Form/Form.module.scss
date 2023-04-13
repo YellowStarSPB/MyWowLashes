@@ -2,18 +2,37 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    
+
     h2 {
         margin-bottom: 20px;
     }
+
     &__info {
         display: flex;
         justify-content: space-between;
         margin-bottom: 40px;
+
         @media screen and (max-width: 660px) {
             flex-direction: column;
         }
-        
+
+        .wrapperInput {
+            width: 45%;
+
+            input {
+                width: 100%;
+            }
+
+            .notValid {
+                font-size: 14px;
+                color: red;
+            }
+
+            .valid {
+                color: green;
+            }
+        }
+
         input {
             width: 45%;
             height: 40px;
@@ -25,9 +44,11 @@
             font-weight: 400;
             transition: transform 0.15s ease-in-out;
             cursor: pointer;
+
             @media screen and (max-width: 660px) {
                 width: 100%;
                 margin-bottom: 40px;
+
                 &:last-child {
                     margin-bottom: 0;
                 }
@@ -40,6 +61,7 @@
             &:focus {
                 transform: scale(1.2);
             }
+
             @media screen and (max-width: 660px) {
                 &:focus {
                     transform: scale(1);
@@ -63,7 +85,7 @@
             margin-bottom: 40px;
             transition: transform 0.15s ease-in-out;
             cursor: pointer;
-            
+
 
             &::placeholder {
                 color: #000;
@@ -71,6 +93,7 @@
 
             &:focus {
                 transform: scale(1.2);
+
                 @media screen and (max-width: 660px) {
                     transform: scale(1);
                 }
@@ -78,8 +101,14 @@
         }
     }
 }
+
 .form__info_date {
-    input {
+    .wrapperInput {
         width: 100%;
+
+        input {
+            width: 100%;
+        }
     }
+
 }

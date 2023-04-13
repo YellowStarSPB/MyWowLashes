@@ -32,7 +32,7 @@ function Time({ nextMonth, onSelectTime, currentDay, date }) {
                 На данную дату запись закончилась
             </div> */}
             <div className={classes.timeWrapper}>
-                {nextMonth ? (
+                {!nextMonth ? (
                     date.current[currentDay - 1].time.length === 0 ? (<div className={`${classes.itemTime}`}>
                         На данную дату запись закончилась
                     </div>) : (date.current[currentDay - 1].time.map((item, index) => (
