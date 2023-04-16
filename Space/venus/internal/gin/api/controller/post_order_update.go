@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"venus/internal/gin/api/domain"
 	"venus/internal/gin/api/service"
 	db_services "venus/internal/gorm/services"
@@ -28,14 +29,14 @@ func PostOrderUpdate(c *gin.Context, dbc db_services.DbController) {
 		"status":  req.Status,
 		"orderId": req.OrderId,
 	}).Info("Start 'PostOrderUpdate' API method")
-	
+
 	resp, err := service.PostOrderUpdate(req, dbc)
 	if err != nil {
 		logrus.WithError(err).Error("couldn't insert data to DB")
 		c.JSON(500, domain.PostOrderUpdateResponse{Error: err.Error(), StatusOk: resp})
 		return
 	}
-	logrus.WithField("response", resp).Debug("Data from DB")
+	logrus.WithField("response", domain.PostRecordResponse{Error: fmt.Sprintf("%v", err), StatusOk: resp}).Debug("Data from DB")
 
-	c.JSON(200, domain.PostOrderUpdateResponse{Error: err.Error(), StatusOk: resp})
+	c.JSON(200, domain.PostOrderUpdateResponse{Error: fmt.Sprintf("%v", err), StatusOk: resp})
 }

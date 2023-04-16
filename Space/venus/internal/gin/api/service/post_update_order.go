@@ -22,11 +22,11 @@ func PostOrderUpdate(req domain.PostOrderUpdateRequest, dbc db_services.DbContro
 	default:
 		return false, errors.New("undefined status type!")
 	}
+
+	_, err = dbc.OrderUpdate(*order)
 	if err != nil {
 		return false, err
 	}
-
-	dbc.OrderUpdate(*order)
 
 	return true, nil
 }
