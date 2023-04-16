@@ -7,7 +7,6 @@ import (
 )
 
 func PostOrderUpdate(req domain.PostOrderUpdateRequest, dbc db_services.DbController) (bool, error) {
-	var err error
 
 	order, err := dbc.OrderGetById(req.OrderId)
 	if err != nil {
@@ -22,6 +21,9 @@ func PostOrderUpdate(req domain.PostOrderUpdateRequest, dbc db_services.DbContro
 		order.Status = "declined"
 	default:
 		return false, errors.New("undefined status type!")
+	}
+	if err != nil {
+		return false, err
 	}
 
 	dbc.OrderUpdate(*order)
