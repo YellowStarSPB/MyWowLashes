@@ -1,7 +1,10 @@
 import React from "react";
+import useValidateInput from "../../../hook/useValidateInput";
 import classes from './CommunicationMethod.module.scss'
 
-function CommunicationMethod({ onSelectMethod, method, checked }) {
+const method = ['Мессенджер', 'E-mail', 'Instagram', 'ВКонтакте']
+
+function CommunicationMethod({ checked, onSelectMethod }) {
 
 
     return (
