@@ -7,9 +7,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func (dc *dbController) OrderNew(status string, time time.Time, description string, userId uint) (*db_domain.Order, error) {
+func (dc *dbController) OrderNew(time time.Time, description string, userId uint) (*db_domain.Order, error) {
 	order := &db_domain.Order{
-		Status:      status,
+		Status:      "pending",
 		Time:        time,
 		Description: description,
 		UserId:      userId,
@@ -54,7 +54,12 @@ func (dc *dbController) GetAllOrders() ([]db_domain.Order, error) {
 
 	return res, nil
 }
-
+func (dc *dbController) OrderUpdate(order db_domain.Order) (*db_domain.Order, error) {
+	if err := dc.dbConn.Updates(&order).Error; err != nil {
+		return nil, err
+	}
+	return dc.OrderGetById(order.ID)
+}
 func (dc *dbController) GetCalendarOrders(time time.Time) ([]db_domain.Order, error) {
 	var res []db_domain.Order
 	if err := dc.dbConn.Debug().Where("time >= ? AND time <= ?", time, time.AddDate(0, 1, 1)).

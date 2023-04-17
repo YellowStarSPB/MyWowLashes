@@ -31,7 +31,7 @@ func PostRecord(req domain.PostRecordRequest, dbc db_services.DbController) (boo
 	}
 	order, _ := dbc.OrderGetByTime(req.Time)
 	if order == nil {
-		_, err = dbc.OrderNew(req.Status, req.Time, req.Description, user.ID)
+		_, err = dbc.OrderNew(req.Time, req.Description, user.ID)
 		if err != nil {
 			return false, err
 		}

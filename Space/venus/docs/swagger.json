@@ -108,6 +108,40 @@
                 }
             }
         },
+        "/admin/orderupdate": {
+            "post": {
+                "description": "Insert update order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Post orderupdate",
+                "parameters": [
+                    {
+                        "description": "update order",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostOrderUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostOrderUpdateResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/photo": {
             "get": {
                 "description": "get photo ID by ID",
@@ -532,10 +566,6 @@
                     "type": "string",
                     "example": "описание"
                 },
-                "status": {
-                    "type": "string",
-                    "example": "waiting"
-                },
                 "time": {
                     "type": "string",
                     "example": "2023-01-02T10:30:00Z"
@@ -552,6 +582,31 @@
                 "orderId": {
                     "type": "integer",
                     "example": 1
+                }
+            }
+        },
+        "domain.PostOrderUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "orderId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
+                    "type": "string",
+                    "example": "accepted"
+                }
+            }
+        },
+        "domain.PostOrderUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "statusOk": {
+                    "type": "boolean",
+                    "example": true
                 }
             }
         },
@@ -600,10 +655,6 @@
                     "type": "string",
                     "example": "banan@mail.ru"
                 },
-                "status": {
-                    "type": "string",
-                    "example": "waiting"
-                },
                 "time": {
                     "type": "string",
                     "example": "2023-01-02T10:30:00Z"
@@ -617,7 +668,9 @@
         "domain.PostRecordResponse": {
             "type": "object",
             "properties": {
-                "error": {},
+                "error": {
+                    "type": "string"
+                },
                 "statusOk": {
                     "type": "boolean",
                     "example": true
