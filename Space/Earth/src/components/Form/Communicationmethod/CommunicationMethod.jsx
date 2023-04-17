@@ -1,11 +1,19 @@
 import React from "react";
-import useValidateInput from "../../../hook/useValidateInput";
 import classes from './CommunicationMethod.module.scss'
 
 const method = ['Мессенджер', 'E-mail', 'Instagram', 'ВКонтакте']
 
-function CommunicationMethod({ checked, onSelectMethod }) {
+function CommunicationMethod({ setFormData }) {
+    //стейт метода связи
+    const [methodConnect, setMethodConnect] = React.useState('Мессенджер')
 
+    //хэндлнер выбора метода связи
+    const onSelectMethod = (value) => {
+        setMethodConnect(value)
+        setFormData(prev => {
+            return { ...prev, methodConnect: value }
+        })
+    }
 
     return (
         <div className={classes.connection}>
@@ -16,7 +24,7 @@ function CommunicationMethod({ checked, onSelectMethod }) {
                     <label key={`${item}_${index}`}>
                         <input
                             type="radio"
-                            checked={checked === item}
+                            checked={methodConnect === item}
                             onChange={() => onSelectMethod(item)}
                         />
                         {item}

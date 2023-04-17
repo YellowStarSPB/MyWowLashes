@@ -1,22 +1,7 @@
 import React from "react"
 
-function useValidateInput(currentDay, nextMonth) {
-    //стейт метода связи
-    const [checked, setChecked] = React.useState('Мессенджер')
-    //стейт данных из формы
-    const [formData, setFormData] = React.useState(
-        {
-            name: '',
-            email: '',
-            inst: '',
-            phone: '',
-            vk: '',
-            date: `${new Date().toISOString().substring(0, 8)}${currentDay}`,
-            time: '',
-            message: '',
-            methodConnect: 'Мессенджер',
+function useValidateInput(setFormData) {
 
-        })
     //проверка на "чисты" инпут
     const [dirtyInput, setDirtyInput] = React.useState(
         {
@@ -62,41 +47,19 @@ function useValidateInput(currentDay, nextMonth) {
             case 'inst':
                 setDirtyInput({ ...dirtyInput, inst: true })
                 break
+            default:
+
         }
     }
-    //хэндлнер выбора метода связи
-    const onSelectMethod = React.useCallback((value) => {
-        setChecked(value)
-        setFormData(prev => {
-            return { ...prev, methodConnect: value }
-        })
-    }, [])
-    //Функция изменения времени записи
-    const onSelectTime = React.useCallback((time) => {
-        setFormData(prev => {
-            return { ...prev, time: time }
-        })
-    }, [])
-    //Функция изменения дня записи
-    const onSelectDate = React.useCallback((day) => {
-        if (nextMonth) {
-            setFormData(prev => {
-                return { ...prev, date: `${new Date(new Date().getFullYear(), new Date().getMonth() + 2, 1).toISOString().substring(0, 8)}${day}` }
-            })
-
-        } else {
-            setFormData(prev => {
-                return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
-            })
-        }
-    }, [nextMonth])
-
     //хэндлер валидации инпутов
     const handleChangeInput = (e) => {
         e.preventDefault()
         //email validation
         if (e.target.name === 'email') {
             const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            if (e.target.value.length > 30) {
+                e.target.value = e.target.value.slice(0, 30)
+            }
             if (!re.test(String(e.target.value).toLowerCase())) {
                 setInputError({ ...inputError, email: 'Некорректный E-mail' })
                 setValidInput({ ...validInput, email: false })
@@ -104,9 +67,7 @@ function useValidateInput(currentDay, nextMonth) {
                 setValidInput({ ...validInput, email: true })
                 setInputError({ ...inputError, email: 'Отлично!' })
             }
-            if (e.target.value.length > 30) {
-                e.target.value = e.target.value.slice(0, 30)
-            }
+
             setFormData(prev => ({ ...prev, email: e.target.value }))
             //phone validation
         } else if (e.target.name === 'phone') {
@@ -120,15 +81,15 @@ function useValidateInput(currentDay, nextMonth) {
             }
             //name validation
         } else if (e.target.name === 'name') {
-            const re = /[^a-zA-Z+A-zА-яЁё]/g
+            const re = /[^a-zA-Z+A-zА-яЁё+\s]/g
             if (e.target.value.length > 16) {
                 e.target.value = e.target.value.slice(0, 16)
             }
             e.target.value = e.target.value.replace(re, '')
 
 
-            if (e.target.value.length < 1) {
-                setInputError({ ...inputError, name: 'Поле должно быть не меньше 1 символа' })
+            if (e.target.value.length < 2) {
+                setInputError({ ...inputError, name: 'Поле должно быть не меньше 2 символов' })
                 setValidInput({ ...validInput, name: false })
             } else {
                 setValidInput({ ...validInput, name: true })
@@ -139,7 +100,7 @@ function useValidateInput(currentDay, nextMonth) {
             //vk validation
         } else if (e.target.name === 'vk') {
 
-            const re = /[^a-zA-Z+A-zА-яЁё+0-9]/g
+            const re = /[^a-zA-Z+A-zА-яЁё+0-9?:.\-/\s]/g
             if (e.target.value.length > 30) {
                 e.target.value = e.target.value.slice(0, 30)
             }
@@ -156,7 +117,7 @@ function useValidateInput(currentDay, nextMonth) {
             //inst validation
         } else if (e.target.name === 'inst') {
 
-            const re = /[^a-zA-Z+A-zА-яЁё+0-9]/g
+            const re = /[^a-zA-Z+A-zА-яЁё+0-9?:.\-/\s]/g
             if (e.target.value.length > 30) {
                 e.target.value = e.target.value.slice(0, 30)
             }
@@ -173,7 +134,7 @@ function useValidateInput(currentDay, nextMonth) {
             //message validation
         } else if (e.target.name === 'message') {
 
-            const re = /[^a-zA-Z+A-zА-яЁё+0-9]/g
+            const re = /[^a-zA-Z+A-zА-яЁё+0-9?:.\-/\s+]/g
             if (e.target.value.length > 100) {
                 e.target.value = e.target.value.slice(0, 100)
             }
@@ -185,14 +146,10 @@ function useValidateInput(currentDay, nextMonth) {
     return {
         handleChangeInput,
         blurHandler,
-        onSelectMethod,
-        onSelectTime,
-        onSelectDate,
         inputError,
         validInput,
         dirtyInput,
-        formData,
-        checked,
+
     }
 }
 export default useValidateInput;

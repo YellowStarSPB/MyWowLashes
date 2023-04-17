@@ -3,46 +3,108 @@ import { IMaskInput } from "react-imask";
 import CommunicationMethod from "./Communicationmethod/CommunicationMethod";
 import Calendar from './Calendar/Calendar'
 import classes from './Form.module.scss'
-import Time from "./Calendar/Time/Time";
 import { date } from './Calendar/data'
 import useValidateInput from "../../hook/useValidateInput";
+import ErrorForm from "./ErrorForm/ErrorForm";
 
 
 function Form() {
+    //стейт заказа
     const [newOrder, setNewOrder] = React.useState({})
-    //Current day in calendar
-    const [currentDay, setCurrentDay] = React.useState(Number(new Date().toISOString().slice(8, 10)))
-    const [nextMonth, setNextMonth] = React.useState(false)
+    //стейт данных с сервера для отображения календаря
     const [fetchData, setFetchData] = React.useState(date)
-
-    const { handleChangeInput,
+    const [errorValid, setErrorValid] = React.useState(false)
+    //стейт данных из формы
+    const [formData, setFormData] = React.useState(
+        {
+            name: '',
+            email: '',
+            inst: '',
+            phone: '',
+            vk: '',
+            date: `${new Date().toISOString().substring(0, 10)}`,
+            time: '',
+            message: '',
+            methodConnect: 'Мессенджер',
+        })
+    console.log(formData)
+    const {
+        handleChangeInput,
         blurHandler,
-        onSelectTime,
-        onSelectDate,
-        onSelectMethod,
         inputError,
         validInput,
-        dirtyInput,
-        formData,
-        checked, } = useValidateInput(currentDay, nextMonth)
-    
+        dirtyInput } = useValidateInput(setFormData)
+
     // Функция добавления и отправки формы
     async function addNewOrder(e) {
         e.preventDefault()
-        const newTalon = {
-            talon: {
-                name: formData.name.trim(),
-                email: formData.email.trim(),
-                inst: formData.inst.trim(),
-                phone: formData.phone,
-                vk: formData.vk.trim(),
-                date: formData.date,
-                time: formData.time,
-                message: formData.message.trim(),
-                methodConnect: formData.methodConnect,
+        if (formData.methodConnect === 'Мессенджер' || formData.methodConnect === 'E-mail') {
+            if (validInput.email !== false && validInput.name !== false && validInput.phone !== false) {
+                if (formData.date !== '' && formData.time !== '') {
+                    const newTalon = {
+                        talon: {
+                            name: formData.name.trim(),
+                            email: formData.email.trim(),
+                            phone: formData.phone,
+                            date: formData.date,
+                            time: formData.time,
+                            message: formData.message.trim(),
+                            methodConnect: formData.methodConnect,
+                        }
+                    }
+                    setNewOrder(newTalon)
+                } else {
+                    setErrorValid(true)
+                }
+            } else {
+                setErrorValid(true)
             }
         }
-        setNewOrder(newTalon)
+        if (formData.methodConnect === 'Instagram') {
+            if (validInput.email !== false && validInput.name !== false && validInput.inst !== false) {
+                if (formData.date !== '' && formData.time !== '') {
+                    const newTalon = {
+                        talon: {
+                            name: formData.name.trim(),
+                            email: formData.email.trim(),
+                            inst: formData.inst,
+                            date: formData.date,
+                            time: formData.time,
+                            message: formData.message.trim(),
+                            methodConnect: formData.methodConnect,
+                        }
+                    }
+                    setNewOrder(newTalon)
+                } else {
+                    setErrorValid(true)
+                }
+            } else {
+                setErrorValid(true)
+            }
+        }
+        if (formData.methodConnect === 'ВКонтакте') {
+            if (validInput.email !== false && validInput.name !== false && validInput.vk !== false) {
+                if (formData.date !== '' && formData.time !== '') {
+                    const newTalon = {
+                        talon: {
+                            name: formData.name.trim(),
+                            email: formData.email.trim(),
+                            vk: formData.vk,
+                            date: formData.date,
+                            time: formData.time,
+                            message: formData.message.trim(),
+                            methodConnect: formData.methodConnect,
+                        }
+                    }
+                    setNewOrder(newTalon)
+                } else {
+                    setErrorValid(true)
+                }
+            } else {
+                setErrorValid(true)
+            }
+        }
+
 
         /* await fetch('http://localhost:1001/api/admin/record', {
             method: 'POST',
@@ -62,15 +124,13 @@ function Form() {
             .then((data) => console.log(data)) */
     }
 
-    console.log(formData)
-
 
 
     return (
         fetchData.error !== null ? (<div>Что-то пошло не так</div>
         ) : (<form
             className={classes.form}>
-            <CommunicationMethod checked={checked} onSelectMethod={onSelectMethod} />
+            <CommunicationMethod setFormData={setFormData} />
 
             {/* form input */}
             <div className={classes.form__info}>
@@ -88,7 +148,7 @@ function Form() {
                             {inputError.name}
                         </div>}
                 </div>
-                {checked === 'Мессенджер' && (
+                {formData.methodConnect === 'Мессенджер' && (
                     <div className={classes.wrapperInput}>
                         <IMaskInput
                             onChange={(e) => handleChangeInput(e)}
@@ -105,7 +165,7 @@ function Form() {
                     </div>)}
 
 
-                {checked === 'E-mail' && (
+                {formData.methodConnect === 'E-mail' && (
                     <div className={classes.wrapperInput}>
                         <input
                             onChange={(e) => handleChangeInput(e)}
@@ -121,7 +181,7 @@ function Form() {
 
                     </div>)}
 
-                {checked === 'Instagram' && (
+                {formData.methodConnect === 'Instagram' && (
                     <div className={classes.wrapperInput}>
                         <input
                             onChange={(e) => handleChangeInput(e)}
@@ -137,7 +197,7 @@ function Form() {
                             </div>}
                     </div>)}
 
-                {checked === 'ВКонтакте' && (
+                {formData.methodConnect === 'ВКонтакте' && (
                     <div className={classes.wrapperInput}>
                         <input
                             onChange={(e) => handleChangeInput(e)}
@@ -156,7 +216,7 @@ function Form() {
             </div>
             <h2>Дополнительный способ связи</h2>
             <div className={`${classes.form__info} ${classes.form__info_date}`}>
-                {checked === 'E-mail' ? (
+                {formData.methodConnect === 'E-mail' ? (
                     <div className={classes.wrapperInput}>
                         <IMaskInput
                             onChange={(e) => handleChangeInput(e)}
@@ -188,17 +248,9 @@ function Form() {
             </div>
 
             <Calendar
-                currentDay={currentDay}
-                setCurrentDay={setCurrentDay}
-                onSelectDate={onSelectDate}
                 fetchData={fetchData}
-                setNextMonth={setNextMonth}
-                nextMonth={nextMonth}
+                setFormData={setFormData}
             />
-
-
-            {<Time date={date} currentDay={currentDay} onSelectTime={onSelectTime} nextMonth={nextMonth} />}
-
 
             <div className={classes.form__message}>
                 <textarea
@@ -210,7 +262,15 @@ function Form() {
                     placeholder='Оставить комментарий' />
             </div>
 
-            <button onClick={(e) => addNewOrder(e)} type="submit" className='btn'>Записаться</button>
+            <button
+                onClick={addNewOrder}
+                type="submit"
+                className={formData.time && formData.date !== '' ? 'btn' : 'btn-disabled'}
+                disabled={!formData.time && formData.date}
+            >
+                {formData.time && formData.date !== '' ? 'Записаться' : 'Выберите дату и время'}
+            </button>
+            {errorValid && <ErrorForm setErrorValid={setErrorValid} />}
         </form>)
 
 

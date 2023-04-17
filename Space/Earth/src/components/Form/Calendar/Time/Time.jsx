@@ -5,14 +5,20 @@ import classes from './Time.module.scss'
 
 
 
-function Time({ nextMonth, onSelectTime, currentDay, date }) {
+function Time({ nextMonth, currentDay, fetchData, setFormData }) {
     const [activeTime, setActiveTime] = React.useState('')
-
+    //хэндлер активного времени
     const handleActiveTime = (item, index) => {
         setActiveTime(index)
         onSelectTime(item)
     }
-   
+    //Функция изменения времени записи
+    const onSelectTime = (time) => {
+        setFormData(prev => {
+            return { ...prev, time: time }
+        })
+    }
+
 
     return (
         <div className={classes.wrapper}>
@@ -33,21 +39,21 @@ function Time({ nextMonth, onSelectTime, currentDay, date }) {
             </div> */}
             <div className={classes.timeWrapper}>
                 {!nextMonth ? (
-                    date.current[currentDay - 1].time.length === 0 ? (<div className={`${classes.itemTime}`}>
+                    fetchData.current[currentDay - 1].time.length === 0 ? (<div className={`${classes.itemTime}`}>
                         На данную дату запись закончилась
-                    </div>) : (date.current[currentDay - 1].time.map((item, index) => (
+                    </div>) : (fetchData.current[currentDay - 1].time.map((item, index) => (
                         <div key={`${item}_${index}`} onClick={() => handleActiveTime(item, index)} className={`${classes.itemTime} ${activeTime === index && classes.active}`}>
                             {item}
-                        </div>)))) : (date.next[currentDay - 1].time.length === 0 ? (
+                        </div>)))) : (fetchData.next[currentDay - 1].time.length === 0 ? (
                             <div className={`${classes.itemTime}`}>
                                 На данную дату запись закончилась
                             </div>
-                        ) : (date.next[currentDay - 1].time.map((item, index) => (
+                        ) : (fetchData.next[currentDay - 1].time.map((item, index) => (
                             <div key={`${item}_${index}`} onClick={() => handleActiveTime(item, index)} className={`${classes.itemTime} ${activeTime === index && classes.active}`}>
                                 {item}
                             </div>))))
                 }
-                
+
             </div >
         </div>
     )
