@@ -146,6 +146,7 @@ function useValidateInput(setFormData) {
     return {
         handleChangeInput,
         blurHandler,
+        setDirtyInput,
         inputError,
         validInput,
         dirtyInput,

@@ -31,10 +31,10 @@ function Form() {
     const {
         handleChangeInput,
         blurHandler,
+        setDirtyInput,
         inputError,
         validInput,
         dirtyInput } = useValidateInput(setFormData)
-
     // Функция добавления и отправки формы
     async function addNewOrder(e) {
         e.preventDefault()
@@ -58,6 +58,12 @@ function Form() {
                 }
             } else {
                 setErrorValid(true)
+                setDirtyInput(prev => ({
+                    ...prev,
+                    name: true,
+                    email: true,
+                    phone: true,
+                }))
             }
         }
         if (formData.methodConnect === 'Instagram') {
@@ -80,6 +86,12 @@ function Form() {
                 }
             } else {
                 setErrorValid(true)
+                setDirtyInput(prev => ({
+                    ...prev,
+                    name: true,
+                    email: true,
+                    inst: true,
+                }))
             }
         }
         if (formData.methodConnect === 'ВКонтакте') {
@@ -102,10 +114,16 @@ function Form() {
                 }
             } else {
                 setErrorValid(true)
+                setDirtyInput(prev => ({
+                    ...prev,
+                    name: true,
+                    email: true,
+                    vk: true,
+                }))
             }
         }
 
-        
+
         /* await fetch('http://localhost:1001/api/admin/record', {
             method: 'POST',
             body: JSON.stringify({
@@ -123,8 +141,6 @@ function Form() {
             .then((res) => res.json())
             .then((data) => console.log(data)) */
     }
-    console.log(newOrder)
-    console.log(formData)
 
     return (
         fetchData.error !== null ? (<div>Что-то пошло не так</div>
