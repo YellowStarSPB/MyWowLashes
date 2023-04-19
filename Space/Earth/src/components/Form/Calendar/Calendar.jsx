@@ -18,12 +18,11 @@ function Calendar({ fetchData, setFormData }) {
     const [nextMonth, setNextMonth] = React.useState(false)
 
     //Функция изменения дня записи
-    const onSelectDate = (day) => {
+    const onSelectDay = (day) => {
         if (nextMonth) {
             setFormData(prev => {
                 return { ...prev, date: `${new Date(new Date().getFullYear(), new Date().getMonth() + 2, 1).toISOString().substring(0, 8)}${day}` }
             })
-
         } else {
             setFormData(prev => {
                 return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
@@ -31,27 +30,26 @@ function Calendar({ fetchData, setFormData }) {
         }
     }
 
-    const handleChangeMonth = (e) => {
-        e.preventDefault()
+    const handleChangeMonth = () => {
         setNextMonth(prev => !prev)
-        setFormData(prev => ({ ...prev, time: '', date: '' }))
+        setCurrentDay(prev => !nextMonth ? prev = 1 : prev = Number(new Date().toISOString().slice(8, 10)))
+        setFormData(prev => ({ ...prev, time: '' }))
     }
 
     React.useEffect(() => {
         if (nextMonth) {
             setCurrentDay(prev => prev = 1)
-            onSelectDate(1)
+            onSelectDay(1)
         } else {
             setCurrentDay(prev => prev = Number(new Date().toISOString().slice(8, 10)))
-            onSelectDate(Number(new Date().toISOString().slice(8, 10)))
+            onSelectDay(Number(new Date().toISOString().slice(8, 10)))
         }
-    }, [nextMonth, setCurrentDay])
+    }, [nextMonth])
 
     const handleChangeDay = (day) => {
         setCurrentDay(prev => prev = day)
-        onSelectDate(day)
+        onSelectDay(day)
     }
-
 
     return (
         <>

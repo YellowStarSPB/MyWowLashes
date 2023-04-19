@@ -11,7 +11,12 @@ function Time({ nextMonth, currentDay, fetchData, setFormData }) {
     const handleActiveTime = (item, index) => {
         setActiveTime(index)
         onSelectTime(item)
+
     }
+    React.useEffect(() => {
+        setActiveTime(prev => prev = '')
+    }, [nextMonth])
+
     //Функция изменения времени записи
     const onSelectTime = (time) => {
         setFormData(prev => {

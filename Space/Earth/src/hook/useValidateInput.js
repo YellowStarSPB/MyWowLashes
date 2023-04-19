@@ -81,7 +81,7 @@ function useValidateInput(setFormData) {
             }
             //name validation
         } else if (e.target.name === 'name') {
-            const re = /[^a-zA-Z+A-zА-яЁё+\s]/g
+            const re = /[^a-zA-Z+A-zА-яЁё\s]/g
             if (e.target.value.length > 16) {
                 e.target.value = e.target.value.slice(0, 16)
             }

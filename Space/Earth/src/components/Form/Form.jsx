@@ -27,7 +27,7 @@ function Form() {
             message: '',
             methodConnect: 'Мессенджер',
         })
-    console.log(formData)
+
     const {
         handleChangeInput,
         blurHandler,
@@ -69,8 +69,8 @@ function Form() {
                             email: formData.email.trim(),
                             inst: formData.inst,
                             date: formData.date,
-                            time: formData.time,
-                            message: formData.message.trim(),
+                            time: formData.date + "T" + formData.time + ":00Z",
+                            message: formData.message.trim(),//поменять на description
                             methodConnect: formData.methodConnect,
                         }
                     }
@@ -105,7 +105,7 @@ function Form() {
             }
         }
 
-
+        
         /* await fetch('http://localhost:1001/api/admin/record', {
             method: 'POST',
             body: JSON.stringify({
@@ -123,8 +123,8 @@ function Form() {
             .then((res) => res.json())
             .then((data) => console.log(data)) */
     }
-
-
+    console.log(newOrder)
+    console.log(formData)
 
     return (
         fetchData.error !== null ? (<div>Что-то пошло не так</div>
