@@ -37,7 +37,9 @@
     letter-spacing: 0.03em;
     text-transform: uppercase;
     transition: transform 0.15s ease-in-out;
+    border: none;
     cursor: pointer;
+
     @media (max-width: 500px) {
         padding: 10px 30px;
         font-size: 14px;
@@ -52,4 +54,29 @@
         transform: translate(0)
     }
 
+}
+
+.btn-disabled {
+    background-color: dimgrey;
+    color: linen;
+    opacity: 1;
+    pointer-events: none;
+    cursor: not-allowed;
+    padding: 18px 50px;
+    box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 194.19%;
+    text-align: center;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border: none;
+
+    @media (max-width: 500px) {
+        padding: 10px 30px;
+        font-size: 14px;
+        width: 100%;
+    }
 }

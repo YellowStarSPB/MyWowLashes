@@ -3,25 +3,18 @@ import { IMaskInput } from "react-imask";
 import CommunicationMethod from "./Communicationmethod/CommunicationMethod";
 import Calendar from './Calendar/Calendar'
 import classes from './Form.module.scss'
-import Time from "./Calendar/Time/Time";
 import { date } from './Calendar/data'
-
-
-const method = ['Мессенджер', 'E-mail', 'Instagram', 'ВКонтакте']
+import useValidateInput from "../../hook/useValidateInput";
+import ErrorForm from "./ErrorForm/ErrorForm";
 
 
 function Form() {
-    //Method state
-    const [checked, setChecked] = React.useState('Мессенджер')
-    //Talon/order state
+    //стейт заказа
     const [newOrder, setNewOrder] = React.useState({})
-    //Current day in calendar
-    const [currentDay, setCurrentDay] = React.useState(Number(new Date().toISOString().slice(8, 10)))
-    const [nextMonth, setNextMonth] = React.useState(false)
+    //стейт данных с сервера для отображения календаря
     const [fetchData, setFetchData] = React.useState(date)
-    //Form data state
-    console.log(currentDay)
-    console.log(nextMonth)
+    const [errorValid, setErrorValid] = React.useState(false)
+    //стейт данных из формы
     const [formData, setFormData] = React.useState(
         {
             name: '',
@@ -29,188 +22,107 @@ function Form() {
             inst: '',
             phone: '',
             vk: '',
-            date: `${new Date().toISOString().substring(0, 8)}${currentDay}`,
+            date: `${new Date().toISOString().substring(0, 10)}`,
             time: '',
             message: '',
             methodConnect: 'Мессенджер',
-
-        })
-    const [dirtyInput, setDirtyInput] = React.useState(
-        {
-            name: false,
-            email: false,
-            inst: false,
-            phone: false,
-            vk: false,
-            message: false,
-        })
-    const [validInput, setValidInput] = React.useState(
-        {
-            name: false,
-            email: false,
-            inst: false,
-            phone: false,
-            vk: false,
-            message: false,
         })
 
-    const [inputError, setInputError] = React.useState(
-        {
-            name: 'Поле не может быть пустым',
-            email: 'Поле не может быть пустым',
-            inst: 'Поле не может быть пустым',
-            phone: 'Поле не может быть пустым',
-            vk: 'Поле не может быть пустым',
-            message: 'Поле не может быть пустым',
-
-
-        })
-    const blurHandler = (e) => {
-        switch (e.target.name) {
-            case 'email':
-                setDirtyInput({ ...dirtyInput, email: true })
-                break
-            case 'phone':
-                setDirtyInput({ ...dirtyInput, phone: true })
-                break
-            case 'name':
-                setDirtyInput({ ...dirtyInput, name: true })
-                break
-            case 'vk':
-                setDirtyInput({ ...dirtyInput, vk: true })
-                break
-            case 'inst':
-                setDirtyInput({ ...dirtyInput, inst: true })
-                break
-        }
-    }
-    const handleChangeInput = (e) => {
-        e.preventDefault()
-        //email validation
-        if (e.target.name === 'email') {
-
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            if (!re.test(String(e.target.value).toLowerCase())) {
-                setInputError({ ...inputError, email: 'Некорректный E-mail' })
-                setValidInput({ ...validInput, email: false })
-            } else {
-                setValidInput({ ...validInput, email: true })
-                setInputError({ ...inputError, email: 'Отлично!' })
-            }
-            if (e.target.value.length > 30) {
-                e.target.value = e.target.value.slice(0, 30)
-            }
-            setFormData(prev => ({ ...prev, email: e.target.value }))
-            //phone validation
-        } else if (e.target.name === 'phone') {
-            setFormData(prev => ({ ...prev, phone: e.target.value }))
-            if (e.target.value.length < 16) {
-                setInputError({ ...inputError, phone: 'Некорректный номер телефона' })
-                setValidInput({ ...validInput, phone: false })
-            } else {
-                setValidInput({ ...validInput, phone: true })
-                setInputError({ ...inputError, phone: 'Отлично!' })
-            }
-            //name validation
-        } else if (e.target.name === 'name') {
-            const re = /[^a-zA-Z+A-zА-яЁё]/g
-            if (e.target.value.length > 16) {
-                e.target.value = e.target.value.slice(0, 16)
-            }
-            e.target.value = e.target.value.replace(re, '')
-
-
-            if (e.target.value.length < 1) {
-                setInputError({ ...inputError, name: 'Поле должно быть не меньше 1 символа' })
-                setValidInput({ ...validInput, name: false })
-            } else {
-                setValidInput({ ...validInput, name: true })
-                setInputError({ ...inputError, name: 'Отлично!' })
-            }
-
-            setFormData(prev => ({ ...prev, name: e.target.value }))
-            //vk validation
-        } else if (e.target.name === 'vk') {
-
-            const re = /[^a-zA-Z+A-zА-яЁё+0-9]/g
-            if (e.target.value.length > 30) {
-                e.target.value = e.target.value.slice(0, 30)
-            }
-            e.target.value = e.target.value.replace(re, '')
-
-            if (e.target.value.length < 10) {
-                setInputError({ ...inputError, vk: 'Поле должно быть не меньше 10 символов' })
-                setValidInput({ ...validInput, vk: false })
-            } else {
-                setValidInput({ ...validInput, vk: true })
-                setInputError({ ...inputError, vk: 'Отлично!' })
-            }
-            setFormData(prev => ({ ...prev, vk: e.target.value }))
-            //inst validation
-        } else if (e.target.name === 'inst') {
-
-            const re = /[^a-zA-Z+A-zА-яЁё+0-9]/g
-            if (e.target.value.length > 30) {
-                e.target.value = e.target.value.slice(0, 30)
-            }
-            e.target.value = e.target.value.replace(re, '')
-
-            if (e.target.value.length < 3) {
-                setInputError({ ...inputError, inst: 'Поле должно быть не меньше 3 символов' })
-                setValidInput({ ...validInput, inst: false })
-            } else {
-                setValidInput({ ...validInput, inst: true })
-                setInputError({ ...inputError, inst: 'Отлично!' })
-            }
-            setFormData(prev => ({ ...prev, inst: e.target.value }))
-        }
-        /* setFormData(prev => ({...prev, [e.target.name]: e.target.value})) */
-    }
-
-    //Функция изменения метода связи
-    const onSelectMethod = React.useCallback((value) => {
-        setChecked(value)
-        setFormData(prev => {
-            return { ...prev, methodConnect: value }
-        })
-    }, [])
-    //Функция изменения времени записи
-    const onSelectTime = React.useCallback((time) => {
-        setFormData(prev => {
-            return { ...prev, time: time }
-        })
-    }, [])
-    //Функция изменения дня записи
-    const onSelectDate = React.useCallback((day) => {
-        if (!nextMonth) {
-            setFormData(prev => {
-                return { ...prev, date: `${new Date().toISOString().substring(0, 8)}${day}` }
-            })
-        } else if (nextMonth) {
-            setFormData(prev => {
-                return { ...prev, date: `${new Date(new Date().getFullYear(), new Date().getMonth() + 2, 1).toISOString().substring(0, 8)}${day}` }
-            })
-        }
-    }, [nextMonth])
-
-
+    const {
+        handleChangeInput,
+        blurHandler,
+        setDirtyInput,
+        inputError,
+        validInput,
+        dirtyInput } = useValidateInput(setFormData)
     // Функция добавления и отправки формы
     async function addNewOrder(e) {
         e.preventDefault()
-        const newTalon = {
-            talon: {
-                name: formData.name.trim(),
-                email: formData.email.trim(),
-                inst: formData.inst.trim(),
-                phone: formData.phone,
-                vk: formData.vk.trim(),
-                date: formData.date,
-                time: formData.time,
-                message: formData.message.trim(),
-                methodConnect: formData.methodConnect,
+        if (formData.methodConnect === 'Мессенджер' || formData.methodConnect === 'E-mail') {
+            if (validInput.email !== false && validInput.name !== false && validInput.phone !== false) {
+                if (formData.date !== '' && formData.time !== '') {
+                    const newTalon = {
+                        talon: {
+                            name: formData.name.trim(),
+                            email: formData.email.trim(),
+                            phone: formData.phone,
+                            date: formData.date,
+                            time: formData.time,
+                            message: formData.message.trim(),
+                            methodConnect: formData.methodConnect,
+                        }
+                    }
+                    setNewOrder(newTalon)
+                } else {
+                    setErrorValid(true)
+                }
+            } else {
+                setErrorValid(true)
+                setDirtyInput(prev => ({
+                    ...prev,
+                    name: true,
+                    email: true,
+                    phone: true,
+                }))
             }
         }
-        setNewOrder(newTalon)
+        if (formData.methodConnect === 'Instagram') {
+            if (validInput.email !== false && validInput.name !== false && validInput.inst !== false) {
+                if (formData.date !== '' && formData.time !== '') {
+                    const newTalon = {
+                        talon: {
+                            name: formData.name.trim(),
+                            email: formData.email.trim(),
+                            inst: formData.inst,
+                            date: formData.date,
+                            time: formData.date + "T" + formData.time + ":00Z",
+                            message: formData.message.trim(),//поменять на description
+                            methodConnect: formData.methodConnect,
+                        }
+                    }
+                    setNewOrder(newTalon)
+                } else {
+                    setErrorValid(true)
+                }
+            } else {
+                setErrorValid(true)
+                setDirtyInput(prev => ({
+                    ...prev,
+                    name: true,
+                    email: true,
+                    inst: true,
+                }))
+            }
+        }
+        if (formData.methodConnect === 'ВКонтакте') {
+            if (validInput.email !== false && validInput.name !== false && validInput.vk !== false) {
+                if (formData.date !== '' && formData.time !== '') {
+                    const newTalon = {
+                        talon: {
+                            name: formData.name.trim(),
+                            email: formData.email.trim(),
+                            vk: formData.vk,
+                            date: formData.date,
+                            time: formData.time,
+                            message: formData.message.trim(),
+                            methodConnect: formData.methodConnect,
+                        }
+                    }
+                    setNewOrder(newTalon)
+                } else {
+                    setErrorValid(true)
+                }
+            } else {
+                setErrorValid(true)
+                setDirtyInput(prev => ({
+                    ...prev,
+                    name: true,
+                    email: true,
+                    vk: true,
+                }))
+            }
+        }
+
 
         /* await fetch('http://localhost:1001/api/admin/record', {
             method: 'POST',
@@ -230,16 +142,11 @@ function Form() {
             .then((data) => console.log(data)) */
     }
 
-    console.log(formData)
-
-
-
     return (
         fetchData.error !== null ? (<div>Что-то пошло не так</div>
         ) : (<form
-            onSubmit={(e) => handleChangeInput(e)}
             className={classes.form}>
-            <CommunicationMethod method={method} checked={checked} onSelectMethod={onSelectMethod} />
+            <CommunicationMethod setFormData={setFormData} />
 
             {/* form input */}
             <div className={classes.form__info}>
@@ -257,7 +164,7 @@ function Form() {
                             {inputError.name}
                         </div>}
                 </div>
-                {checked === 'Мессенджер' && (
+                {formData.methodConnect === 'Мессенджер' && (
                     <div className={classes.wrapperInput}>
                         <IMaskInput
                             onChange={(e) => handleChangeInput(e)}
@@ -274,7 +181,7 @@ function Form() {
                     </div>)}
 
 
-                {checked === 'E-mail' && (
+                {formData.methodConnect === 'E-mail' && (
                     <div className={classes.wrapperInput}>
                         <input
                             onChange={(e) => handleChangeInput(e)}
@@ -290,7 +197,7 @@ function Form() {
 
                     </div>)}
 
-                {checked === 'Instagram' && (
+                {formData.methodConnect === 'Instagram' && (
                     <div className={classes.wrapperInput}>
                         <input
                             onChange={(e) => handleChangeInput(e)}
@@ -306,7 +213,7 @@ function Form() {
                             </div>}
                     </div>)}
 
-                {checked === 'ВКонтакте' && (
+                {formData.methodConnect === 'ВКонтакте' && (
                     <div className={classes.wrapperInput}>
                         <input
                             onChange={(e) => handleChangeInput(e)}
@@ -325,7 +232,7 @@ function Form() {
             </div>
             <h2>Дополнительный способ связи</h2>
             <div className={`${classes.form__info} ${classes.form__info_date}`}>
-                {checked === 'E-mail' ? (
+                {formData.methodConnect === 'E-mail' ? (
                     <div className={classes.wrapperInput}>
                         <IMaskInput
                             onChange={(e) => handleChangeInput(e)}
@@ -341,42 +248,45 @@ function Form() {
                             </div>}
                     </div>
                 ) : (<div className={classes.wrapperInput}>
-                        <input
-                            onChange={(e) => handleChangeInput(e)}
-                            value={formData.email}
-                            type="email"
-                            name="email"
-                            onBlur={(e) => blurHandler(e)}
-                            placeholder='Ваш E-mail' />
-                        {(dirtyInput.email && inputError.email) &&
-                            <div className={validInput.email ? classes.valid : classes.notValid}>
-                                {inputError.email}
-                            </div>}
+                    <input
+                        onChange={(e) => handleChangeInput(e)}
+                        value={formData.email}
+                        type="email"
+                        name="email"
+                        onBlur={(e) => blurHandler(e)}
+                        placeholder='Ваш E-mail' />
+                    {(dirtyInput.email && inputError.email) &&
+                        <div className={validInput.email ? classes.valid : classes.notValid}>
+                            {inputError.email}
+                        </div>}
 
-                    </div>)}
+                </div>)}
             </div>
 
             <Calendar
-                currentDay={currentDay}
-                setCurrentDay={setCurrentDay}
-                onSelectDate={onSelectDate}
                 fetchData={fetchData}
-                setNextMonth={setNextMonth}
-                nextMonth={nextMonth}
+                setFormData={setFormData}
             />
-
-
-            {<Time date={date} currentDay={currentDay} onSelectTime={onSelectTime} nextMonth={nextMonth} />}
-
 
             <div className={classes.form__message}>
                 <textarea
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) => handleChangeInput(e)}
+                    name="message"
+                    onInput={(e) => handleChangeInput(e)}
+                    onBlur={(e) => blurHandler(e)}
                     value={formData.message}
                     placeholder='Оставить комментарий' />
             </div>
 
-            <button onClick={(e) => addNewOrder(e)} type="submit" className='btn'>Записаться</button>
+            <button
+                onClick={addNewOrder}
+                type="submit"
+                className={formData.time && formData.date !== '' ? 'btn' : 'btn-disabled'}
+                disabled={!formData.time && formData.date}
+            >
+                {formData.time && formData.date !== '' ? 'Записаться' : 'Выберите дату и время'}
+            </button>
+            {errorValid && <ErrorForm setErrorValid={setErrorValid} />}
         </form>)
 
 
